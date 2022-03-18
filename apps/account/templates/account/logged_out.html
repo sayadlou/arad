@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+    <div id="page-top" class="wide">
+        <!-- Single Service Item ////////// Just this Section is changed! -->
+        <div id="change_password">
+            <div class="row">
+                <div class="col">
+                    <div class="user-form">
+                        <h1>{% translate "Profile" %}</h1>
+                        <hr>
+                        {% translate "You have successfully logged out!" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

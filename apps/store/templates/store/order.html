@@ -1,0 +1,43 @@
+{% extends "core/base.html" %}
+{% load humanize %}
+{% load i18n %}
+
+
+{% block content %}
+    <div id="page-top" class="wide">
+        <div id="user">
+            <h1>{% translate "order" %} {% translate "status" %} {{ order.get_status_display }}</h1>
+
+
+            <table class="table" id="cart-table">
+                <thead>
+                <tr>
+                    <th scope="col">سطر</th>
+                    <th scope="col">نام کالا</th>
+                    <th scope="col">قیمت</th>
+                    <th scope="col">تعداد</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in order.orderitem_set.all %}
+                    <tr id="row{{ forloop.counter }}">
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ item.product.title }}</td>
+                        <td>{{ item.product.price |floatformat:"0" |intcomma }}</td>
+                        <td>{{ item.quantity }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <h1>
+                {{ order.total_price }}
+            </h1>
+            <br>
+            <form autocomplete=off method="post" action="{% url 'store:payments' %}">
+                {% csrf_token %}
+                <input type="text" hidden name="order_id" value="{{ order.id }}">
+                <input type="submit" value="{% trans 'Make Payment' %}">
+            </form>
+        </div>
+    </div>
+{% endblock %}

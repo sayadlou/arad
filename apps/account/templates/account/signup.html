@@ -1,0 +1,126 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+    <div id="page-top" class="wide">
+        <!-- Single Service Item ////////// Just this Section is changed! -->
+        <div id="user">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="user-form">
+                        <h1>{% translate "Login" %}</h1>
+                        <hr>
+                        <form autocomplete="off" method="post" action="{% url 'account:signup' %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <div>
+                                        {{ form.first_name.label_tag }}
+                                    </div>
+                                    {{ form.first_name }}
+                                    {{ form.first_name.errors }}
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div>
+                                        {{ form.last_name.label_tag }}
+                                    </div>
+                                    {{ form.last_name }}
+                                    {{ form.last_name.errors }}
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <div>
+                                        {{ form.username.label_tag }}
+                                    </div>
+                                    {{ form.username }}
+                                    {{ form.username.errors }}
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div>
+                                        {{ form.email.label_tag }}
+                                    </div>
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <div>
+                                        {{ form.mobile.label_tag }}
+                                    </div>
+                                    {{ form.mobile }}
+                                    {{ form.mobile.errors }}
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div>
+                                        {{ form.phone.label_tag }}
+                                    </div>
+                                    {{ form.phone }}
+                                    {{ form.phone.errors }}
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <div>
+                                        {{ form.password1.label_tag }}
+                                    </div>
+                                    {{ form.password1 }}
+                                    {{ form.password1.errors }}
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div>
+                                        {{ form.password2.label_tag }}
+                                    </div>
+                                    {{ form.password2 }}
+                                    {{ form.password2.errors }}
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <div>
+                                        {{ form.address.label_tag }}
+                                    </div>
+                                    {{ form.address.errors }}
+
+                                    {{ form.address }}
+
+                                </div>
+                                {{ form.captcha }}
+                                {{ form.captcha.errors }}
+
+                            </div>
+                            <button type="submit" class="mt-1 btn btn-primary">{% translate "Create account" %}</button>
+
+
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-5">
+                    {% if form.password1.help_text %}
+                        <p class="help">{{ form.password1.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        alertify.success('Success message');
+        alertify.error('Error message');
+        alertify.warning('Warning message');
+        alertify.message('Normal message');
+    </script>
+{% endblock content %}

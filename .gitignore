@@ -1,0 +1,65 @@
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+#media
+
+# Backup files # 
+*.bak 
+
+# If you are using PyCharm # 
+.idea
+*.iws /out/ 
+
+# Python # 
+*.py[cod] 
+*$py.class 
+
+# Distribution / packaging 
+.Python build/ 
+develop-eggs/ 
+dist/ 
+downloads/ 
+eggs/ 
+.eggs/ 
+lib/ 
+lib64/ 
+parts/ 
+sdist/ 
+var/ 
+wheels/ 
+*.egg-info/ 
+.installed.cfg 
+*.egg 
+*.manifest 
+*.spec 
+
+# Installer logs 
+pip-log.txt 
+pip-delete-this-directory.txt 
+
+
+# pyenv 
+.python-version 
+
+# Environments
+venv
+venv.bak/
+
+.env
+
+# mypy 
+.mypy_cache/
+
+
+requirements/temp.txt
+django/sent_email
+django/.coverage
+.env.dev
+learning_attachments/
+.env.prod
+db.sqlite3
+static/
+media/
+general.log/

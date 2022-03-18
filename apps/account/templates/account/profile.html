@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <div id="page-top" class="wide">
+        <div id="change_password">
+            <div class="row">
+                <div class="col">
+                    <div class="user-form">
+                        <h1>{% translate "Profile" %}</h1>
+                        <hr>
+                        <p>{% translate "username" %} : {{ user.username }}</p>
+                        <p>{% translate "first_name" %} : {{ user.first_name }}</p>
+                        <p>{% translate "last_name" %} : {{ user.last_name }}</p>
+                        <p>{% translate "email" %} : {{ user.email }}</p>
+                        <p>{% translate "profile_picture" %} : <img src="{{ user.profile_picture.url }}"
+                                                                    class="img-thumbnail" style="max-height: 200px"
+                                                                    alt="{% translate "profile_picture" %}"></p>
+                        <p>{% translate "address" %} : {{ user.address }}</p>
+                    </div>
+                </div>
+
+            </div>
+            <a href="{% url "account:logout" %}" class="btn btn-outline-danger btn-equal">{% translate "logout" %}</a>
+            <a href="{% url "account:password_reset" %}" class="btn btn-outline-danger btn-equal">{% translate "password reset" %}</a>
+            <a href="{% url "account:password_change" %}" class="btn btn-outline-danger btn-equal">{% translate "password change" %}</a>
+            <a href="{% url "store:cart" %}" class="btn btn-outline-primary btn-equal">{% translate "cart" %}</a>
+            <a href="{% url "store:orders" %}" class="btn btn-outline-primary btn-equal">{% translate "order" %}</a>
+        </div>
+    </div>
+{% endblock %}

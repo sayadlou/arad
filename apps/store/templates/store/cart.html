@@ -1,0 +1,92 @@
+{% extends "core/base.html" %}
+{% load humanize %}
+{% load i18n %}
+
+
+{% block content %}
+    <div id="page-top" class="wide">
+        <div id="user">
+            {% if cart_has_item %}
+                <table class="table" id="cart-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">سطر</th>
+                        <th scope="col">نام کالا</th>
+                        <th scope="col">قیمت</th>
+                        <th scope="col">تعداد</th>
+                        <th scope="col">تغییر تعداد</th>
+                        <th scope="col">حذف</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart_item %}
+                        <tr id="row{{ forloop.counter }}">
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ item.product.title }}</td>
+                            <td>{{ item.product.price |floatformat:"0" |intcomma }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>
+                                <form autocomplete=off method="post"
+                                      action="{% url 'store:cart_item' item.id %}">
+                                    {% csrf_token %}
+                                    <input type="text" name="product" value="{{ item.product.pk }}" hidden>
+                                    <input type="text" name="request_type" value="dec" hidden>
+                                    <input type="number" name="quantity" value="1" hidden>
+                                    <input type="submit" value="Dec">
+                                </form>
+
+                                <form autocomplete=off method="post"
+                                      action="{% url 'store:cart_item' item.id %}">
+                                    {% csrf_token %}
+                                    <input type="text" name="product" value="{{ item.product.pk }}" hidden>
+                                    <input type="text" name="request_type" value="inc" hidden>
+                                    <input type="number" name="quantity" value="1" hidden>
+                                    <input type="submit" value="Inc">
+                                </form>
+
+
+                            </td>
+                            <td>
+                                <button id="delete{{ forloop.counter }}">delete</button>
+                                <script>
+                                    $("#delete{{ forloop.counter }}").click(function () {
+                                        $.ajax({
+                                            type: "DELETE",
+                                            url: '{% url 'store:cart_item'  item.id %}',
+                                            beforeSend: function (xhr) {
+                                                xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                                            },
+                                            success: function (data) {
+                                                console.log("success");
+                                                $('#row{{ forloop.counter }}').remove();
+                                            },
+                                            error: function (data) {
+                                                alertify.error('{% translate "error in response" %}');
+                                            },
+
+                                        });
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+                <br>
+                <h1>جمع کل {{ cart_sum |floatformat:"0" |intcomma  }}</h1>
+                <form autocomplete=off method="post"
+                      action="{% url 'store:orders' %}">
+                    {% csrf_token %}
+                    <input type="submit" value="{% trans 'Submit an Order' %}">
+                </form>
+            {% else %}
+                <h1>{% trans "your cart is empty" %}</h1>
+            {% endif %}
+            {% for post in page_obj %}
+
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

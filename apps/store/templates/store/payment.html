@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+{% load humanize %}
+{% load i18n %}
+
+
+{% block content %}
+    <div id="page-top" class="wide">
+        <div id="user">
+            {% if is_payment_valid %}
+
+                <br>
+            {% else %}
+                <h1>{% trans "you have no payment" %}</h1>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
