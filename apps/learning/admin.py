@@ -10,7 +10,7 @@ from .views import refresh
 
 @admin.register(Category)
 class CategoryAdmin(DraggableMPTTAdmin):
-    mptt_level_indent = 10
+    mptt_level_indent = 2
     readonly_fields = ['id']
 
 

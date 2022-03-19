@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.account',
     'apps.contact_us',
     'apps.store',
+    'apps.event',
 ]
 
 MIDDLEWARE = [
