@@ -11,16 +11,16 @@
                     <div>
                         {% translate "tag:" %}
                         {% for tag in object.tags_list %}
-                            <a href="{% url "learning:tag" %}?tag={{ tag }}">{{ tag }}</a>
+                            <a href="{% url "event:tag" %}?tag={{ tag }}">{{ tag }}</a>
                         {% endfor %}
                     </div>
                     <div>
                         {% translate "category:" %}
-                        <a href="{% url "learning:category" object.category %}">{{ object.category }}</a>
+                        <a href="{% url "event:category" object.category %}">{{ object.category }}</a>
                     </div>
                     <img src="{{ object.picture.url }}" alt="object-image">
                     <p>
-                        {{ object.content | safe }}
+                        {{ object.description | safe }}
                     </p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                         allowfullscreen></iframe>
             </div>
             <div class="my-5">
-                <a href="{% url "learning:attachment" object.slug %}">attachment</a>
+                <a href="{% url "event:attachment" object.slug %}">attachment</a>
             </div>
 
         </div>

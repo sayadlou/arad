@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "samim";
+    src: url("static/core/fonts/samim.eot");
+    src: url("static/core/fonts/samim.woff") format("woff"),
+    url("static/core/fonts/samim.otf") format("opentype");
+}
+
+* {
+
+    font-family: "samim", Verdana, Arial, sans-serif !important;
+}

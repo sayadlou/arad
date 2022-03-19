@@ -60,6 +60,6 @@ django/.coverage
 learning_attachments/
 .env.prod
 db.sqlite3
-static/
 media/
 general.log/
+/static/

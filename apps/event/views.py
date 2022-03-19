@@ -29,7 +29,7 @@ class IndexView(ListView):
         return data
 
 
-class SlugView(LoginRequiredMixin, DetailView):
+class SlugView(BoughtUserMixin, DetailView):
     template_name = 'event/slug.html'
     model = Event
 
