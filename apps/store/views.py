@@ -144,22 +144,22 @@ class CallbackGatewayView(LoginRequiredMixin, View):
         except bank_models.Bank.DoesNotExist:
             logging.error("bank record is not valid")
             raise Http404
-        # if bank_record.is_success:
-        try:
-            payment = Payment.objects.get(content_type=ContentType.objects.get_for_model(bank_record),
-                                          object_id=bank_record.pk)
-            payment.status = Payment.STATUS_CONFIRMED
-            payment.save()
-            payment.order.status = Order.ORDER_STATUS_PAYED
-            payment.order.save()
-            paid_order_items = payment.order.orderitem_set.all()
-            bayer = payment.owner
-            for item in paid_order_items:
-                item.product.add_buyer(bayer)
-            return HttpResponse("پرداخت با موفقیت انجام شد.")
-        except Payment.DoesNotExist:
-            logging.error(f"payment for {bank_record.pk} was successful but has no oder")
-            return HttpResponse("خطایی در پرداخت رخ داده است جهت بازپرداخت وجه با پشتیبانی تماس حاصل نمایید.")
-        # logging.error(f"payment {bank_record.pk} with amount {bank_record.amount} was not successful")
-        # return HttpResponse(
-        #     "پرداخت با شکست مواجه شده است.اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.")
+        if bank_record.is_success:
+            try:
+                payment = Payment.objects.get(content_type=ContentType.objects.get_for_model(bank_record),
+                                              object_id=bank_record.pk)
+                payment.status = Payment.STATUS_CONFIRMED
+                payment.save()
+                payment.order.status = Order.ORDER_STATUS_PAYED
+                payment.order.save()
+                paid_order_items = payment.order.orderitem_set.all()
+                bayer = payment.owner
+                for item in paid_order_items:
+                    item.product.add_buyer(bayer)
+                return HttpResponse("پرداخت با موفقیت انجام شد.")
+            except Payment.DoesNotExist:
+                logging.error(f"payment for {bank_record.pk} was successful but has no oder")
+                return HttpResponse("خطایی در پرداخت رخ داده است جهت بازپرداخت وجه با پشتیبانی تماس حاصل نمایید.")
+        logging.error(f"payment {bank_record.pk} with amount {bank_record.amount} was not successful")
+        return HttpResponse(
+            "پرداخت با شکست مواجه شده است.اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.")
