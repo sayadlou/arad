@@ -130,8 +130,6 @@ ATTACHMENT_URL = '/attachment/'
 ATTACHMENT_ROOT = BASE_DIR / "learning_attachments"
 
 STATICFILES_DIRS = [
-    # BASE_DIR / "static",
-    # BASE_DIR / 'templates/sabery/build/static',
 ]
 
 learning_attachments_path = FileSystemStorage(location=ATTACHMENT_ROOT, base_url=ATTACHMENT_URL)

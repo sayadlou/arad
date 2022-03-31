@@ -130,25 +130,17 @@ class PaymentListAddView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         order_id = request.POST['order_id']
         order = get_object_or_404(Order, owner=request.user, pk=order_id)
-
         if order.total_price <= MINIMUM_ORDER_AMOUNT:
             messages.success(request, _('minimum order amount should be more than 100,000 IRR'))
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         factory = bankfactories.BankFactory()
         try:
-            bank = factory.auto_create(
-                bank_models.BankType.ZARINPAL)  # or factory.create(bank_models.BankType.BMI) or set identifier
+            bank = factory.auto_create(bank_models.BankType.ZARINPAL)
             bank.set_request(request)
             bank.set_amount(int(order.total_price))
-            # یو آر ال بازگشت به نرم افزار برای ادامه فرآیند
             bank.set_client_callback_url(reverse_lazy('store:callback-gateway'))
             bank.set_mobile_number(order.owner.mobile)
-
-            # در صورت تمایل اتصال این رکورد به رکورد فاکتور یا هر چیزی که بعدا بتوانید ارتباط بین محصول یا خدمات را با این
-            # پرداخت برقرار کنید.
             bank_record = bank.ready()
-
-            # هدایت کاربر به درگاه بانک
             return bank.redirect_gateway()
         except AZBankGatewaysException as e:
             logging.critical(e)
@@ -156,34 +148,20 @@ class PaymentListAddView(LoginRequiredMixin, View):
             raise e
 
 
-class PaymentConfirmView(LoginRequiredMixin, View):
+class CallbackGatewayView(LoginRequiredMixin, View):
+
     def get(self, request, *args, **kwargs):
-        payment = get_object_or_404(Payment, owner=request.user, pk=kwargs['pk'])
-        if request.GET['Status'] and request.GET['Status'] == 'OK':
-            pass
-        else:
-            pass
-        return HttpResponse("salam")
+        tracking_code = request.GET.get(settings.TRACKING_CODE_QUERY_PARAM, None)
+        if not tracking_code:
+            logging.debug("tracking code is not in url query param.")
+            raise Http404
+        try:
+            bank_record = bank_models.Bank.objects.get(tracking_code=tracking_code)
+        except bank_models.Bank.DoesNotExist:
+            logging.debug("bank record is not valid")
+            raise Http404
+        if bank_record.is_success:
+            return HttpResponse("پرداخت با موفقیت انجام شد.")
 
-
-def callback_gateway_view(request):
-    tracking_code = request.GET.get(settings.TRACKING_CODE_QUERY_PARAM, None)
-    if not tracking_code:
-        logging.debug("این لینک معتبر نیست.")
-        raise Http404
-
-    try:
-        bank_record = bank_models.Bank.objects.get(tracking_code=tracking_code)
-    except bank_models.Bank.DoesNotExist:
-        logging.debug("این لینک معتبر نیست.")
-        raise Http404
-
-    # در این قسمت باید از طریق داده هایی که در بانک رکورد وجود دارد، رکورد متناظر یا هر اقدام مقتضی دیگر را انجام دهیم
-    if bank_record.is_success:
-        # پرداخت با موفقیت انجام پذیرفته است و بانک تایید کرده است.
-        # می توانید کاربر را به صفحه نتیجه هدایت کنید یا نتیجه را نمایش دهید.
-        return HttpResponse("پرداخت با موفقیت انجام شد.")
-
-    # پرداخت موفق نبوده است. اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.
-    return HttpResponse(
-        "پرداخت با شکست مواجه شده است. اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.")
+        return HttpResponse(
+            "پرداخت با شکست مواجه شده است.اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.")
