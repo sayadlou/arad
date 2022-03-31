@@ -4,6 +4,8 @@ from random import random
 from uuid import uuid4
 
 from azbankgateways.models import Bank
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import Sum, Func, F, Count
 from django.utils.translation import ugettext_lazy as _
@@ -22,6 +24,9 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+    def add_buyer(self, user):
+        self.purchaser.add(user)
 
 
 class Cart(models.Model):
@@ -74,8 +79,8 @@ class Order(models.Model):
     ORDER_STATUS_FAILED = 'F'
     ORDER_STATUS_CHOICES = [
         (ORDER_STATUS_WAITING, 'Waiting'),
-        (ORDER_STATUS_TRANSFERRED, 'Payed'),
-        (ORDER_STATUS_PAYED, 'Transferred'),
+        (ORDER_STATUS_TRANSFERRED, 'Transferred'),
+        (ORDER_STATUS_PAYED, 'Payed'),
         (ORDER_STATUS_FAILED, 'Failed')
     ]
 
@@ -106,9 +111,8 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, verbose_name=_('order'), on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, verbose_name=_('order item'), on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
-
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -135,13 +139,15 @@ class Payment(models.Model):
     ]
     owner = models.ForeignKey(UserProfile, on_delete=models.RESTRICT)
     order = models.ForeignKey(Order, verbose_name=_('order'), on_delete=models.CASCADE)
-    id = models.UUIDField(primary_key=True, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created at'))
     expired_at = models.DateTimeField(verbose_name=_('expired at'), null=True, blank=True)
     due_at = models.DateTimeField(verbose_name=_('due at'), null=True, blank=True)
     fulfilled_at = models.DateTimeField(verbose_name=_('fulfilled at'), null=True, blank=True)
     amount = models.PositiveIntegerField(default=0, verbose_name=_('amount'))
     status = models.PositiveSmallIntegerField(verbose_name=_('status'), choices=STATUS_TYPE_CHOICES,
-                                              default=STATUS_INITIAL)
+                                              default=STATUS_PROCESSING)
     status_change_date = models.DateTimeField(auto_now_add=True)
-    transaction = models.ForeignKey(Bank, on_delete=models.RESTRICT, null=True, blank=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    transaction = GenericForeignKey('content_type', 'object_id')

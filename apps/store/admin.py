@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Cart, CartItem, OrderItem, Order, Product
+from .models import Cart, CartItem, OrderItem, Order, Product, Payment
 
 
 class CartItemInLine(admin.TabularInline):
@@ -16,14 +16,6 @@ class CartAdmin(admin.ModelAdmin):
     inlines = [CartItemInLine]
 
 
-#
-# @admin.register(CartItem)
-# class CartItemAdmin(admin.ModelAdmin):
-#     search_fields = ['cart']
-#     list_display = ['cart', 'product']
-#     readonly_fields = ['id']
-
-
 class OrderItemInLine(admin.TabularInline):
     model = OrderItem
 
@@ -36,13 +28,11 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInLine]
 
 
-# @admin.register(OrderItem)
-# class OrderItemAdmin(admin.ModelAdmin):
-#     search_fields = ['order']
-#     list_display = ['order', 'product']
-#     readonly_fields = ['id']
-
-
 @admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Payment)
 class ProductAdmin(admin.ModelAdmin):
     pass

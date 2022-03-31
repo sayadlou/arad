@@ -10,6 +10,7 @@ from azbankgateways.exceptions import AZBankGatewaysException
 from azbankgateways import models as bank_models, default_settings as settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
@@ -17,23 +18,12 @@ from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.utils.translation import gettext as _
 
+from utils.functions import cart_to_order
 from .forms import CartItemForm
 from ..store.models import CartItem, Order, OrderItem, Payment
 from config.settings.base import MINIMUM_ORDER_AMOUNT
 
-logger = logging.getLogger(__name__)
-
-
-def print_attributes(obj):
-    def attributes(obj):
-        from inspect import getmembers
-        from types import FunctionType
-        disallowed_names = {
-            name for name, value in getmembers(type(obj))
-            if isinstance(value, FunctionType)}
-        return {
-            name: getattr(obj, name) for name in dir(obj)
-            if name[0] != '_' and name not in disallowed_names and hasattr(obj, name)}
+logger = logging.getLogger('store.views')
 
 
 class CartListAddView(LoginRequiredMixin, View):
@@ -88,29 +78,12 @@ class CartPutDeleteView(LoginRequiredMixin, View):
             return HttpResponse(status=404)
 
 
-class OrderListAddView(LoginRequiredMixin, View):
+class OrderListView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         orders = Order.objects.filter(owner=request.user)
         context = {'orders': orders, 'has_order': orders.exists()}
         return render(request=self.request, template_name="store/orders.html", context=context)
-
-    @transaction.atomic()
-    def post(self, request, *args, **kwargs):
-        cart = request.user.cart
-        order_items = list()
-        new_order = Order.objects.create(owner=request.user, status='W')
-        for item in cart.cartitem_set.all():
-            order_items.append(
-                OrderItem(
-                    order=new_order,
-                    quantity=item.quantity,
-                    product=item.product,
-                )
-            )
-        OrderItem.objects.bulk_create(order_items, batch_size=20)
-        cart.cartitem_set.all().delete()
-        return redirect(reverse('store:order_item', kwargs={'pk': new_order.id}), permanent=True)
 
 
 class OrderDetailView(LoginRequiredMixin, View):
@@ -128,24 +101,35 @@ class PaymentListAddView(LoginRequiredMixin, View):
         return render(request=self.request, template_name="store/payments.html", context=context)
 
     def post(self, request, *args, **kwargs):
-        order_id = request.POST['order_id']
-        order = get_object_or_404(Order, owner=request.user, pk=order_id)
-        if order.total_price <= MINIMUM_ORDER_AMOUNT:
-            messages.success(request, _('minimum order amount should be more than 100,000 IRR'))
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-        factory = bankfactories.BankFactory()
-        try:
-            bank = factory.auto_create(bank_models.BankType.ZARINPAL)
-            bank.set_request(request)
-            bank.set_amount(int(order.total_price))
-            bank.set_client_callback_url(reverse_lazy('store:callback-gateway'))
-            bank.set_mobile_number(order.owner.mobile)
-            bank_record = bank.ready()
-            return bank.redirect_gateway()
-        except AZBankGatewaysException as e:
-            logging.critical(e)
-            # TODO: redirect to failed page.
-            raise e
+        with transaction.atomic():
+            order_id = request.POST.get('order_id')
+            try:
+                order = Order.objects.get(owner=request.user, pk=order_id)
+            except Order.DoesNotExist:
+                order = cart_to_order(request)
+            if order.total_price <= MINIMUM_ORDER_AMOUNT:
+                messages.success(request, _('minimum order amount should be more than 100,000 IRR'))
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+            request.user.cart.cartitem_set.all().delete()
+            factory = bankfactories.BankFactory()
+            try:
+                bank = factory.auto_create(bank_models.BankType.ZARINPAL)
+                bank.set_request(request)
+                bank.set_amount(int(order.total_price))
+                bank.set_client_callback_url(reverse_lazy('store:callback-gateway'))
+                bank.set_mobile_number(order.owner.mobile)
+                bank_record = bank.ready()
+                Payment.objects.create(
+                    owner=request.user,
+                    order=order,
+                    amount=(int(order.total_price)),
+                    transaction=bank_record,
+                )
+                return bank.redirect_gateway()
+            except AZBankGatewaysException as e:
+                logging.critical(e)
+                # TODO: redirect to failed page.
+                raise e
 
 
 class CallbackGatewayView(LoginRequiredMixin, View):
@@ -153,15 +137,29 @@ class CallbackGatewayView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         tracking_code = request.GET.get(settings.TRACKING_CODE_QUERY_PARAM, None)
         if not tracking_code:
-            logging.debug("tracking code is not in url query param.")
+            logging.error("tracking code is not in url query param.")
             raise Http404
         try:
             bank_record = bank_models.Bank.objects.get(tracking_code=tracking_code)
         except bank_models.Bank.DoesNotExist:
-            logging.debug("bank record is not valid")
+            logging.error("bank record is not valid")
             raise Http404
-        if bank_record.is_success:
+        # if bank_record.is_success:
+        try:
+            payment = Payment.objects.get(content_type=ContentType.objects.get_for_model(bank_record),
+                                          object_id=bank_record.pk)
+            payment.status = Payment.STATUS_CONFIRMED
+            payment.save()
+            payment.order.status = Order.ORDER_STATUS_PAYED
+            payment.order.save()
+            paid_order_items = payment.order.orderitem_set.all()
+            bayer = payment.owner
+            for item in paid_order_items:
+                item.product.add_buyer(bayer)
             return HttpResponse("پرداخت با موفقیت انجام شد.")
-
-        return HttpResponse(
-            "پرداخت با شکست مواجه شده است.اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.")
+        except Payment.DoesNotExist:
+            logging.error(f"payment for {bank_record.pk} was successful but has no oder")
+            return HttpResponse("خطایی در پرداخت رخ داده است جهت بازپرداخت وجه با پشتیبانی تماس حاصل نمایید.")
+        # logging.error(f"payment {bank_record.pk} with amount {bank_record.amount} was not successful")
+        # return HttpResponse(
+        #     "پرداخت با شکست مواجه شده است.اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.")
