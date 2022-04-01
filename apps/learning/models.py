@@ -53,13 +53,30 @@ class Post(ProductBaseModel):
         return f'{self.title}'
 
     @property
-    def tags_list(self):
+    def post_tags_list(self):
         tag_to_list = list()
         if "," in self.tags:
             tag_to_list = [x.strip() for x in self.tags.split(',')]
         else:
             tag_to_list.append(self.tags)
         return tag_to_list
+
+    @staticmethod
+    def blog_tags_list():
+        def clean_tag(uncleaned_tag):
+            cleaned_tag = str(uncleaned_tag)
+            cleaned_tag = cleaned_tag.lower()
+            cleaned_tag = cleaned_tag.strip()
+            return cleaned_tag
+
+        tag_to_set = set()
+        posts_tag = Post.objects.values_list('tags')
+        for post_tag in posts_tag:
+            for tag in post_tag[0].split(','):
+                if tag:
+                    tag = clean_tag(tag)
+                    tag_to_set.add(tag)
+        return tag_to_set
 
 
 class VideoFile(models.Model):

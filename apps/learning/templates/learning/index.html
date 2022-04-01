@@ -1,79 +1,39 @@
 {% extends "core/base.html" %}
+{% load jalali_tags %}
 
 
 
 {% block content %}
-    <div id="page-top" class="wide">
-        <div id="user">
-            <div class="row">
-                {% for post in page_obj %}
-                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mb-30">
-                        <article class="post-container">
-                            <div class="post-thumb">
-                                <a href="{{ post.get_absolute_url }}"
-                                   class="d-block position-relative overflow-hidden">
-                                    <img src="{{ post.picture.url }}" class="img-fluid" alt="learning Post">
-                                </a>
-                            </div>
-                            <div class="post-content">
-                                <div class="entry-header">
-                                    <h3>
-                                        <a href="{{ post.get_absolute_url }}">{{ post.title| truncatechars:100 }}</a>
-                                    </h3>
-
-
-                                    <form autocomplete="off" method="post" action="{% url 'store:cart' %}">
-                                        {% csrf_token %}
-                                        <input type="text" name="product" value="{{ post.pk }}" hidden>
-                                        <input type="text" name="request_type" value="inc" hidden>
-                                        <input type="number" name="quantity" value="1" hidden>
-                                        <input type="submit" class="btn btn-primary" value="Add to Cart">
-
-                                    </form>
-                                </div>
-                            </div>
-                        </article>
-
-                    </div>
+    <div id="" class="wide">
+        <div class="filter row">
+            <div class="blog-categoty col-4">
+                <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "learning:home" %}">همه</a>
+                {% for category in categories %}
+                    <a type="button" class="btn btn-light btn-sm btn-tag"
+                       href="{% url "learning:category" category.name %}">{{ category.name }}</a>
                 {% endfor %}
             </div>
-            <div class="row">
-                <div class="col-12 mt-4">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center mb-0">
-                            {% if page_obj.has_previous %}
-                                <li class="page-item"><a class="page-link"
-                                                         href="?page={{ page_obj.previous_page_number }}"><i
-                                        class="fa fa-chevron-right"
-                                        aria-hidden="true"></i></a></li>
-                            {% else %}
-                                <li class="page-item"><a class="page-link disabled"><i
-                                        class="fa fa-chevron-right"
-                                        aria-hidden="true"></i></a></li>
-                            {% endif %}
-                            {% for i in page_obj.paginator.page_range %}
-                                {% if page_obj.number == i %}
-                                    <li class="page-item active">
-                                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                                        {#                                        <span>{{ i }} <span class="sr-only">(current)</span></span>#}
-                                    </li>
-                                {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
-                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                                {% endif %}
-                            {% endfor %}
-                            {% if page_obj.has_next %}
-                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i
-                                        class="fa fa-chevron-left"
-                                        aria-hidden="true"></i></a></li>
-                            {% else %}
-                                <li class="page-item"><a class="page-link disabled"><i
-                                        class="fa fa-chevron-left"
-                                        aria-hidden="true"></i></a></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                </div>
+            <div class="blog-tag col-8">
+                <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "learning:home" %}">همه</a>
+                {% for tag in tags %}
+                    <a type="button" class="btn btn-light btn-sm btn-tag"
+                       href="{% url "learning:tag" %}?tag={{ tag }}">{{ tag }}</a>
+                {% endfor %}
             </div>
+        </div>
+        <hr>
+        <div class="row">
+            {% for post in page_obj %}
+                <div class="col-4 blog-single">
+                    <div class="blog-image">
+                        <a class="post-title" href="{{ post.get_absolute_url }}"><h1>{{ post.title }}</h1></a>
+                        <strong class="post-date">{{ post.pub_date|to_jalali:'%Y/%m/%d' }}</strong>
+                        <a href="{{ post.get_absolute_url }}">
+                            <img class="" src="{{ post.picture.url }}" alt="">
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

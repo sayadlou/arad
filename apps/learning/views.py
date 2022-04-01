@@ -7,7 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView
-from .models import Post as LearningPost, VideoFile
+from .models import Post as LearningPost, VideoFile, Category, Post
 from .permitions import BoughtUserMixin
 from django_downloadview import ObjectDownloadView
 
@@ -25,11 +25,10 @@ class IndexView(ListView):
         return self.model.objects.order_by('pub_date').filter(status='Published')
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['model'] = ContentType.objects.get_for_model(LearningPost).pk
-        data['formmy'] = CartItemForm()
-
-        return data
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['tags'] = Post.blog_tags_list()
+        return context
 
 
 class SlugView(BoughtUserMixin, DetailView):
