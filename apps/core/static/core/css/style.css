@@ -78,7 +78,7 @@ body {
 	padding: 1rem 3rem !important;
     text-align: left;
 }
-#highlights {margin: auto;}
+#highlights {}
 #highlights img {
 	width: 100%;
 	border-radius: 0.5rem;
@@ -102,6 +102,20 @@ body {
 .wide {background-color: transparent;}
 .wide2 {background-color: #99c0cf;}
 
+/* Blog */
+.filter {margin-bottom: 2rem; padding: 5px 10px;}
+.form-select {width: auto}
+.blog-tag {float: left; text-align: left;}
+.blog-category {float: right; text-align: right;}
+.blog-single {background: transparent; margin-bottom: 2rem;}
+.blog-single img {
+	width: 100%;
+	border-radius: 0.5rem;
+}
+.post-name {width: 100%;}
+.blog-single .post-title {width: 70%; float: right; text-align: right; text-indent: 5px; text-decoration: none;}
+.blog-single .post-date {width: 30%; float: left; text-align: left; color: #ccc; padding: 5px; font-weight: 100;}
+.post-item .post-date {color: #ccc; font-weight: 100;}
 /* Services */
 .services-highlight {
 	margin-bottom: 1rem;
@@ -134,19 +148,19 @@ body {
 	position: absolute;
 	margin-top: 70px;
 }
-.service-img img {
+.service-img img, .post-img img {
 	width: 100%;
 	border-radius: 5px;
 }
-.service-video {border-radius: 5px; overflow: hidden;}
+.service-video, .post-video {border-radius: 5px; overflow: hidden;}
 .links-public {
 	width: 100%;
 	text-align: center;
 }
-.service-item-head {
+.service-item-head, .post-item-head {
 	margin-bottom: 1rem;
 }
-.service-item-head p {
+.service-item-head p, .post-item-head p {
 	min-height: 10rem;
 }
 /* Events */
@@ -173,32 +187,8 @@ body {
 .event-highlight-date a:hover {
 	background-color: #ccc;
 }
-/* Portal & Ticket */
-.user-info {
-	height: inherit;
-}
-.last-tickets {
-	height: inherit;
-	overflow-y: scroll;
-}
-.ticket a {
-	color:#007bff;
-	text-decoration: none;
-}
-.ticket a:hover {
-	color: #f04f31;
-	text-decoration: none;
-}
-.status-open {color: auto;}
-.status-done {color: #9d9d9d;}
-.my-list {
-	margin-top: 2rem;
-}
-.dl-link {text-align: left;}
-.user-form {
-	min-height: 13rem;
-}
 /* Changes of Bootstrap */
+.form-control {margin-bottom: 10px !important;}
 .next-prev {
     position: absolute;
 	width: 80px;
@@ -215,8 +205,11 @@ body {
     bottom: 0;
     left: 0;
 }
-.form-group {margin-bottom: 9px;}
 .btn-icon {
+	border-radius: 0 4px 4px 0 !important;
+	text-align: center;
+}
+#page_top .btn-icon {
 	border-radius: 0 4px 4px 0 !important;
 	text-align: center;
     width: 45px;

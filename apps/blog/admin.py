@@ -6,7 +6,7 @@ from .models import Post, Category
 
 @admin.register(Category)
 class CategoryAdmin(DraggableMPTTAdmin):
-    mptt_level_indent = 2
+    mptt_level_indent = 20
 
 
 @admin.register(Post)

@@ -10,7 +10,8 @@ from django.db import models
 from django.db.models import Sum, Func, F, Count
 from django.utils.translation import ugettext_lazy as _
 
-from ..account.models import UserProfile
+from apps.account.models import UserProfile
+from config.settings.base import product_models
 
 
 class Product(models.Model):
@@ -27,6 +28,11 @@ class Product(models.Model):
 
     def add_buyer(self, user):
         self.purchaser.add(user)
+
+    def get_child(self):
+        for attr in product_models:
+            if getattr(self, attr, False):
+                return getattr(self, attr)
 
 
 class Cart(models.Model):

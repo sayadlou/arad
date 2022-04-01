@@ -10,10 +10,14 @@ class Blog(ListView):
     model = Post
     paginate_by = 6
 
-    # all_posts = Post.objects.order_by('pub_date').filter(status='Published')
-
     def get_queryset(self):
         return self.model.objects.order_by('pub_date').filter(status='Published')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['tags'] = Post.blog_tags_list()
+        return context
 
 
 class Tag(ListView):
@@ -22,8 +26,17 @@ class Tag(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        tag = self.request.GET.get("tag", "")
-        return self.model.objects.order_by('pub_date').filter(status='Published').filter(tags__icontains=tag)
+        tag = str(self.request.GET.get("tag", "")).lower()
+        print(self.model.blog_tags_list())
+        if tag in self.model.blog_tags_list():
+            return self.model.objects.order_by('pub_date').filter(status='Published').filter(tags__icontains=tag)
+        return self.model.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['tags'] = Post.blog_tags_list()
+        return context
 
 
 class Slug(DetailView):
@@ -39,3 +52,10 @@ class CategoryList(ListView):
     def get_queryset(self):
         category = self.kwargs['category']
         return self.model.objects.order_by('pub_date').filter(category__name__iexact=category)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_category'] = self.kwargs['category']
+        context['categories'] = Category.objects.all()
+        context['tags'] = Post.blog_tags_list()
+        return context
