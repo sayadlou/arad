@@ -11,4 +11,7 @@ class CategoryAdmin(DraggableMPTTAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    search_fields = ['title']
+    search_fields = ['title', 'slug']
+    list_display = ['title', 'slug']
+    readonly_fields = ['id']
+    prepopulated_fields = {'slug': ('title',)}
