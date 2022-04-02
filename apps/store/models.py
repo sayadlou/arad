@@ -17,7 +17,7 @@ from config.settings.base import product_models
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True, allow_unicode=True)
     price = models.DecimalField(max_digits=12, decimal_places=0)
     max_order_quantity = models.DecimalField(max_digits=12, decimal_places=0)
     min_order_quantity = models.DecimalField(max_digits=12, decimal_places=0)
