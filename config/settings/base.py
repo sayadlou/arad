@@ -197,7 +197,7 @@ product_models = [
 ]
 # default settings
 JALALI_DATE_DEFAULTS = {
-   'Strftime': {
+    'Strftime': {
         'date': '%y/%m/%d',
         'datetime': '%H:%M:%S _ %y/%m/%d',
     },
@@ -219,3 +219,5 @@ JALALI_DATE_DEFAULTS = {
         }
     },
 }
+
+ALLOW_UNICODE_SLUGS = True
