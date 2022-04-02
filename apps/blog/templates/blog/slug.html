@@ -14,8 +14,8 @@
                     </div>
                     <hr>
 
-                        <b>مقدمه : </b>
-                        {{ object.intro |safe}}
+                    <b>مقدمه : </b>
+                    {{ object.intro |safe }}
                 </div>
                 <div class="col-lg-6">
                     <div class="post-img">
@@ -28,30 +28,6 @@
                 <p>
                     {{ object.content | safe }}
                 </p>
-            </div>
-        </div>
-
-
-        <div id="user">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>{{ object.title }}</h1>
-                    <div>
-                        {% translate "tag:" %}
-                        {% for tag in object.tags_list %}
-                            <a href="{% url "blog:tag" %}?tag={{ tag }}">{{ tag }}</a>
-                        {% endfor %}
-                    </div>
-                    <div>
-                        {% translate "category:" %}
-                        <a href="{% url "blog:tag" %}?tag={{ object.category }}">{{ object.category }}</a>
-                    </div>
-                    <img src="{{ object.picture.url }}" alt="object-image">
-                    <p>
-                        {{ object.content | safe }}
-                    </p>
-
-                </div>
             </div>
         </div>
     </div>
