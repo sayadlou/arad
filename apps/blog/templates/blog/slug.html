@@ -4,6 +4,34 @@
 {% block content %}
     <div id="page-top" class="wide">
         <!-- Single Service Item ////////// Just this Section is changed! -->
+
+        <div class="post-item">
+            <div class="row post-item-head">
+                <div class="col-lg-6">
+                    <div class="post-name">
+                        <h1>خدمات مشاوره تحصیلی</h1>
+                        <strong class="post-date">01.01.1401</strong>
+                    </div>
+                    <hr>
+
+                        <b>مقدمه : </b>
+                        {{ object.intro |safe}}
+                </div>
+                <div class="col-lg-6">
+                    <div class="post-img">
+                        <img class="" src="{{ object.picture.url }}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row service-item-body">
+                <h1>توضیحات بیشتر:</h1>
+                <p>
+                    {{ object.content | safe }}
+                </p>
+            </div>
+        </div>
+
+
         <div id="user">
             <div class="row">
                 <div class="col-lg-12">

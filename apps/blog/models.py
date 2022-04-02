@@ -30,6 +30,7 @@ class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=50, unique=True)
+    intro = RichTextUploadingField()
     content = RichTextUploadingField()
     status = models.CharField(max_length=50, choices=STATUS)
     view = models.BigIntegerField(null=True, blank=True, default=0)
