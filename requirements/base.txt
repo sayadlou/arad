@@ -13,3 +13,4 @@ celery==5.2.3
 requests==2.27.1
 django_downloadview==2.3.0
 az-iranian-bank-gateways==1.6.15
+django-tinymce==3.4.0
