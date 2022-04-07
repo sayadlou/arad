@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from uuid import uuid4
+from tinymce.models import HTMLField
 
 
 class Category(MPTTModel):
@@ -32,6 +33,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=50, unique=True, allow_unicode=True)
     intro = RichTextUploadingField()
     content = RichTextUploadingField()
+    content2 = HTMLField()
     status = models.CharField(max_length=50, choices=STATUS)
     view = models.BigIntegerField(null=True, blank=True, default=0)
     tags = models.CharField(max_length=200)
