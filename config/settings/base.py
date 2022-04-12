@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django.contrib.humanize',
     'django.forms',
-    'jalali_date',
+    'django_jalali',
     'captcha',
     'ckeditor',
     'tinymce',

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 
-from .models import Organizer, Event, Category
+from .models import Event, Category
 
 
 @admin.register(Category)
@@ -10,14 +10,10 @@ class CategoryAdmin(DraggableMPTTAdmin):
     readonly_fields = ['id']
 
 
-class OrganizerInLine(admin.TabularInline):
-    model = Organizer
-
-
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    search_fields = ['title']
-    list_display = ['title']
-    readonly_fields = ['id']
-    inlines = [OrganizerInLine]
-    prepopulated_fields = {'slug': ('title',)}
+    pass
+    # search_fields = ['title']
+    # list_display = ['title']
+    # readonly_fields = ['id']
+    # prepopulated_fields = {'slug': ('title',)}

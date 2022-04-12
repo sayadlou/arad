@@ -5,8 +5,10 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from django_jalali.db import models as jmodels
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
+from tinymce.models import HTMLField
 
 from ..store.models import Product as ProductBaseModel
 
@@ -23,31 +25,34 @@ class Category(MPTTModel):
         order_insertion_by = ['name']
 
 
-class Organizer(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.CharField(max_length=200)
-    mobile_number = models.CharField(_('mobile'), max_length=20, default=_('00989123456789'))
-    policy = models.CharField(max_length=200)
-    event = models.ForeignKey('Event', on_delete=models.RESTRICT, null=True)
+# class Organizer(models.Model):
+#     title = models.CharField(max_length=200)
+#     description = models.CharField(max_length=200)
+#     mobile_number = models.CharField(_('mobile'), max_length=20, default=_('00989123456789'))
+#     policy = models.CharField(max_length=200)
+#     event = models.ForeignKey('Event', on_delete=models.RESTRICT, null=True)
 
 
 class Event(ProductBaseModel):
     STATUS = (
         ('Published', 'Published'),
         ('Draft', 'Draft'),
-        ('Trash', 'Trash'),
+        ('Trash', 'Trash')
+        ,
     )
 
     status = models.CharField(max_length=50, choices=STATUS)
-    pub_date = models.DateField(_("Date"), default=datetime.date.today)
+    pub_date = jmodels.jDateTimeField(_("Date"))
     picture = models.ImageField(upload_to='event/picture')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     seo_tag = models.CharField(max_length=200)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = jmodels.jDateTimeField()
+    end_date = jmodels.jDateTimeField()
     duration = models.IntegerField()
     join_link = models.URLField(max_length=128)
-    description = models.TextField(max_length=400)
+    description = HTMLField()
+    policy = HTMLField()
+    organizer_mobile_number = models.CharField(_('mobile'), max_length=20, default=_('00989354356804'))
 
     def get_absolute_url(self):
         return reverse('event:slug', kwargs={'slug': self.slug})

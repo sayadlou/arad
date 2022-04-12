@@ -34,6 +34,11 @@ class SlugView(BoughtUserMixin, DetailView):
     model = Event
 
 
+class SlugPreviewView(DetailView):
+    template_name = 'event/event_preview.html'
+    model = Event
+
+
 class CategoryView(ListView):
     model = Event
     template_name = 'learning/category.html'
