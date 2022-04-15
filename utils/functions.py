@@ -1,7 +1,11 @@
+from django.http.response import HttpResponseBadRequest
+
 from apps.store.models import Cart, Order, OrderItem
 
 
 def cart_to_order(request):
+    if not request.user.cart.cartitem_set.exists():
+        raise HttpResponseBadRequest
     cart = request.user.cart
     order_items = list()
     new_order = Order.objects.create(owner=request.user, status='W')

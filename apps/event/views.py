@@ -29,14 +29,16 @@ class IndexView(ListView):
         return data
 
 
-class SlugView(BoughtUserMixin, DetailView):
+class SlugView(DetailView):
     template_name = 'event/slug.html'
     model = Event
 
-
-class SlugPreviewView(DetailView):
-    template_name = 'event/event_preview.html'
-    model = Event
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        event = self.object
+        user_id = self.request.user.pk
+        data['owner'] = event.purchaser.filter(pk=user_id).exists()
+        return data
 
 
 class CategoryView(ListView):

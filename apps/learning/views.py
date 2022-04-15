@@ -70,7 +70,7 @@ class TagView(ListView):
     def get_queryset(self):
         tag = self.request.GET.get("tag", "")
         tag = tag.lower()
-        return self.model.objects.order_by('pub_date').filter(status='Published').filter(tags__contains=[tag])
+        return self.model.objects.order_by('pub_date').filter(status='Published').filter(tags__contains=tag)
 
 
 class CategoryView(ListView):
