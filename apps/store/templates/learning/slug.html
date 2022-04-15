@@ -1,0 +1,60 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div id="page-top" class="wide">
+        <!-- Single Service Item ////////// Just this Section is changed! -->
+        {% if status %}
+            <div class="post-item">
+                <div class="row post-item-head">
+                    <div>
+                        {% translate "tag:" %}
+                        {% for tag in object.tags_list %}
+                            <a href="{% url "store:learning_tag" %}?tag={{ tag }}">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        {% translate "category:" %}
+                        <a href="{% url "store:learning_category" object.category %}">{{ object.category }}</a>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="post-name">
+                            <h1>خدمات مشاوره تحصیلی</h1>
+                            <strong class="post-date">01.01.1401</strong>
+                        </div>
+                        <hr>
+                        <b>مقدمه مطلب: </b>
+                        {{ object.introduction | safe }}
+
+
+                    </div>
+                    <div class="col-lg-6">
+
+                        <div class="post-img">
+                            <img class="" src="{{ object.picture.url }}" alt="">
+                        </div>
+                        <!--
+                        <div class="service-video">
+                            <div id="73832804035"><script type="text/JavaScript" src="https://www.aparat.com/embed/2QjXp?data[rnddiv]=73832804035&data[responsive]=yes"></script></div>
+                        </div>
+                        -->
+                    </div>
+                </div>
+                <div class="row service-item-body">
+                    <h1>توضیحات بیشتر:</h1>
+                    {{ object.content | safe }}
+                </div>
+            </div>
+            <div class="ratio ratio-16x9">
+                <iframe src="{{ video_url }}" title="YouTube video"
+                        allowfullscreen></iframe>
+            </div>
+            <div class="my-5">
+                <a href="{% url "store:learning_attachment" object.slug %}">attachment</a>
+            </div>
+        {% else %}
+            <h1>
+                {% trans "error in video server" %}
+            </h1>
+        {% endif %}
+{% endblock %}

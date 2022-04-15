@@ -1,5 +1,9 @@
+from datetime import timedelta, datetime
 from decimal import Decimal
 from pprint import pprint
+from time import mktime
+
+import os
 import requests
 import json
 from uuid import uuid4
@@ -9,6 +13,7 @@ from azbankgateways import bankfactories
 from azbankgateways.exceptions import AZBankGatewaysException
 from azbankgateways import models as bank_models, default_settings as settings
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
@@ -17,11 +22,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.utils.translation import gettext as _
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django_downloadview.views.object import ObjectDownloadView
 
 from utils.functions import cart_to_order
 from .forms import CartItemForm
-from ..store.models import CartItem, Order, OrderItem, Payment
+from .models import *
 from config.settings.base import MINIMUM_ORDER_AMOUNT
+from .permitions import LearningBoughtUserMixin
 
 logger = logging.getLogger('store.views')
 
@@ -163,3 +172,175 @@ class CallbackGatewayView(LoginRequiredMixin, View):
         logging.error(f"payment {bank_record.pk} with amount {bank_record.amount} was not successful")
         return HttpResponse(
             "پرداخت با شکست مواجه شده است.اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.")
+
+
+class ServiceIndexView(ListView):
+    model = Service
+    template_name = 'service/index.html'
+    paginate_by = 6
+
+    # all_posts = Post.objects.order_by('pub_date').filter(status='Published')
+
+    def get_queryset(self):
+        return self.model.objects.order_by('pub_date').filter(status='Published')
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['model'] = ContentType.objects.get_for_model(Service).pk
+        data['formmy'] = CartItemForm()
+
+        return data
+
+
+class ServiceSlugView(DetailView):
+    template_name = 'service/slug.html'
+    model = Service
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        event = self.object
+        user_id = self.request.user.pk
+        data['owner'] = event.purchaser.filter(pk=user_id).exists()
+        return data
+
+
+class ServiceCategoryView(ListView):
+    model = Service
+    template_name = 'service/category.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        category = self.kwargs['category']
+        return self.model.objects.order_by('pub_date').filter(category__name__iexact=category)
+
+
+class LearningIndexView(ListView):
+    model = LearningPost
+    template_name = 'learning/index.html'
+    paginate_by = 6
+
+    # all_posts = Post.objects.order_by('pub_date').filter(status='Published')
+
+    def get_queryset(self):
+        return self.model.objects.order_by('pub_date').filter(status='Published')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = LearningCategory.objects.all()
+        context['tags'] = LearningPost.blog_tags_list()
+        return context
+
+
+class LearningSlugView(DetailView):
+    template_name = 'learning/slug.html'
+    model = LearningPost
+
+    def get_context_data(self, **kwargs):
+        validity_link_time = datetime.now() + timedelta(hours=10)
+        validity_link_time_unix = int(mktime(validity_link_time.timetuple()))
+        url = f"https://napi.arvancloud.com/vod/2.0/videos/{self.object.video.arvan_id}"
+        headers = {'Authorization': os.environ.get('arvan_api_key')}
+        payload = {'secure_expire_time': validity_link_time_unix, 'secure_ip': '1.1.1.1'}
+        if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
+            payload['secure_ip'] = self.get_client_ip()
+        r = requests.get(url, headers=headers)
+        data = super().get_context_data(**kwargs)
+        if r.status_code == 200:
+            respone = r.json()
+            data['video_url'] = respone["data"]["player_url"]
+            data['status'] = True
+        else:
+            data['status'] = False
+        return data
+
+    def get_client_ip(self):
+        x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = self.request.META.get('REMOTE_ADDR')
+        return ip
+
+
+class LearningTagView(ListView):
+    model = LearningPost
+    template_name = 'learning/tag.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        tag = self.request.GET.get("tag", "")
+        tag = tag.lower()
+        return self.model.objects.order_by('pub_date').filter(status='Published').filter(tags__contains=tag)
+
+
+class LearningCategoryView(ListView):
+    model = LearningPost
+    template_name = 'learning/category.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        category = self.kwargs['category']
+        return self.model.objects.order_by('pub_date').filter(category__name__iexact=category)
+
+
+class LearningAttachmentView(LearningBoughtUserMixin, ObjectDownloadView):
+    model = LearningPost
+    file_field = "attachment"
+
+
+@staff_member_required
+def refresh(request):
+    url = f"https://napi.arvancloud.com/vod/2.0/channels/{os.environ.get('arvan_channel_id')}/videos"
+    headers = {'Authorization': os.environ.get('arvan_api_key')}
+    r = requests.get(url, headers=headers)
+    if r.status_code == 200:
+        respone = r.json()
+        ids = VideoFile.objects.values_list('arvan_id')
+        list(ids)
+        id_list = [i[0] for i in ids]
+        video_file = []
+        for video in respone['data']:
+            if video['id'] not in id_list:
+                video_file.append(VideoFile(arvan_id=video['id'], name=video['title']))
+        VideoFile.objects.bulk_create(video_file)
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+
+class EventIndexView(ListView):
+    model = Event
+    template_name = 'event/index.html'
+    paginate_by = 6
+
+    # all_posts = Post.objects.order_by('pub_date').filter(status='Published')
+
+    def get_queryset(self):
+        return self.model.objects.order_by('pub_date').filter(status='Published')
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['model'] = ContentType.objects.get_for_model(Event).pk
+        data['formmy'] = CartItemForm()
+
+        return data
+
+
+class EventSlugView(DetailView):
+    template_name = 'event/slug.html'
+    model = Event
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        event = self.object
+        user_id = self.request.user.pk
+        data['owner'] = event.purchaser.filter(pk=user_id).exists()
+        return data
+
+
+class EventCategoryView(ListView):
+    model = Event
+    template_name = 'learning/category.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        category = self.kwargs['category']
+        return self.model.objects.order_by('pub_date').filter(category__name__iexact=category)

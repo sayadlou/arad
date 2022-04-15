@@ -39,11 +39,9 @@ INSTALLED_APPS = [
     'azbankgateways',
     'apps.core',
     'apps.blog',
-    'apps.learning',
     'apps.account',
     'apps.contact_us',
     'apps.store',
-    'apps.event',
 ]
 
 MIDDLEWARE = [

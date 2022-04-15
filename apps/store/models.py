@@ -1,20 +1,22 @@
-import string
-from decimal import Decimal
-from random import random
+from datetime import date
 from uuid import uuid4
 
 from azbankgateways.models import Bank
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import Sum, Func, F, Count
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from mptt.fields import TreeForeignKey
+from mptt.models import MPTTModel
+from tinymce.models import HTMLField
+from django_jalali.db import models as jmodels
 
 from apps.account.models import UserProfile
-from config.settings.base import product_models
+from config.settings.base import product_models, learning_attachments_path
 
 
-class Product(models.Model):
+class ProductBaseModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=50, unique=True, allow_unicode=True)
@@ -62,7 +64,7 @@ class Cart(models.Model):
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, verbose_name=_('cart'), on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductBaseModel, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _('Cart item')
@@ -119,7 +121,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, verbose_name=_('order item'), on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductBaseModel, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.quantity} of {self.product.title}'
@@ -157,3 +159,143 @@ class Payment(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     transaction = GenericForeignKey('content_type', 'object_id')
+
+
+class ServiceCategory(MPTTModel):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    name = models.CharField(max_length=50, unique=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
+    def __str__(self):
+        return self.name
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+
+class Service(ProductBaseModel):
+    STATUS = (
+        ('Published', 'Published'),
+        ('Draft', 'Draft'),
+        ('Trash', 'Trash')
+        ,
+    )
+
+    status = models.CharField(max_length=50, choices=STATUS)
+    pub_date = jmodels.jDateTimeField(_("Date"))
+    picture = models.ImageField(upload_to='event/picture')
+    category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
+    seo_tag = models.CharField(max_length=200)
+    description = HTMLField()
+    introduction = HTMLField()
+
+    def get_absolute_url(self):
+        return reverse('store:service_slug', kwargs={'slug': self.slug})
+
+
+class LearningCategory(MPTTModel):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    name = models.CharField(max_length=50, unique=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
+    def __str__(self):
+        return self.name
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+
+class LearningPost(ProductBaseModel):
+    STATUS = (
+        ('Published', 'Published'),
+        ('Draft', 'Draft'),
+        ('Trash', 'Trash'),
+    )
+
+    content = HTMLField()
+    introduction = HTMLField()
+    status = models.CharField(max_length=50, choices=STATUS)
+    view = models.BigIntegerField(null=True, blank=True, default=0)
+    tags = models.CharField(max_length=200)
+    pub_date = models.DateField(_("Date"), default=date.today)
+    picture = models.ImageField(upload_to='learning/picture')
+    category = models.ForeignKey(LearningCategory, on_delete=models.SET_NULL, null=True)
+    video = models.ForeignKey('VideoFile', on_delete=models.CASCADE, null=True, blank=True)
+    attachment = models.FileField(null=True, blank=True, storage=learning_attachments_path)
+
+    def get_absolute_url(self):
+        return reverse('store:learning_slug', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return f'{self.title}'
+
+    @property
+    def post_tags_list(self):
+        tag_to_list = list()
+        if "," in self.tags:
+            tag_to_list = [x.strip() for x in self.tags.split(',')]
+        else:
+            tag_to_list.append(self.tags)
+        return tag_to_list
+
+    @staticmethod
+    def blog_tags_list():
+        def clean_tag(uncleaned_tag):
+            cleaned_tag = str(uncleaned_tag)
+            cleaned_tag = cleaned_tag.lower()
+            cleaned_tag = cleaned_tag.strip()
+            return cleaned_tag
+
+        tag_to_set = set()
+        posts_tag = LearningPost.objects.values_list('tags')
+        for post_tag in posts_tag:
+            for tag in post_tag[0].split(','):
+                if tag:
+                    tag = clean_tag(tag)
+                    tag_to_set.add(tag)
+        return tag_to_set
+
+
+class VideoFile(models.Model):
+    name = models.CharField(max_length=255)
+    arvan_id = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class EventCategory(MPTTModel):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    name = models.CharField(max_length=50, unique=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
+    def __str__(self):
+        return self.name
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+
+class Event(ProductBaseModel):
+    STATUS = (
+        ('Published', 'Published'),
+        ('Draft', 'Draft'),
+        ('Trash', 'Trash')
+        ,
+    )
+
+    status = models.CharField(max_length=50, choices=STATUS)
+    pub_date = jmodels.jDateTimeField(_("Date"))
+    picture = models.ImageField(upload_to='event/picture')
+    category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
+    seo_tag = models.CharField(max_length=200)
+    start_date = jmodels.jDateTimeField()
+    end_date = jmodels.jDateTimeField()
+    duration = models.IntegerField()
+    join_link = models.URLField(max_length=128)
+    description = HTMLField()
+    policy = HTMLField()
+    organizer_mobile_number = models.CharField(_('mobile'), max_length=20, default=_('00989354356804'))
+
+    def get_absolute_url(self):
+        return reverse('store:event_slug', kwargs={'slug': self.slug})

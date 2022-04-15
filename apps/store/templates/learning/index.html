@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+{% load jformat  %}
+
+
+
+{% block content %}
+    <div id="" class="wide">
+        <div class="filter row">
+            <div class="blog-categoty col-4">
+                <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "store:learning_home" %}">همه</a>
+                {% for category in categories %}
+                    <a type="button" class="btn btn-light btn-sm btn-tag"
+                       href="{% url "store:learning_category" category.name %}">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+            <div class="blog-tag col-8">
+                <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "store:learning_home" %}">همه</a>
+                {% for tag in tags %}
+                    <a type="button" class="btn btn-light btn-sm btn-tag"
+                       href="{% url "store:learning_tag" %}?tag={{ tag }}">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            {% for post in page_obj %}
+                <div class="col-4 blog-single">
+                    <div class="blog-image">
+                        <a class="post-title" href="{{ post.get_absolute_url }}"><h1>{{ post.title }}</h1></a>
+                        <strong class="post-date">{{ post.pub_date|jformat:'%Y/%m/%d' }}</strong>
+                        <a href="{{ post.get_absolute_url }}">
+                            <img class="" src="{{ post.picture.url }}" alt="">
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
-from .models import CartItem, Product
+from .models import CartItem
 
 
 class CartItemForm(forms.ModelForm):

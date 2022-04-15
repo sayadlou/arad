@@ -2,10 +2,10 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 
-from .models import  Event
+from .models import LearningPost
 
 
-class BoughtUserMixin(UserPassesTestMixin):
+class LearningBoughtUserMixin(UserPassesTestMixin):
     raise_exception = False
 
     def handle_no_permission(self):
@@ -15,7 +15,7 @@ class BoughtUserMixin(UserPassesTestMixin):
 
     def test_func(self):
         slug = self.kwargs.get(self.slug_url_kwarg)
-        post = get_object_or_404(Event, slug__iexact=slug)
+        post = get_object_or_404(LearningPost, slug__iexact=slug)
         user_id = self.request.user.pk
         is_user_owner = post.purchaser.filter(pk=user_id).exists()
         if is_user_owner and self.request.user.is_authenticated:

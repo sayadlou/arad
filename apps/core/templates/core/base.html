@@ -95,11 +95,26 @@
 
             <!-- MENU -->
             <div>
+                <div id="menu_mobile_icon">
+                    <a class="icon" onclick="mobileMenu()"><i class="fa fa-bars"></i></a>
+                </div>
+                <script>
+                    function mobileMenu() {
+                        var x = document.getElementById("Menu");
+
+                        if (x.style.display === "block") {
+                            x.style.display = "none";
+                        } else {
+                            x.style.display = "block";
+                        }
+
+                    }
+                </script>
                 <ul id="Menu">
                     <li><a href="{% url "core:home" %}" class="active">صفحه نخست</a></li>
-                    <li><a href="#">خدمات</a></li>
-                    <li><a href="{% url "event:home" %}">رویداد ها</a></li>
-                    <li><a href="{% url "learning:home" %}">آموزش</a></li>
+                    <li><a href="{% url "store:service_home" %}">خدمات</a></li>
+                    <li><a href="{% url "store:event_home" %}">رویداد ها</a></li>
+                    <li><a href="{% url "store:learning_home" %}">آموزش</a></li>
                     <li><a href="{% url "blog:home" %}">بلاگ</a></li>
                     <li><a href="{% url "core:about_us" %}">درباره ما</a></li>
                     <li><a href="{% url "contact_us:form" %}">ارتباط با ما</a></li>
@@ -123,7 +138,7 @@
                 {% if user.is_authenticated %}
                     <a href="{% url "store:cart" %}" class="btn btn-outline-primary btn-equal">سبد خرید</a>
                     <a href="{% url "store:orders" %}" class="btn btn-outline-primary btn-equal">سفارشات</a>
-{#                    <a href="{% url "store:payments" %}" class="btn btn-outline-primary btn-equal">پرداخت ها</a>#}
+                    {#                    <a href="{% url "store:payments" %}" class="btn btn-outline-primary btn-equal">پرداخت ها</a>#}
 
                     {#                    {% if user.cart %}#}
                     {#                        <div class="dropdown d-inline mx-3">#}

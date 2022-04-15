@@ -1,7 +1,11 @@
+from django.conf.urls import url
 from django.contrib import admin
 
 # Register your models here.
-from .models import Cart, CartItem, OrderItem, Order, Product, Payment
+from mptt.admin import DraggableMPTTAdmin
+
+from .models import *
+from .views import refresh
 
 
 class CartItemInLine(admin.TabularInline):
@@ -28,7 +32,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInLine]
 
 
-@admin.register(Product)
+@admin.register(ProductBaseModel)
 class ProductAdmin(admin.ModelAdmin):
     pass
 
@@ -36,3 +40,67 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Payment)
 class ProductAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(ServiceCategory)
+class CategoryAdmin(DraggableMPTTAdmin):
+    mptt_level_indent = 2
+    readonly_fields = ['id']
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    pass
+    # search_fields = ['title']
+    # list_display = ['title']
+    # readonly_fields = ['id']
+    prepopulated_fields = {'slug': ('title',)}
+
+
+@admin.register(LearningCategory)
+class CategoryAdmin(DraggableMPTTAdmin):
+    mptt_level_indent = 2
+    readonly_fields = ['id']
+
+
+@admin.register(VideoFile)
+class VideoFileAdmin(admin.ModelAdmin):
+    readonly_fields = ['id']
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+            url("refresh/", refresh)
+        ]
+        return my_urls + urls
+
+
+@admin.register(LearningPost)
+class PostAdmin(admin.ModelAdmin):
+    search_fields = ['title', 'slug']
+    list_display = ['title', 'slug']
+    readonly_fields = ['id']
+    prepopulated_fields = {'slug': ('title',)}
+
+
+@admin.register(EventCategory)
+class CategoryAdmin(DraggableMPTTAdmin):
+    mptt_level_indent = 2
+    readonly_fields = ['id']
+
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    # search_fields = ['title']
+    # list_display = ['title']
+    # readonly_fields = ['id']
+    prepopulated_fields = {'slug': ('title',)}
