@@ -74,10 +74,6 @@ class CartItem(models.Model):
     def __str__(self):
         return f'{self.quantity} of {self.product.title}'
 
-    class Meta:
-        verbose_name = _('Cart item')
-        verbose_name_plural = _('Cart items')
-        ordering = ('id',)
 
 
 class Order(models.Model):

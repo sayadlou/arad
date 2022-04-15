@@ -192,7 +192,9 @@ LOGGING = {
 }
 
 product_models = [
-    "post",
+    "learningpost",
+    "service",
+    "event",
 ]
 # default settings
 JALALI_DATE_DEFAULTS = {
