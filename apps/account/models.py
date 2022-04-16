@@ -6,7 +6,6 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserM
 from uuid import uuid4
 
 
-
 class UserProfileManager(UserManager):
     pass
 
@@ -15,7 +14,8 @@ class UserProfile(AbstractUser):
     objects = UserProfileManager()
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    profile_picture = models.ImageField(_('profile picture'), upload_to='profile_pic', default='default_profile.png')
-    address = models.TextField(_('address'), max_length=250, default=_('your address'))
-    mobile = models.CharField(_('mobile'), max_length=20, default=_('00989123456789'))
-    phone = models.CharField(_('phone'), max_length=20, default=_('00982112345678'))
+    profile_picture = models.ImageField(_('profile picture'), null=True, blank=True, upload_to='profile_pic',
+                                        default='default_profile.png')
+    address = models.TextField(_('address'), max_length=250, null=True, blank=True)
+    mobile = models.CharField(_('mobile'), max_length=20, null=True, blank=True)
+    phone = models.CharField(_('phone'), max_length=20, null=True, blank=True)

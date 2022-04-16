@@ -77,6 +77,7 @@ class UserRegisterForm(UserCreationForm):
         widget=forms.TextInput(attrs={'autofocus': True, 'class': "form-control", 'autocomplete': 'off'}),
         strip=True,
         help_text="",
+        required=False,
     )
 
     last_name = forms.CharField(
@@ -84,6 +85,7 @@ class UserRegisterForm(UserCreationForm):
         widget=forms.TextInput(attrs={'class': "form-control", 'autocomplete': 'off'}),
         strip=True,
         help_text="",
+        required=False,
     )
 
     mobile = forms.CharField(
@@ -96,6 +98,7 @@ class UserRegisterForm(UserCreationForm):
         label=_("phone"),
         widget=forms.TextInput(attrs={'class': "form-control", 'autocomplete': 'off'}),
         help_text="",
+        required=False,
     )
 
     email = forms.EmailField(
@@ -132,6 +135,7 @@ class UserRegisterForm(UserCreationForm):
         widget=forms.Textarea(attrs={'class': "form-control", 'rows': '4'}),
         strip=True,
         help_text="",
+        required=False,
     )
 
     def save(self, commit=True):

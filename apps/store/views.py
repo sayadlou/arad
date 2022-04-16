@@ -239,7 +239,7 @@ class LearningSlugView(DetailView):
         validity_link_time = datetime.now() + timedelta(hours=10)
         validity_link_time_unix = int(mktime(validity_link_time.timetuple()))
         url = f"https://napi.arvancloud.com/vod/2.0/videos/{self.object.video.arvan_id}"
-        headers = {'Authorization': os.environ.get('arvan_api_key')}
+        headers = {'Authorization': os.environ.get('ARVAN_API_KEY')}
         payload = {'secure_expire_time': validity_link_time_unix, 'secure_ip': '1.1.1.1'}
         if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
             payload['secure_ip'] = self.get_client_ip()
@@ -290,8 +290,8 @@ class LearningAttachmentView(LearningBoughtUserMixin, ObjectDownloadView):
 
 @staff_member_required
 def refresh(request):
-    url = f"https://napi.arvancloud.com/vod/2.0/channels/{os.environ.get('arvan_channel_id')}/videos"
-    headers = {'Authorization': os.environ.get('arvan_api_key')}
+    url = f"https://napi.arvancloud.com/vod/2.0/channels/{os.environ.get('ARVAN_CHANNEL_ID')}/videos"
+    headers = {'Authorization': os.environ.get('ARVAN_API_KEY')}
     r = requests.get(url, headers=headers)
     if r.status_code == 200:
         respone = r.json()
