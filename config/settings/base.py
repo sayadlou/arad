@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'tinymce',
     'ckeditor_uploader',
     'mptt',
-    'corsheaders',
     'azbankgateways',
     'apps.core',
     'apps.blog',
@@ -49,7 +48,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     # 'django.middleware.locale.LocaleMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -211,13 +209,3 @@ TINYMCE_DEFAULT_CONFIG = {
                "alignright alignjustify | bullist numlist outdent indent | "
                "removeformat | ltr rtl | help",
 }
-
-CORS_ALLOWED_ORIGINS = [
-    'https://aradmohajer.ir',
-    'http://aradmohajer.ir',
-    'https://player.arvancloud.com',
-    'http://player.arvancloud.com',
-    'http://localhost:8000',
-    'http://127.0.0.1:8000',
-]
-CORS_ALLOW_ALL_ORIGINS = True
