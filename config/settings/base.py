@@ -215,6 +215,8 @@ TINYMCE_DEFAULT_CONFIG = {
 CORS_ALLOWED_ORIGINS = [
     'https://aradmohajer.ir',
     'http://aradmohajer.ir',
+    'https://player.arvancloud.com',
+    'http://player.arvancloud.com',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
 ]
