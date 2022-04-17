@@ -241,8 +241,8 @@ class LearningSlugView(DetailView):
         url = f"https://napi.arvancloud.com/vod/2.0/videos/{self.object.video.arvan_id}"
         headers = {'Authorization': os.environ.get('ARVAN_API_KEY')}
         payload = {'secure_expire_time': validity_link_time_unix, 'secure_ip': '1.1.1.1'}
-        if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
-            payload['secure_ip'] = self.get_client_ip()
+        # if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
+        payload['secure_ip'] = self.get_client_ip()
         r = requests.get(url, headers=headers)
         data = super().get_context_data(**kwargs)
         if r.status_code == 200:
