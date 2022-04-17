@@ -243,7 +243,9 @@ class LearningSlugView(DetailView):
         payload = {'secure_expire_time': validity_link_time_unix, 'secure_ip': '1.1.1.1'}
         # if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
         payload['secure_ip'] = self.get_client_ip()
-        r = requests.get(url, headers=headers)
+        r = requests.get(url, headers=headers, params=payload)
+        logging.info(self.get_client_ip())
+        logging.info(r.json()["data"])
         data = super().get_context_data(**kwargs)
         if r.status_code == 200:
             respone = r.json()
