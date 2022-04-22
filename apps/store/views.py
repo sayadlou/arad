@@ -340,7 +340,7 @@ class EventIndexView(ListView):
         data = super().get_context_data(**kwargs)
         data['model'] = ContentType.objects.get_for_model(Event).pk
         data['formmy'] = CartItemForm()
-
+        data['categories'] = EventCategory.objects.all()
         return data
 
 
@@ -352,14 +352,20 @@ class EventSlugView(DetailView):
         data = super().get_context_data(**kwargs)
         event = self.object
         user_id = self.request.user.pk
-        data['owner'] = event.purchaser.filter(pk=user_id).exists()
+        data['is_owner'] = event.purchaser.filter(pk=user_id).exists()
         return data
 
 
 class EventCategoryView(ListView):
     model = Event
-    template_name = 'learning/category.html'
+    template_name = 'event/category.html'
     paginate_by = 6
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['category'] = self.kwargs['category']
+        data['categories'] = EventCategory.objects.all()
+        return data
 
     def get_queryset(self):
         category = self.kwargs['category']

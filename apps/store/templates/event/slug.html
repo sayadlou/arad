@@ -60,7 +60,7 @@
                                     </p>
                                 </div>
                             </div>
-                            {% if owner %}
+                            {% if is_owner %}
                                 <a href="{{ object.join_link }}" class="btn btn-primary">لینک ورود</a>
                             {% else %}
                                 <form autocomplete="off" method="post" action="{% url 'store:cart' %}">

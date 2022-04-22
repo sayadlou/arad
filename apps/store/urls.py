@@ -22,6 +22,6 @@ urlpatterns = [
 
     path('events', EventIndexView.as_view(), name='event_home'),
     path('event/<str:slug>', EventSlugView.as_view(), name='event_slug'),
-    path('category/<str:category>', EventCategoryView.as_view(), name='event_category'),
+    path('event/category/<str:category>', EventCategoryView.as_view(), name='event_category'),
 
 ]
