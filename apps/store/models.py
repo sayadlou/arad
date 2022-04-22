@@ -14,6 +14,7 @@ from django_jalali.db import models as jmodels
 
 from apps.account.models import UserProfile
 from config.settings.base import product_models, learning_attachments_path
+from utils.functions import clean_tag
 
 
 class ProductBaseModel(models.Model):
@@ -73,7 +74,6 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f'{self.quantity} of {self.product.title}'
-
 
 
 class Order(models.Model):
@@ -181,10 +181,10 @@ class Service(ProductBaseModel):
     pub_date = jmodels.jDateTimeField(_("Date"))
     picture = models.ImageField(upload_to='event/picture')
     category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
-    seo_tag = models.CharField(max_length=200)
     description = HTMLField()
     introduction = HTMLField()
 
+    @property
     def get_absolute_url(self):
         return reverse('store:service_slug', kwargs={'slug': self.slug})
 
@@ -219,31 +219,26 @@ class LearningPost(ProductBaseModel):
     video = models.ForeignKey('VideoFile', on_delete=models.CASCADE, null=True, blank=True)
     attachment = models.FileField(null=True, blank=True, storage=learning_attachments_path)
 
+    @property
     def get_absolute_url(self):
         return reverse('store:learning_slug', kwargs={'slug': self.slug})
 
     def __str__(self):
         return f'{self.title}'
 
-    @property
-    def post_tags_list(self):
-        tag_to_list = list()
-        if "," in self.tags:
-            tag_to_list = [x.strip() for x in self.tags.split(',')]
-        else:
-            tag_to_list.append(self.tags)
-        return tag_to_list
+    # @property
+    # def post_tags_list(self):
+    #     tag_to_list = list()
+    #     if "," in self.tags:
+    #         tag_to_list = [x.strip() for x in self.tags.split(',')]
+    #     else:
+    #         tag_to_list.append(self.tags)
+    #     return tag_to_list
 
-    @staticmethod
-    def blog_tags_list():
-        def clean_tag(uncleaned_tag):
-            cleaned_tag = str(uncleaned_tag)
-            cleaned_tag = cleaned_tag.lower()
-            cleaned_tag = cleaned_tag.strip()
-            return cleaned_tag
-
+    @classmethod
+    def tags_list(cls):
         tag_to_set = set()
-        posts_tag = LearningPost.objects.values_list('tags')
+        posts_tag = cls.objects.values_list('tags')
         for post_tag in posts_tag:
             for tag in post_tag[0].split(','):
                 if tag:
@@ -284,7 +279,6 @@ class Event(ProductBaseModel):
     pub_date = jmodels.jDateTimeField(_("Date"))
     picture = models.ImageField(upload_to='event/picture')
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
-    seo_tag = models.CharField(max_length=200)
     start_date = jmodels.jDateTimeField()
     end_date = jmodels.jDateTimeField()
     duration = models.IntegerField()
@@ -293,5 +287,17 @@ class Event(ProductBaseModel):
     policy = HTMLField()
     organizer_mobile_number = models.CharField(_('mobile'), max_length=20, default=_('00989354356804'))
 
+    @property
     def get_absolute_url(self):
         return reverse('store:event_slug', kwargs={'slug': self.slug})
+
+    @classmethod
+    def tags_list(cls):
+        tag_to_set = set()
+        posts_tag = cls.objects.values_list('tags')
+        for post_tag in posts_tag:
+            for tag in post_tag[0].split(','):
+                if tag:
+                    tag = clean_tag(tag)
+                    tag_to_set.add(tag)
+        return tag_to_set

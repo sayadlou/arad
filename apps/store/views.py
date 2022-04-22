@@ -26,7 +26,6 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django_downloadview.views.object import ObjectDownloadView
 
-from utils.functions import cart_to_order
 from .forms import CartItemForm
 from .models import *
 from config.settings.base import MINIMUM_ORDER_AMOUNT
@@ -115,7 +114,7 @@ class PaymentListAddView(LoginRequiredMixin, View):
             try:
                 order = Order.objects.get(owner=request.user, pk=order_id)
             except Order.DoesNotExist:
-                order = cart_to_order(request)
+                order = self.cart_to_order(request)
             if order.total_price <= MINIMUM_ORDER_AMOUNT:
                 messages.success(request, _('minimum order amount should be more than 100,000 IRR'))
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
@@ -139,6 +138,23 @@ class PaymentListAddView(LoginRequiredMixin, View):
                 logging.critical(e)
                 # TODO: redirect to failed page.
                 raise e
+
+    def cart_to_order(self):
+        if not self.request.user.cart.cartitem_set.exists():
+            raise HttpResponseBadRequest
+        cart = self.request.user.cart
+        order_items = list()
+        new_order = Order.objects.create(owner=self.request.user, status='W')
+        for item in cart.cartitem_set.all():
+            order_items.append(
+                OrderItem(
+                    order=new_order,
+                    quantity=item.quantity,
+                    product=item.product,
+                )
+            )
+        OrderItem.objects.bulk_create(order_items, batch_size=20)
+        return new_order
 
 
 class CallbackGatewayView(LoginRequiredMixin, View):
@@ -186,9 +202,7 @@ class ServiceIndexView(ListView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['model'] = ContentType.objects.get_for_model(Service).pk
-        data['formmy'] = CartItemForm()
-
+        data['categories'] = EventCategory.objects.all()
         return data
 
 
@@ -200,7 +214,7 @@ class ServiceSlugView(DetailView):
         data = super().get_context_data(**kwargs)
         event = self.object
         user_id = self.request.user.pk
-        data['owner'] = event.purchaser.filter(pk=user_id).exists()
+        data['is_owner'] = event.purchaser.filter(pk=user_id).exists()
         return data
 
 
@@ -227,7 +241,7 @@ class LearningIndexView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = LearningCategory.objects.all()
-        context['tags'] = LearningPost.blog_tags_list()
+        context['tags'] = LearningPost.tags_list()
         return context
 
 

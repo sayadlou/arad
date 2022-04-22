@@ -8,14 +8,7 @@
                 <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "store:learning_home" %}">همه</a>
                 {% for category in categories %}
                     <a type="button" class="btn btn-light btn-sm btn-tag"
-                       href="{% url "store:learning_category" category.name %}">{{ category.name }}</a>
-                {% endfor %}
-            </div>
-            <div class="blog-tag col-8">
-                <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "store:learning_home" %}">همه</a>
-                {% for tag in tags %}
-                    <a type="button" class="btn btn-light btn-sm btn-tag"
-                       href="{% url "store:learning_tag" %}?tag={{ tag }}">{{ tag }}</a>
+                       href="{% url "store:event_category" category.name %}">{{ category.name }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -40,10 +33,11 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center mb-0">
                     {% if page_obj.has_previous %}
-                        <li class="page-item"><a class="page-link"
-                                                 href="?page={{ page_obj.previous_page_number }}"><i
-                                class="fa fa-chevron-right"
-                                aria-hidden="true"></i></a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </a>
+                        </li>
                     {% else %}
                         <li class="page-item"><a class="page-link disabled"><i
                                 class="fa fa-chevron-right"

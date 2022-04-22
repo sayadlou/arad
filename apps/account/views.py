@@ -19,9 +19,6 @@ class Logout(LogoutView):
     template_name = 'account/logged_out.html'
 
 
-
-
-
 class PasswordChange(PasswordChangeView):
     success_url = reverse_lazy('account:password_change_done')
     template_name = 'account/password_change_form.html'
@@ -69,5 +66,14 @@ class Profile(LoginRequiredMixin, DetailView):
     template_name = "account/profile.html"
     context_object_name = "user"
 
-    def get_object(self):
+    def get_object(self, queryset=None):
         return self.request.user
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data()
+        user_purchased_base_product = self.request.user.productbasemodel_set.all()
+        user_purchased_product = set()
+        for base_product in user_purchased_base_product:
+            user_purchased_product.add(base_product.get_child())
+        data["purchase"] = user_purchased_product
+        return data
