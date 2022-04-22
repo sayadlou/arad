@@ -12,7 +12,7 @@ urlpatterns = [
 
     path('services/', ServiceIndexView.as_view(), name='service_home'),
     path('service/<str:slug>', ServiceSlugView.as_view(), name='service_slug'),
-    path('category/<str:category>', ServiceCategoryView.as_view(), name='service_category'),
+    path('service/category/<str:category>', ServiceCategoryView.as_view(), name='service_category'),
 
     path('learning', LearningIndexView.as_view(), name='learning_home'),
     path('learning/post/<str:slug>', LearningSlugView.as_view(), name='learning_slug'),

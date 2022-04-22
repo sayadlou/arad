@@ -26,17 +26,15 @@
                 {{ object.description | safe }}
             </div>
 
-            <form autocomplete="off" method="post" action="{% url 'store:cart' %}">
-                {% csrf_token %}
-                <input type="text" name="product" value="{{ service.pk }}" hidden>
-                <input type="text" name="request_type" value="inc" hidden>
-                <input type="number" name="quantity" value="1" hidden>
-                <input type="submit" class="btn btn-primary" value="اضافه به سبد خرید">
-            </form>
-            {% if request.user.is_authenticated %}
 
-            {% elif is_owner %}
-
+            {% if not is_owner %}
+                <form autocomplete="off" method="post" action="{% url 'store:cart' %}">
+                    {% csrf_token %}
+                    <input type="text" name="product" value="{{ service.pk }}" hidden>
+                    <input type="text" name="request_type" value="inc" hidden>
+                    <input type="number" name="quantity" value="1" hidden>
+                    <input type="submit" class="btn btn-primary" value="اضافه به سبد خرید">
+                </form>
             {% endif %}
         </div>
 {% endblock %}

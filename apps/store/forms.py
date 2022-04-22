@@ -18,20 +18,16 @@ class CartItemForm(forms.ModelForm):
         if not cleaned_data["request_type"] in ("dec", "inc"):
             raise ValidationError(_("requested type is not valid"))
         try:
-            data = CartItem.objects.get(product=self.cleaned_data['product'])
+            data = CartItem.objects.get(product=product)
             if cleaned_data["request_type"] == "inc":
-                if data.quantity + cleaned_data['quantity'] > cleaned_data['product'].max_order_quantity:
+                if data.quantity + cleaned_data['quantity'] > product.max_order_quantity:
                     raise ValidationError(_("quantity is more than allowed value"))
             if cleaned_data["request_type"] == "dec":
-                if data.quantity - cleaned_data['quantity'] < cleaned_data['product'].min_order_quantity:
+                if data.quantity - cleaned_data['quantity'] < product.min_order_quantity:
                     raise ValidationError(_("quantity is less than allowed value"))
+
         except CartItem.DoesNotExist:
-            if cleaned_data["request_type"] == "inc":
-                if cleaned_data['quantity'] > product.max_order_quantity:
-                    raise ValidationError(_("quantity is more than allowed value"))
-            if cleaned_data["request_type"] == "dec":
-                if cleaned_data['quantity'] < product.min_order_quantity:
-                    raise ValidationError(_("quantity is less than allowed value"))
+            raise ValidationError(_("product not found"))
 
     def save_or_update(self):
         try:

@@ -202,7 +202,7 @@ class ServiceIndexView(ListView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['categories'] = EventCategory.objects.all()
+        data['categories'] = ServiceCategory.objects.all()
         return data
 
 
@@ -226,6 +226,12 @@ class ServiceCategoryView(ListView):
     def get_queryset(self):
         category = self.kwargs['category']
         return self.model.objects.order_by('pub_date').filter(category__name__iexact=category)
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['categories'] = ServiceCategory.objects.all()
+        data['category'] = self.kwargs.get('category')
+        return data
 
 
 class LearningIndexView(ListView):
@@ -254,9 +260,7 @@ class LearningSlugView(DetailView):
         validity_link_time_unix = int(mktime(validity_link_time.timetuple()))
         url = f"https://napi.arvancloud.com/vod/2.0/videos/{self.object.video.arvan_id}"
         headers = {'Authorization': os.environ.get('ARVAN_API_KEY')}
-        payload = {'secure_expire_time': validity_link_time_unix, 'secure_ip': '1.1.1.1'}
-        # if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
-        payload['secure_ip'] = self.get_client_ip()
+        payload = {'secure_expire_time': validity_link_time_unix, 'secure_ip': self.get_client_ip()}
         r = requests.get(url, headers=headers, params=payload)
         logging.info(self.get_client_ip())
         logging.info(r.json()["data"])
