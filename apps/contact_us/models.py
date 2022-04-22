@@ -1,6 +1,7 @@
 from uuid import uuid4
 
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class Message(models.Model):
@@ -15,6 +16,10 @@ class Message(models.Model):
     content = models.TextField(null=True, db_column="Content")
     checked = models.CharField(max_length=50, choices=checked_type, db_column="Read", default='No')
     time = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+
+    class Meta:
+        verbose_name = _('Message')
+        verbose_name_plural = _('Messages')
 
     def __str__(self):
         return self.subject

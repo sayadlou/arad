@@ -18,6 +18,10 @@ class Category(MPTTModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('Blog Category')
+        verbose_name_plural = _('Blog Categories')
+
     class MPTTMeta:
         order_insertion_by = ['name']
 
@@ -40,6 +44,10 @@ class Post(models.Model):
     pub_date = models.DateField(_("Date"), default=datetime.date.today)
     picture = models.ImageField(upload_to='blog')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        verbose_name = _('Blog Post')
+        verbose_name_plural = _('Blog Posts')
 
     def __str__(self):
         return self.title

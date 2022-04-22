@@ -26,6 +26,10 @@ class ProductBaseModel(models.Model):
     min_order_quantity = models.DecimalField(max_digits=12, decimal_places=0)
     purchaser = models.ManyToManyField(UserProfile, blank=True)
 
+    class Meta:
+        verbose_name = _('Product Base Model')
+        verbose_name_plural = _('Product Base Models')
+
     def __str__(self):
         return f"{self.title}"
 
@@ -100,7 +104,7 @@ class Order(models.Model):
 
     class Meta:
         verbose_name = _('Order')
-        verbose_name_plural = _('Order')
+        verbose_name_plural = _('Orders')
         ordering = ('id',)
 
     @property
@@ -156,6 +160,11 @@ class Payment(models.Model):
     object_id = models.PositiveIntegerField()
     transaction = GenericForeignKey('content_type', 'object_id')
 
+    class Meta:
+        verbose_name = _('Payment')
+        verbose_name_plural = _('Payments')
+        ordering = ('created_at',)
+
 
 class ServiceCategory(MPTTModel):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
@@ -184,6 +193,11 @@ class Service(ProductBaseModel):
     description = HTMLField()
     introduction = HTMLField()
 
+    class Meta:
+        verbose_name = _('Service')
+        verbose_name_plural = _('Services')
+        ordering = ('pub_date',)
+
     @property
     def get_absolute_url(self):
         return reverse('store:service_slug', kwargs={'slug': self.slug})
@@ -193,6 +207,10 @@ class LearningCategory(MPTTModel):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=50, unique=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
+    class Meta:
+        verbose_name = _('Learning Category')
+        verbose_name_plural = _('Learning Categories')
 
     def __str__(self):
         return self.name
@@ -219,21 +237,16 @@ class LearningPost(ProductBaseModel):
     video = models.ForeignKey('VideoFile', on_delete=models.CASCADE, null=True, blank=True)
     attachment = models.FileField(null=True, blank=True, storage=learning_attachments_path)
 
+    class Meta:
+        verbose_name = _('Learning Post')
+        verbose_name_plural = _('Learning Posts')
+
     @property
     def get_absolute_url(self):
         return reverse('store:learning_slug', kwargs={'slug': self.slug})
 
     def __str__(self):
         return f'{self.title}'
-
-    # @property
-    # def post_tags_list(self):
-    #     tag_to_list = list()
-    #     if "," in self.tags:
-    #         tag_to_list = [x.strip() for x in self.tags.split(',')]
-    #     else:
-    #         tag_to_list.append(self.tags)
-    #     return tag_to_list
 
     @classmethod
     def tags_list(cls):
@@ -265,6 +278,10 @@ class EventCategory(MPTTModel):
 
     class MPTTMeta:
         order_insertion_by = ['name']
+
+    class Meta:
+        verbose_name = _('Event ')
+        verbose_name_plural = _('Event Categories')
 
 
 class Event(ProductBaseModel):
@@ -301,3 +318,7 @@ class Event(ProductBaseModel):
                     tag = clean_tag(tag)
                     tag_to_set.add(tag)
         return tag_to_set
+
+    class Meta:
+        verbose_name = _('Event')
+        verbose_name_plural = _('Events')
