@@ -292,6 +292,13 @@ class LearningTagView(ListView):
         tag = tag.lower()
         return self.model.objects.order_by('pub_date').filter(status='Published').filter(tags__contains=tag)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = LearningCategory.objects.all()
+        context['tag'] = self.request.GET.get("tag")
+        context['tags'] = LearningPost.tags_list()
+        return context
+
 
 class LearningCategoryView(ListView):
     model = LearningPost
@@ -301,6 +308,13 @@ class LearningCategoryView(ListView):
     def get_queryset(self):
         category = self.kwargs['category']
         return self.model.objects.order_by('pub_date').filter(category__name__iexact=category)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = LearningCategory.objects.all()
+        context['category'] = self.kwargs.get('category')
+        context['tags'] = LearningPost.tags_list()
+        return context
 
 
 class LearningAttachmentView(LearningBoughtUserMixin, ObjectDownloadView):

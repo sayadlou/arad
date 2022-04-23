@@ -8,9 +8,9 @@
         <div class="filter row">
             <div class="blog-categoty col-4">
                 <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "store:learning_home" %}">همه</a>
-                {% for category in categories %}
+                {% for cat in categories %}
                     <a type="button" class="btn btn-light btn-sm btn-tag"
-                       href="{% url "store:learning_category" category.name %}">{{ category.name }}</a>
+                       href="{% url "store:learning_category" cat.name %}">{{ cat.name }}</a>
                 {% endfor %}
             </div>
             <div class="blog-tag col-8">

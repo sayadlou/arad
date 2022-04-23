@@ -55,7 +55,7 @@ class CategoryList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_category'] = self.kwargs['category']
+        context['current_category'] = self.kwargs.get('category')
         context['categories'] = Category.objects.all()
         context['tags'] = Post.blog_tags_list()
         return context
