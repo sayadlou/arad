@@ -3,6 +3,7 @@ from pathlib import Path
 
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse, reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -96,7 +97,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 
-from django.utils.translation import gettext_lazy as _
 
 LANGUAGE_CODE = 'fa'
 
