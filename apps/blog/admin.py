@@ -1,5 +1,5 @@
 from django.contrib import admin
-from mptt.admin import MPTTModelAdmin, DraggableMPTTAdmin
+from mptt.admin import DraggableMPTTAdmin
 
 from .models import Post, Category
 
@@ -11,7 +11,7 @@ class CategoryAdmin(DraggableMPTTAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    search_fields = ['title', 'slug']
-    list_display = ['title', 'slug']
+    search_fields = ['title',]
+    list_display = ['title',]
     readonly_fields = ['id']
-    prepopulated_fields = {'slug': ('title',)}
+    exclude = ('slug',)

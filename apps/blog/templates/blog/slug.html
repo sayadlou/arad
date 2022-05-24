@@ -4,31 +4,13 @@
 {% block content %}
     <div id="page-top" class="wide">
         <!-- Single Service Item ////////// Just this Section is changed! -->
-
         <div class="post-item">
-            <div class="row post-item-head">
-                <div class="col-lg-6">
-                    <div class="post-name">
-                        <h1>خدمات مشاوره تحصیلی</h1>
-                        <strong class="post-date">01.01.1401</strong>
-                    </div>
-                    <hr>
-
-                    <b>مقدمه : </b>
-                    {{ object.intro |safe }}
-                </div>
-                <div class="col-lg-6">
-                    <div class="post-img">
-                        <img class="" src="{{ object.picture.url }}" alt="">
-                    </div>
-                </div>
+            <div class="post-name">
+                <h1> {{ object.title }}</h1>
+                <strong class="post-date">01.01.1401</strong>
             </div>
-            <div class="row service-item-body">
-                <h1>توضیحات بیشتر:</h1>
-                <p>
-                    {{ object.content | safe }}
-                </p>
-            </div>
+            <hr>
+            {{ object.content | safe }}
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

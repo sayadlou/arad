@@ -8,5 +8,6 @@ from .views import Home, AboutUs
 urlpatterns = [
     path('', Home.as_view(), name='home'),
     path('about_us/', AboutUs.as_view(), name='about_us'),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 
 ]

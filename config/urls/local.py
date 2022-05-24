@@ -21,4 +21,3 @@ urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
 urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
 urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
 
-ROOT_URLCONF = 'config.urls.local'

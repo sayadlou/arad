@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from django.core.files.storage import FileSystemStorage
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django_jalali',
     'captcha',
     'ckeditor',
-    'tinymce',
     'ckeditor_uploader',
     'mptt',
     'azbankgateways',
@@ -147,7 +146,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
-CKEDITOR_UPLOAD_PATH = "/image"
+CKEDITOR_UPLOAD_PATH = BASE_DIR / "media/ckeditor"
+CKEDITOR_FILENAME_GENERATOR = 'utils.functions.get_filename'
 
 AZ_IRANIAN_BANK_GATEWAYS = {
     'GATEWAYS': {
@@ -200,6 +200,8 @@ ALLOW_UNICODE_SLUGS = True
 TINYMCE_DEFAULT_CONFIG = {
     "theme": "silver",
     "height": 500,
+    "automatic_uploads": True,
+    "file_picker_types": "image media",
     "menubar": True,
     "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
                "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
@@ -209,3 +211,12 @@ TINYMCE_DEFAULT_CONFIG = {
                "alignright alignjustify | bullist numlist outdent indent | "
                "removeformat | ltr rtl | help",
 }
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 900,
+    },
+}
+
+CKEDITOR_BROWSE_SHOW_DIRS = True

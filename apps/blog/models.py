@@ -1,13 +1,12 @@
-from ckeditor_uploader.fields import RichTextUploadingField
-from django.contrib.postgres.fields import ArrayField, CICharField
 import datetime
-
-from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
-from django.db import models
-from mptt.models import MPTTModel, TreeForeignKey
 from uuid import uuid4
-from tinymce.models import HTMLField
+
+from ckeditor_uploader.fields import RichTextUploadingField
+from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
+from django.utils.translation import ugettext_lazy as _
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Category(MPTTModel):
@@ -34,13 +33,10 @@ class Post(models.Model):
     )
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=50, unique=True, allow_unicode=True)
-    intro = HTMLField()
-    content = HTMLField()
-    content2 = HTMLField()
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True, blank=True)
+    content = RichTextUploadingField()
     status = models.CharField(max_length=50, choices=STATUS)
     view = models.BigIntegerField(null=True, blank=True, default=0)
-    tags = models.CharField(max_length=200)
     pub_date = models.DateField(_("Date"), default=datetime.date.today)
     picture = models.ImageField(upload_to='blog')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
@@ -51,6 +47,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('blog:slug', kwargs={'slug': self.slug})

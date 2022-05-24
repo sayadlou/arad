@@ -1,5 +1,5 @@
-{% load static %}
-{% load i18n %}
+    {% load static %}
+    {% load i18n %}
 <!DOCTYPE html>
 <html lang="fa-ir" dir="rtl">
 <head>
@@ -90,26 +90,11 @@
         <!-- Sidebar -->
         <div class="col-lg-2 sidebar">
             <div class="logo">
-                <a href="#" onclick=""><img class="" src="{% static "core/images/logo.png" %}" alt="Arad Mohajer"></a>
+                <a href="{% url "core:home" %}"><img class="" src="{% static "core/images/logo.png" %}" alt="Arad Mohajer"></a>
             </div>
 
             <!-- MENU -->
             <div>
-                <div id="menu_mobile_icon">
-                    <a class="icon" onclick="mobileMenu()"><i class="fa fa-bars"></i></a>
-                </div>
-                <script>
-                    function mobileMenu() {
-                        var x = document.getElementById("Menu");
-
-                        if (x.style.display === "block") {
-                            x.style.display = "none";
-                        } else {
-                            x.style.display = "block";
-                        }
-
-                    }
-                </script>
                 <ul id="Menu">
                     <li><a href="{% url "core:home" %}" class="active">صفحه نخست</a></li>
                     <li><a href="{% url "store:service_home" %}">خدمات</a></li>
