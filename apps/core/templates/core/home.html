@@ -2,56 +2,68 @@
 {% load static %}
 {% block content %}
     <!-- Page Content -->
-            <!-- Highlighs / Slideshow -->
-            <div id="highlights" class="wide">
-                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <h1>تیتر پست هایلایت شده</h1>
-                                    <hr>
-                                    <p>
-                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان
-                                        جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه
-                                        ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو
-                                    </p>
-                                </div>
-                                <div class="col-lg-6">
-                                    <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <h1>تیتر پست هایلایت شده 2</h1>
-                                    <hr>
-                                    <p>
-                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان
-                                        جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه
-                                        ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو
-                                    </p>
-                                </div>
-                                <div class="col-lg-6">
-                                    <a href="#"><img class="" src="{% static "core/images/0002.jpg" %}" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="next-prev">
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                                data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+    <!-- Highlighs / Slideshow -->
+    <div>
+        <a href="https://t.me/s_sayadlou" target=”_blank”>telegram</a>
+        <a href="https://wa.me/+989123346829" target=”_blank”>whatsapp</a>
+    </div>
+    <div id="highlights" class="wide">
+        <div
+                id="carouselExampleControls"
+                class="carousel slide"
+                data-bs-ride="carousel"
+                data-bs-interval=5000
+                data-bs-pause=false
+                style="min-height: 400px"
+        >
+            <div class="carousel-inner">
+{#                <div class="carousel-item active">#}
+{#                    <div class="row">#}
+{#                        <div class="col-lg-6">#}
+{#                            <h1>تیتر پست هایلایت شده</h1>#}
+{##}
+{#                            <hr>#}
+{#                            <p>#}
+{#                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان#}
+{#                                گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و#}
+{#                                برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای#}
+{#                                کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان#}
+{#                                جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه#}
+{#                                ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو#}
+{#                            </p>#}
+{#                        </div>#}
+{#                        <div class="col-lg-6">#}
+{#                            <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="carousel-item">#}
+{#                    <div class="row">#}
+{#                        <div class="col-lg-6">#}
+{#                            <h1>تیتر پست هایلایت شده 2</h1>#}
+{#                            <hr>#}
+{#                            <p>#}
+{#                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان#}
+{#                                گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و#}
+{#                                برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای#}
+{#                                کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان#}
+{#                                جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه#}
+{#                                ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو#}
+{#                            </p>#}
+{#                        </div>#}
+{#                        <div class="col-lg-6">#}
+{#                            <a href="#"><img class="" src="{% static "core/images/0002.jpg" %}" alt=""></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+            </div>
+            <div class="next-prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
                                 data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
