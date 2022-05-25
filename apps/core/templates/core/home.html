@@ -21,14 +21,19 @@
                     <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
                         <div class="row">
                             <div class="col-lg-6">
-                                <h1>{{ slide.title }}</h1>
+                                <h1>
+
+                                        {{ slide.title }}
+
+                                </h1>
                                 <hr>
-                                <p>
-                                    {{ slide.intro }}
+                                <p style="text-align: justify">
+                                    {{ slide.intro }}<a href="{{ slide.get_absolute_url }}">&nbsp;ادامه مطلب ...</a>
                                 </p>
                             </div>
                             <div class="col-lg-6">
-                                <a href="#"><img class="home-slide-pic" src="{{ slide.picture.url }}" alt=""></a>
+                                <a href="{{ slide.get_absolute_url }}"><img class="home-slide-pic"
+                                                                            src="{{ slide.picture.url }}" alt=""></a>
                             </div>
                         </div>
                     </div>

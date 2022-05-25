@@ -40,6 +40,7 @@ class Post(models.Model):
     picture = models.ImageField(upload_to='blog')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     intro = models.TextField(max_length=500)
+    show_in_home = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Blog Post')
