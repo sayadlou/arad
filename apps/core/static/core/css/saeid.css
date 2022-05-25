@@ -5,3 +5,11 @@
 .errorlist {
     text-align: left;
 }
+.blog-index-pic{
+    height: 30vh;
+    object-fit: cover;
+}
+.home-slide-pic{
+    height: 50vh;
+    object-fit: cover;
+}

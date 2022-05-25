@@ -17,45 +17,22 @@
                 style="min-height: 400px"
         >
             <div class="carousel-inner">
-{#                <div class="carousel-item active">#}
-{#                    <div class="row">#}
-{#                        <div class="col-lg-6">#}
-{#                            <h1>تیتر پست هایلایت شده</h1>#}
-{##}
-{#                            <hr>#}
-{#                            <p>#}
-{#                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان#}
-{#                                گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و#}
-{#                                برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای#}
-{#                                کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان#}
-{#                                جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه#}
-{#                                ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو#}
-{#                            </p>#}
-{#                        </div>#}
-{#                        <div class="col-lg-6">#}
-{#                            <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="carousel-item">#}
-{#                    <div class="row">#}
-{#                        <div class="col-lg-6">#}
-{#                            <h1>تیتر پست هایلایت شده 2</h1>#}
-{#                            <hr>#}
-{#                            <p>#}
-{#                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان#}
-{#                                گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و#}
-{#                                برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای#}
-{#                                کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان#}
-{#                                جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه#}
-{#                                ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو#}
-{#                            </p>#}
-{#                        </div>#}
-{#                        <div class="col-lg-6">#}
-{#                            <a href="#"><img class="" src="{% static "core/images/0002.jpg" %}" alt=""></a>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
+                {% for slide in slides %}
+                    <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h1>{{ slide.title }}</h1>
+                                <hr>
+                                <p>
+                                    {{ slide.intro }}
+                                </p>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="#"><img class="home-slide-pic" src="{{ slide.picture.url }}" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
             <div class="next-prev">
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
@@ -64,34 +41,34 @@
                     <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                                data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Services -->
+    <div id="services" class="wide2">
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- خدمات هایلایت شده -->
+                <div class="row services-highlight">
+                    <div class="col-5">
+                        <a href="#"><h1>ویزای کاری</h1></a>
+                        <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
+                    </div>
+                    <div class="col-7">
+                        <p>توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات
+                            توضیحات خدمات توضیحات خدمات </p>
                     </div>
                 </div>
-
-            </div>
-
-            <!-- Services -->
-            <div id="services" class="wide2">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <!-- خدمات هایلایت شده -->
-                        <div class="row services-highlight">
-                            <div class="col-5">
-                                <a href="#"><h1>ویزای کاری</h1></a>
-                                <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
-                            </div>
-                            <div class="col-7">
-                                <p>توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات
-                                    توضیحات خدمات توضیحات خدمات </p>
-                            </div>
-                        </div>
-                        <div class="row services-highlight">
-                            <div class="col-5">
-                                <a href="#"><h1>ارسال رزومه</h1></a>
-                                <a href="#"><img class="" src="{% static "core/images/0002.jpg" %}" alt=""></a>
+                <div class="row services-highlight">
+                    <div class="col-5">
+                        <a href="#"><h1>ارسال رزومه</h1></a>
+                        <a href="#"><img class="" src="{% static "core/images/0002.jpg" %}" alt=""></a>
                             </div>
                             <div class="col-7">
                                 <p>توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات

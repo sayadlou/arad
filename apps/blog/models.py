@@ -31,15 +31,15 @@ class Post(models.Model):
         ('Draft', 'Draft'),
         ('Trash', 'Trash'),
     )
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True, blank=True)
+    slug = models.SlugField(primary_key=True, max_length=200, unique=True, allow_unicode=True, blank=True)
     content = RichTextUploadingField()
     status = models.CharField(max_length=50, choices=STATUS)
     view = models.BigIntegerField(null=True, blank=True, default=0)
     pub_date = models.DateField(_("Date"), default=datetime.date.today)
     picture = models.ImageField(upload_to='blog')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    intro = models.TextField(max_length=500)
 
     class Meta:
         verbose_name = _('Blog Post')

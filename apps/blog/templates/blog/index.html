@@ -22,7 +22,7 @@
                         <a class="post-title" href="{{ post.get_absolute_url }}"><h1>{{ post.title }}</h1></a>
                         <strong class="post-date">{{ post.pub_date|jformat:'%Y/%m/%d' }}</strong>
                         <a href="{{ post.get_absolute_url }}">
-                            <img class="" src="{{ post.picture.url }}" alt="">
+                            <img class="blog-index-pic" src="{{ post.picture.url }}" >
                         </a>
                     </div>
                 </div>

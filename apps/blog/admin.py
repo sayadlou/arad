@@ -13,5 +13,5 @@ class CategoryAdmin(DraggableMPTTAdmin):
 class PostAdmin(admin.ModelAdmin):
     search_fields = ['title',]
     list_display = ['title',]
-    readonly_fields = ['id']
+    # readonly_fields = ['id']
     exclude = ('slug',)
