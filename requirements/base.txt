@@ -13,3 +13,4 @@ django_downloadview==2.3.*
 az-iranian-bank-gateways==1.6.*
 django-ckeditor==6.2.*
 django-jalali==6.0.*
+django-filer==2.2.*

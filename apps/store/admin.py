@@ -1,6 +1,5 @@
 from django.conf.urls import url
 from django.contrib import admin
-
 # Register your models here.
 from mptt.admin import DraggableMPTTAdmin
 
@@ -86,10 +85,7 @@ class VideoFileAdmin(admin.ModelAdmin):
 
 @admin.register(LearningPost)
 class PostAdmin(admin.ModelAdmin):
-    search_fields = ['title', 'slug']
-    list_display = ['title', 'slug']
-    readonly_fields = ['id']
-    prepopulated_fields = {'slug': ('title',)}
+    exclude = ('slug', 'view','id')
 
 
 @admin.register(EventCategory)

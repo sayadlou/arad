@@ -51,15 +51,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="user-form">
-                            <hr>
-                            <div>
-                                <div> <!-- Text / info -->
-                                    <h3>سیاست عودت وجه شرکت کنندگان:</h3>
-                                    <p>
-                                        {{ event.policy | safe }}
-                                    </p>
-                                </div>
-                            </div>
+
                             {% if is_owner %}
                                 <a href="{{ object.join_link }}" class="btn btn-primary">لینک ورود</a>
                             {% else %}

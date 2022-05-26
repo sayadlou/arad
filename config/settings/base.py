@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django.contrib.humanize',
     'django.forms',
+    'easy_thumbnails',
+    'filer',
     'django_jalali',
     'captcha',
     'ckeditor',

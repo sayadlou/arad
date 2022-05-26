@@ -2,15 +2,19 @@ from datetime import date
 from uuid import uuid4
 
 from azbankgateways.models import Bank
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 from tinymce.models import HTMLField
 from django_jalali.db import models as jmodels
+from filer.fields.image import FilerImageField
 
 from apps.account.models import UserProfile
 from config.settings.base import product_models, learning_attachments_path
@@ -189,6 +193,7 @@ class Service(ProductBaseModel):
     status = models.CharField(max_length=50, choices=STATUS)
     pub_date = jmodels.jDateTimeField(_("Date"))
     picture = models.ImageField(upload_to='event/picture')
+    #picture2 = FilerImageField(related_name='service', on_delete=models.PROTECT)
     category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
     description = HTMLField()
     introduction = HTMLField()
@@ -226,12 +231,13 @@ class LearningPost(ProductBaseModel):
         ('Trash', 'Trash'),
     )
 
-    content = HTMLField()
-    introduction = HTMLField()
+    content = RichTextUploadingField()
+    introduction = RichTextField()
     status = models.CharField(max_length=50, choices=STATUS)
     view = models.BigIntegerField(null=True, blank=True, default=0)
     pub_date = models.DateField(_("Date"), default=date.today)
     picture = models.ImageField(upload_to='learning/picture')
+    #picture2 = FilerImageField(related_name='learning_post', on_delete=models.PROTECT)
     category = models.ForeignKey(LearningCategory, on_delete=models.SET_NULL, null=True)
     video = models.ForeignKey('VideoFile', on_delete=models.CASCADE, null=True, blank=True)
     attachment = models.FileField(null=True, blank=True, storage=learning_attachments_path)
@@ -243,6 +249,10 @@ class LearningPost(ProductBaseModel):
     @property
     def get_absolute_url(self):
         return reverse('store:learning_slug', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.title}'
@@ -283,6 +293,7 @@ class Event(ProductBaseModel):
     status = models.CharField(max_length=50, choices=STATUS)
     pub_date = jmodels.jDateTimeField(_("Date"))
     picture = models.ImageField(upload_to='event/picture')
+    #picture2 = FilerImageField(related_name='event', on_delete=models.PROTECT)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     start_date = jmodels.jDateTimeField()
     end_date = jmodels.jDateTimeField()

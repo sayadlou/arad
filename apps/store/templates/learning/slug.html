@@ -4,7 +4,28 @@
 {% block content %}
     <div id="page-top" class="wide">
         <!-- Single Service Item ////////// Just this Section is changed! -->
-        {% if status %}
+        {% if not is_user_owner %}
+
+            <div id="page-top" class="wide">
+                <!-- Single Service Item ////////// Just this Section is changed! -->
+                <div style="float: left ; padding: 1vw;">
+                    <img class="img-fluid" style="max-width: 40vw" src="{{ object.picture.url }}" alt="">
+                </div>
+                <div class="post-item">
+                    <div class="post-name">
+                        <h1> {{ object.title }}</h1>
+                        <strong class="post-date">01.01.1401</strong>
+                    </div>
+                    <hr>
+                    {{ object.introduction }}
+                </div>
+            </div>
+
+
+        {% elif request_status and is_user_owner %}
+            <div class="ratio ratio-16x9">
+                <iframe src="{{ video_url }}" title="Learning video" allowfullscreen></iframe>
+            </div>
             <div class="post-item">
                 <div class="row post-item-head">
                     <div>
@@ -45,10 +66,7 @@
                     {{ object.content | safe }}
                 </div>
             </div>
-            <div class="ratio ratio-16x9">
-                <iframe src="{{ video_url }}" title="YouTube video"
-                        allowfullscreen></iframe>
-            </div>
+
             <div class="my-5">
                 <a href="{% url "store:learning_attachment" object.slug %}">attachment</a>
             </div>

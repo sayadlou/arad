@@ -246,25 +246,39 @@ class LearningIndexView(ListView):
 
 
 class LearningSlugView(DetailView):
-    template_name = 'learning/slug.html'
-    model = LearningPost
+    template_name: str = 'learning/slug.html'
+    model: ProductBaseModel = LearningPost
+    movie_link: str
+    movie_link_request_result: bool = False
 
-    def get_context_data(self, **kwargs):
-        validity_link_time = datetime.now() + timedelta(hours=10)
-        validity_link_time_unix = int(mktime(validity_link_time.timetuple()))
+    def _get_link_validity_hours_in_unix(self, hours):
+        hours_time_delta = datetime.now() + timedelta(hours=hours)
+        return int(mktime(hours_time_delta.timetuple()))
+
+    def _get_movie_link(self):
         url = f"https://napi.arvancloud.com/vod/2.0/videos/{self.object.video.arvan_id}"
         headers = {'Authorization': os.environ.get('ARVAN_API_KEY')}
-        payload = {'secure_expire_time': validity_link_time_unix, 'secure_ip': self.get_client_ip()}
-        r = requests.get(url, headers=headers, params=payload)
+        payload = {
+            'secure_expire_time': self._get_link_validity_hours_in_unix(hours=10),
+            'secure_ip': self.get_client_ip()
+        }
+        response = requests.get(url, headers=headers, params=payload)
+        response_jason = response.json()
         logging.info(self.get_client_ip())
-        logging.info(r.json()["data"])
+        logging.info(response_jason["data"])
+        if response.status_code == 200:
+            self.movie_link = response_jason["data"]["player_url"]
+            self.movie_link_request_result = True
+
+    def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        if r.status_code == 200:
-            respone = r.json()
-            data['video_url'] = respone["data"]["player_url"]
-            data['status'] = True
-        else:
-            data['status'] = False
+        user_id = self.request.user.pk
+        is_user_owner = self.object.purchaser.filter(pk=user_id).exists()
+        data['is_user_owner'] = is_user_owner
+        if is_user_owner:
+            self._get_movie_link()
+            data['video_url'] = self.movie_link
+            data['request_status'] = self.movie_link_request_result
         return data
 
     def get_client_ip(self):
