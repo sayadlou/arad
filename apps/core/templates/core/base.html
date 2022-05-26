@@ -160,14 +160,26 @@
                         </span>
                         </h2>
                         <ul class="px-4">
-                            <li class="text-black pt-2 ">وبلاگ</li>
-                            <li class="text-black ">قوانین و مقررات</li>
-                            <li class="text-black ">درباره ما</li>
-                            <li class="text-black ">تماس با ما</li>
-                            <li class="text-black ">وبلاگ</li>
-                            <li class="text-black ">قوانین و مقررات</li>
-                            <li class="text-black ">درباره ما</li>
-                            <li class="text-black ">تماس با ما</li>
+
+                            <li class="text-black pt-2 ">
+                                <a class=" text-black" href="{% url "blog:home" %}">وبلاگ
+                                </a>
+                            </li>
+
+                            <li class="text-black ">
+                                <a class=" text-black" href="{% url "core:rules" %}">قوانین و مقررات
+                                </a>
+                            </li>
+
+                            <li class="text-black ">
+                                <a class=" text-black" href="{% url "core:about_us" %}">درباره ما
+                                </a>
+                            </li>
+
+                            <li class="text-black ">
+                                <a class=" text-black" href="{% url "contact_us:form" %}">تماس با ما
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="col-lg-4">

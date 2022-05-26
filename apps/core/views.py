@@ -12,9 +12,15 @@ class Home(TemplateView):
         return context
 
 
-# Create your views here.
 class AboutUs(TemplateView):
     template_name = 'core/about_us.html'
+
+    def get_context_data(self, **kwargs):
+        pass
+
+
+class Rules(TemplateView):
+    template_name = 'core/rules.html'
 
     def get_context_data(self, **kwargs):
         pass
