@@ -1,4 +1,5 @@
 from azbankgateways.urls import az_bank_gateways_urls
+from django.conf.urls import url
 from django.urls import path, include
 
 
@@ -12,7 +13,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('bankgateways/', az_bank_gateways_urls()),
     path('tinymce/', include('tinymce.urls')),
-
+    url(r'^filer/', include('filer.urls')),
 ]
 
 

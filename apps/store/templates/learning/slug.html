@@ -6,7 +6,6 @@
         <!-- Single Service Item ////////// Just this Section is changed! -->
         {% if not is_user_owner %}
 
-            <div id="page-top" class="wide">
                 <!-- Single Service Item ////////// Just this Section is changed! -->
                 <div style="float: left ; padding: 1vw;">
                     <img class="img-fluid" style="max-width: 40vw" src="{{ object.picture.url }}" alt="">
@@ -17,9 +16,8 @@
                         <strong class="post-date">01.01.1401</strong>
                     </div>
                     <hr>
-                    {{ object.introduction }}
+                    {{ object.introduction |safe }}
                 </div>
-            </div>
 
 
         {% elif request_status and is_user_owner %}
