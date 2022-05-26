@@ -230,7 +230,6 @@ class LearningPost(ProductBaseModel):
     introduction = HTMLField()
     status = models.CharField(max_length=50, choices=STATUS)
     view = models.BigIntegerField(null=True, blank=True, default=0)
-    tags = models.CharField(max_length=200)
     pub_date = models.DateField(_("Date"), default=date.today)
     picture = models.ImageField(upload_to='learning/picture')
     category = models.ForeignKey(LearningCategory, on_delete=models.SET_NULL, null=True)
@@ -247,17 +246,6 @@ class LearningPost(ProductBaseModel):
 
     def __str__(self):
         return f'{self.title}'
-
-    @classmethod
-    def tags_list(cls):
-        tag_to_set = set()
-        posts_tag = cls.objects.values_list('tags')
-        for post_tag in posts_tag:
-            for tag in post_tag[0].split(','):
-                if tag:
-                    tag = clean_tag(tag)
-                    tag_to_set.add(tag)
-        return tag_to_set
 
 
 class VideoFile(models.Model):

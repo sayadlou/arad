@@ -1,34 +1,29 @@
+import logging
+import os
 from datetime import timedelta, datetime
 from decimal import Decimal
-from pprint import pprint
 from time import mktime
 
-import os
 import requests
-import json
-from uuid import uuid4
-import logging
-
 from azbankgateways import bankfactories
-from azbankgateways.exceptions import AZBankGatewaysException
 from azbankgateways import models as bank_models, default_settings as settings
+from azbankgateways.exceptions import AZBankGatewaysException
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse, reverse_lazy
-from django.views import View
+from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
+from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django_downloadview.views.object import ObjectDownloadView
 
+from config.settings.base import MINIMUM_ORDER_AMOUNT
 from .forms import CartItemForm
 from .models import *
-from config.settings.base import MINIMUM_ORDER_AMOUNT
 from .permitions import LearningBoughtUserMixin
 
 logger = logging.getLogger('store.views')
@@ -247,7 +242,6 @@ class LearningIndexView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = LearningCategory.objects.all()
-        context['tags'] = LearningPost.tags_list()
         return context
 
 
@@ -282,22 +276,6 @@ class LearningSlugView(DetailView):
         return ip
 
 
-class LearningTagView(ListView):
-    model = LearningPost
-    template_name = 'learning/tag.html'
-    paginate_by = 6
-
-    def get_queryset(self):
-        tag = self.request.GET.get("tag", "")
-        tag = tag.lower()
-        return self.model.objects.order_by('pub_date').filter(status='Published').filter(tags__contains=tag)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = LearningCategory.objects.all()
-        context['tag'] = self.request.GET.get("tag")
-        context['tags'] = LearningPost.tags_list()
-        return context
 
 
 class LearningCategoryView(ListView):
@@ -313,7 +291,6 @@ class LearningCategoryView(ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = LearningCategory.objects.all()
         context['category'] = self.kwargs.get('category')
-        context['tags'] = LearningPost.tags_list()
         return context
 
 

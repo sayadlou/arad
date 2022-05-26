@@ -7,6 +7,7 @@
     <div id="" class="wide">
         <div class="filter row">
             <div class="blog-categoty col-4">
+                دسته بندی&nbsp;:
                 <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "blog:home" %}">همه</a>
                 {% for category in categories %}
                     <a type="button" class="btn btn-light btn-sm btn-tag"
@@ -22,7 +23,7 @@
                         <a class="post-title" href="{{ post.get_absolute_url }}"><h1>{{ post.title }}</h1></a>
                         <strong class="post-date">{{ post.pub_date|jformat:'%Y/%m/%d' }}</strong>
                         <a href="{{ post.get_absolute_url }}">
-                            <img class="blog-index-pic" src="{{ post.picture.url }}" >
+                            <img class="blog-index-pic" src="{{ post.picture.url }}" alt={{ post.title }}>
                         </a>
                     </div>
                 </div>

@@ -14,8 +14,6 @@ class UserProfile(AbstractUser):
     objects = UserProfileManager()
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    profile_picture = models.ImageField(_('profile picture'), null=True, blank=True, upload_to='profile_pic',
-                                        default='default_profile.png')
     address = models.TextField(_('address'), max_length=250, null=True, blank=True)
     mobile = models.CharField(_('mobile'), max_length=20, null=True, blank=True)
     phone = models.CharField(_('phone'), max_length=20, null=True, blank=True)

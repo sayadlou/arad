@@ -16,7 +16,6 @@ urlpatterns = [
 
     path('learning', LearningIndexView.as_view(), name='learning_home'),
     path('learning/post/<str:slug>', LearningSlugView.as_view(), name='learning_slug'),
-    path('learning/tag/', LearningTagView.as_view(), name='learning_tag'),
     path('learning/category/<str:category>', LearningCategoryView.as_view(), name='learning_category'),
     path('learning/attachment/<str:slug>', LearningAttachmentView.as_view(), name='learning_attachment'),
 

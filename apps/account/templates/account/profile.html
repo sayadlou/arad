@@ -31,10 +31,6 @@
                                 <p>{% translate "first_name" %} : {{ user.first_name }}</p>
                                 <p>{% translate "last_name" %} : {{ user.last_name }}</p>
                                 <p>{% translate "email" %} : {{ user.email }}</p>
-                                <p>{% translate "profile_picture" %} : <img src="{{ user.profile_picture.url }}"
-                                                                            class="img-thumbnail"
-                                                                            style="max-height: 200px"
-                                                                            alt="{% translate "profile_picture" %}"></p>
                                 <p>{% translate "address" %} : {{ user.address }}</p>
                                 <a href="{% url "account:logout" %}"
                                    class="btn btn-outline-danger btn-equal">{% translate "logout" %}</a>
