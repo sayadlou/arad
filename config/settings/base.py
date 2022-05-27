@@ -99,7 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'fa'
 
 LANGUAGES = (
     ('en', _('English')),
