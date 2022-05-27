@@ -63,3 +63,4 @@ db.sqlite3
 media/
 general.log/
 /static/
+/backup/
