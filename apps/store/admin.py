@@ -49,11 +49,7 @@ class CategoryAdmin(DraggableMPTTAdmin):
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    pass
-    # search_fields = ['title']
-    # list_display = ['title']
-    # readonly_fields = ['id']
-    prepopulated_fields = {'slug': ('title',)}
+    exclude = ('slug', 'view', 'id')
 
 
 @admin.register(LearningCategory)
@@ -85,7 +81,7 @@ class VideoFileAdmin(admin.ModelAdmin):
 
 @admin.register(LearningPost)
 class PostAdmin(admin.ModelAdmin):
-    exclude = ('slug', 'view','id')
+    exclude = ('slug', 'view', 'id')
 
 
 @admin.register(EventCategory)

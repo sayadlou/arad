@@ -205,7 +205,12 @@ class ServiceSlugView(DetailView):
     template_name = 'service/slug.html'
     model = Service
 
+    def _increase_view_counter(self):
+        self.object.view += 1
+        self.object.save()
+
     def get_context_data(self, **kwargs):
+        self._increase_view_counter()
         data = super().get_context_data(**kwargs)
         event = self.object
         user_id = self.request.user.pk
@@ -270,7 +275,12 @@ class LearningSlugView(DetailView):
             self.movie_link = response_jason["data"]["player_url"]
             self.movie_link_request_result = True
 
+    def _increase_view_counter(self):
+        self.object.view += 1
+        self.object.save()
+
     def get_context_data(self, **kwargs):
+        self._increase_view_counter()
         data = super().get_context_data(**kwargs)
         user_id = self.request.user.pk
         is_user_owner = self.object.purchaser.filter(pk=user_id).exists()
@@ -353,7 +363,12 @@ class EventSlugView(DetailView):
     template_name = 'event/slug.html'
     model = Event
 
+    def _increase_view_counter(self):
+        self.object.view += 1
+        self.object.save()
+
     def get_context_data(self, **kwargs):
+        self._increase_view_counter()
         data = super().get_context_data(**kwargs)
         event = self.object
         user_id = self.request.user.pk

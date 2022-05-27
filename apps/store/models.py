@@ -10,11 +10,11 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+from django_jalali.db import models as jmodels
+from filer.fields.image import FilerImageField
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 from tinymce.models import HTMLField
-from django_jalali.db import models as jmodels
-from filer.fields.image import FilerImageField
 
 from apps.account.models import UserProfile
 from config.settings.base import product_models, learning_attachments_path
@@ -205,6 +205,10 @@ class Service(ProductBaseModel):
     @property
     def get_absolute_url(self):
         return reverse('store:service_slug', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
 
 
 class LearningCategory(MPTTModel):
