@@ -2,73 +2,66 @@
 {% load jformat %}
 
 {% block title %}
-    <body class="learning-post light">
 {% endblock title %}
 {% block content %}
     <div id="page-top" class="wide">
         <div class="post-item">
-            <div class="row post-item-head">
-                <div class="col-lg-6">
-                    <div class="post-name">
-                        <h1>{{ event.title }}</h1>
-                    </div>
-                    <hr>
-                    <b>توضیحات رویداد: </b>
-                    {{ event.description | safe }}
-                    <div class="event-info">
-                        <table class="table">
-                            <tr>
-                                <td class="notice"><i class="fa fa-calendar"></i> تاریخ:</td>
-                                <td>{{ event.start_date|jformat:"%Y-%m-%d" }}</td>
-                                <td class="notice"><i class="fa fa-location-arrow"></i> مکان:</td>
-                                <td>آنلاین - غیر حضوری</td>
-                            </tr>
-                            <tr>
-                                <td class="notice"><i class="fa fa-clock"></i> زمان:</td>
-                                <td>{{ event.start_date|jformat:"%H:%M" }} - {{ event.end_date|jformat:"%H:%M" }}</td>
-                                <td class="notice"><i class="fa fa-coins"></i> هزینه:</td>
-                                <td>{{ event.price }}</td>
-                            </tr>
-                        </table>
-                    </div>
-
+            <div style="float: left ; padding: 1vw;">
+                <img class="img-fluid" style="max-width: 40vw" src="{{ object.picture.url }}" alt="">
+            </div>
+            <div class=" post-item-head">
+                <div class="post-name">
+                    <h1>{{ event.title }}</h1>
                 </div>
-                <div class="col-lg-6">
-
-                    <div class="post-img">
-                        <img class="" src="{{ event.picture.url }}" alt="">
-                    </div>
-                    <!--
-                    <div class="service-video">
-                        <div id="73832804035"><script type="text/JavaScript" src="https://www.aparat.com/embed/2QjXp?data[rnddiv]=73832804035&data[responsive]=yes"></script></div>
-                    </div>
-                    -->
+                <hr>
+                {{ event.description | safe }}
+            </div>
+            <div style="max-width: 50%">
+                <div class="event-info">
+                    <table class="table">
+                        <tr>
+                            <td class="notice"><i class="fa fa-calendar"></i> تاریخ:</td>
+                            <td>{{ event.start_date|jformat:"%Y-%m-%d" }}</td>
+                            <td class="notice"><i class="fa fa-location-arrow"></i> مکان:</td>
+                            <td>آنلاین - غیر حضوری</td>
+                        </tr>
+                        <tr>
+                            <td class="notice"><i class="fa fa-clock"></i> زمان:</td>
+                            <td>{{ event.start_date|jformat:"%H:%M" }} -
+                                {{ event.end_date|jformat:"%H:%M" }}</td>
+                            <td class="notice"><i class="fa fa-coins"></i> هزینه:</td>
+                            <td>{{ event.price }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-
-            <!-- Register Form for Event -->
-            <div id="event-register">
-                <div class="row">
-                    <div class="col">
-                        <div class="user-form">
-
-                            {% if is_owner %}
-                                <a href="{{ object.join_link }}" class="btn btn-primary">لینک ورود</a>
-                            {% else %}
-                                <form autocomplete="off" method="post" action="{% url 'store:cart' %}">
-                                    {% csrf_token %}
-                                    <input type="text" name="product" value="{{ event.pk }}" hidden>
-                                    <input type="text" name="request_type" value="inc" hidden>
-                                    <input type="number" name="quantity" value="1" hidden>
-                                    <input type="submit" class="btn btn-primary" value="اضافه به سبد خرید">
-                                </form>
-                            {% endif %}
-                        </div>
-
+            <!--
+            <div class="service-video">
+                <div id="73832804035"><script type="text/JavaScript" src="https://www.aparat.com/embed/2QjXp?data[rnddiv]=73832804035&data[responsive]=yes"></script></div>
+            </div>
+            -->
+        </div>
+        <!-- Register Form for Event -->
+        <div id="event-register">
+            <div class="row">
+                <div class="col">
+                    <div class="user-form">
+                        {% if is_owner %}
+                            <a href="{{ object.join_link }}" class="btn btn-primary">لینک ورود</a>
+                        {% else %}
+                            <form autocomplete="off" method="post" action="{% url 'store:cart' %}">
+                                {% csrf_token %}
+                                <input type="text" name="product" value="{{ event.pk }}" hidden>
+                                <input type="text" name="request_type" value="inc" hidden>
+                                <input type="number" name="quantity" value="1" hidden>
+                                <input type="submit" class="btn btn-primary" value="اضافه به سبد خرید">
+                            </form>
+                        {% endif %}
                     </div>
+
                 </div>
             </div>
         </div>
-        <!-- Page Title Ends -->
     </div>
+    <!-- Page Title Ends -->
 {% endblock content %}
