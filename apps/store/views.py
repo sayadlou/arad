@@ -288,7 +288,7 @@ class LearningSlugView(DetailView):
         if is_user_owner:
             self._get_movie_link()
             data['video_url'] = self.movie_link
-            data['request_status'] = self.movie_link_request_result
+            data['request_successful'] = self.movie_link_request_result
         return data
 
     def get_client_ip(self):
@@ -298,8 +298,6 @@ class LearningSlugView(DetailView):
         else:
             ip = self.request.META.get('REMOTE_ADDR')
         return ip
-
-
 
 
 class LearningCategoryView(ListView):

@@ -135,9 +135,10 @@
                     <a href="{% url "account:signup" %}" class="btn btn-secondary btn-equal">عضویت در سایت</a>
                 {% endif %}
             </div>
-            {% block content %}
+            <div style="min-height: 80vh">
+                {% block content %}
             {% endblock content %}
-
+            </div>
             <div class="s-footer">
                 <div class="row">
                     <div class="col-lg-4">
