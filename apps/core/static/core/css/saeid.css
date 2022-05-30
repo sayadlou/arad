@@ -7,8 +7,10 @@
 }
 
 .blog-index-pic {
-    height: 30vh;
     object-fit: cover;
+    object-position: center;
+    height: 200px;
+    max-height: 30vh;
 }
 
 .home-slide-pic {
@@ -24,6 +26,11 @@
 
 .s-footer p {
     font-weight: 550;
+}
+
+.s-footer img {
+    width: 70%;
+    max-height: 100px !important;
 }
 
 

@@ -210,7 +210,6 @@ class ServiceSlugView(DetailView):
         self.object.save()
 
     def get_context_data(self, **kwargs):
-        self._increase_view_counter()
         data = super().get_context_data(**kwargs)
         event = self.object
         user_id = self.request.user.pk
