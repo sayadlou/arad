@@ -303,6 +303,8 @@ class Event(ProductBaseModel):
     description = HTMLField()
     policy = HTMLField()
     organizer_mobile_number = models.CharField(_('mobile'), max_length=20, default=_('00989354356804'))
+    show_in_home = models.BooleanField(default=False)
+    show_big_in_home = models.BooleanField(default=False)
 
     @property
     def get_absolute_url(self):

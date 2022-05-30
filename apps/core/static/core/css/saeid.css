@@ -87,3 +87,10 @@ img {
 .over_flow::-webkit-scrollbar {
   display: block;
 }
+.s-footer a {
+    text-decoration: none;
+}
+.s-footer img {
+    width: 70%;
+    max-height: 100px !important;
+}
