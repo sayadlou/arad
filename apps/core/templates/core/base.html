@@ -1,5 +1,5 @@
-    {% load static %}
-    {% load i18n %}
+{% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="fa-ir" dir="rtl">
 <head>
@@ -89,13 +89,17 @@
         <!-- Sidebar -->
         <div class="col-lg-2 sidebar">
             <div class="logo">
-                <a href="{% url "core:home" %}"><img class="" src="{% static "core/images/logo.png" %}" alt="Arad Mohajer"></a>
+                <a href="{% url "core:home" %}"><img class="" src="{% static "core/images/logo.png" %}"
+                                                     alt="Arad Mohajer"></a>
             </div>
 
             <!-- MENU -->
             <div>
+                <div id="menu_mobile_icon">
+                    <a class="icon" onclick="mobileMenu()"><i class="fa fa-bars"></i></a>
+                </div>
                 <ul id="Menu">
-{#                    <li><a href="{% url "core:home" %}" class="active">صفحه نخست</a></li>#}
+                    {#                    <li><a href="{% url "core:home" %}" class="active">صفحه نخست</a></li>#}
                     <li><a href="{% url "store:service_home" %}">خدمات</a></li>
                     <li><a href="{% url "store:event_home" %}">رویداد ها</a></li>
                     <li><a href="{% url "store:learning_home" %}">آموزش</a></li>
@@ -125,8 +129,9 @@
                     <div class="btn-group" role="group">
                         <a type="button" class="btn btn-outline-secondary btn-icon"
                            href="{% url "account:profile" %}">{{ user.username }}</a>
-                        <a type="button" href="{% url "account:logout" %}" class="btn btn-secondary btn-text"><i class="fas fa-times"
-                                                                               aria-hidden="true"></i></a>
+                        <a type="button" href="{% url "account:logout" %}" class="btn btn-secondary btn-text"><i
+                                class="fas fa-times"
+                                aria-hidden="true"></i></a>
                     </div>
 
 
@@ -137,7 +142,7 @@
             </div>
             <div style="min-height: 80vh">
                 {% block content %}
-            {% endblock content %}
+                {% endblock content %}
             </div>
             <div class="s-footer">
                 <div class="row">
@@ -160,29 +165,29 @@
                         <span class="text-black border-bottom border-secondary p-1">
                                 لینک های مفید
                         </span>
-                        </h2>
-                        <ul class="px-4">
+                            </h2>
+                            <ul class="px-4">
 
-                            <li class="text-black pt-2 ">
-                                <a class=" text-black" href="{% url "blog:home" %}">وبلاگ
-                                </a>
-                            </li>
+                                <li class="text-black pt-2 ">
+                                    <a class=" text-black" href="{% url "blog:home" %}">وبلاگ
+                                    </a>
+                                </li>
 
-                            <li class="text-black ">
-                                <a class=" text-black" href="{% url "core:rules" %}">قوانین و مقررات
-                                </a>
-                            </li>
+                                <li class="text-black ">
+                                    <a class=" text-black" href="{% url "core:rules" %}">قوانین و مقررات
+                                    </a>
+                                </li>
 
-                            <li class="text-black ">
-                                <a class=" text-black" href="{% url "core:about_us" %}">درباره ما
-                                </a>
-                            </li>
+                                <li class="text-black ">
+                                    <a class=" text-black" href="{% url "core:about_us" %}">درباره ما
+                                    </a>
+                                </li>
 
-                            <li class="text-black ">
-                                <a class=" text-black" href="{% url "contact_us:form" %}">تماس با ما
-                                </a>
-                            </li>
-                        </ul>
+                                <li class="text-black ">
+                                    <a class=" text-black" href="{% url "contact_us:form" %}">تماس با ما
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
 
                     </div>

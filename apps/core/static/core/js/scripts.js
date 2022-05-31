@@ -39,3 +39,14 @@ function getCookie(name) {
 }
 
 const csrftoken = getCookie('csrftoken');
+
+function mobileMenu() {
+    var x = document.getElementById("Menu");
+
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+
+}
