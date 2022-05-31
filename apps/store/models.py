@@ -243,6 +243,8 @@ class LearningPost(ProductBaseModel):
     category = models.ForeignKey(LearningCategory, on_delete=models.SET_NULL, null=True)
     video = models.ForeignKey('VideoFile', on_delete=models.CASCADE, null=True, blank=True)
     attachment = models.FileField(null=True, blank=True, storage=learning_attachments_path)
+    show_in_home = models.BooleanField(default=False)
+    show_big_in_home = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Learning Post')
@@ -304,7 +306,6 @@ class Event(ProductBaseModel):
     policy = HTMLField()
     organizer_mobile_number = models.CharField(_('mobile'), max_length=20, default=_('00989354356804'))
     show_in_home = models.BooleanField(default=False)
-    show_big_in_home = models.BooleanField(default=False)
 
     @property
     def get_absolute_url(self):

@@ -17,23 +17,21 @@
                 style="min-height: 400px"
         >
             <div class="carousel-inner">
-                {% for slide in slides %}
+                {% for post in Posts %}
                     <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
                         <div class="row">
                             <div class="col-lg-6">
                                 <h1>
-
-                                        {{ slide.title }}
-
+                                        {{ post.title }}
                                 </h1>
                                 <hr>
                                 <p style="text-align: justify">
-                                    {{ slide.intro }}<a href="{{ slide.get_absolute_url }}">&nbsp;ادامه مطلب ...</a>
+                                    {{ post.intro }}<a href="{{ post.get_absolute_url }}">&nbsp;ادامه مطلب ...</a>
                                 </p>
                             </div>
                             <div class="col-lg-6">
-                                <a href="{{ slide.get_absolute_url }}"><img class="home-slide-pic"
-                                                                            src="{{ slide.picture.url }}" alt=""></a>
+                                <a href="{{ post.get_absolute_url }}"><img class="home-post-pic"
+                                                                            src="{{ post.picture.url }}" alt=""></a>
                             </div>
                         </div>
                     </div>
