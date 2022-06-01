@@ -2,67 +2,76 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-    <div id="page-top" class="wide">
-        <!-- Single Service Item ////////// Just this Section is changed! -->
-        <div id="user">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="user-form">
-                        <h1>{% translate "Contact us" %}</h1>
-                        <hr>
-                        <form autocomplete="off" method="post" action="{% url 'contact_us:form' %}">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="form-group col-12">
-                                    <div class="mb-3">
-                                        <div>
-                                            {{ form.subject.label_tag }}
-                                        </div>
-                                        {{ form.subject }}
-                                        {{ form.subject.errors }}
-                                    </div>
-                                    <div class="mb-3">
-                                        <div>
-                                            {{ form.phone.label_tag }}
-                                        </div>
-                                        {{ form.phone }}
-                                        {{ form.phone.errors }}
-                                    </div>
-                                    <div class="mb-3">
-                                        <div>
-                                            {{ form.email.label_tag }}
-                                        </div>
-                                        {{ form.email }}
-                                        {{ form.email.errors }}
-                                    </div>
-                                    <div class="mb-3">
-                                        <div>
-                                            {{ form.content.label_tag }}
-                                        </div>
-                                        {{ form.content }}
-                                        {{ form.content.errors }}
-                                    </div>
-                                    <div class="mb-3">
-                                        <div>
-                                            {{ form.owner.label_tag }}
-                                        </div>
-                                        {{ form.owner }}
-                                        {{ form.owner.errors }}
-                                    </div>
-                                </div>
-                                {{ form.captcha }}
-                                {{ form.captcha.errors }}
-                            </div>
-                            <button type="submit" class="mt-1 btn btn-primary">{% translate "Create account" %}</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-6 mt-5">
-                    {% if form.password1.help_text %}
-                        <p class="help">{{ form.password1.help_text|safe }}</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+
+    <div class="embed-responsive" >
+        <iframe  class="embed-responsive-item" style="width: 100% ;min-height: 80vh"
+                src="https://formaloo.com/aradmohajer"></iframe>
+
     </div>
+
+
+    {#    <iframe src="https://formaloo.com/aradmohajer" frameborder="1"></iframe>#}
+    {#    <div id="page-top" class="wide">#}
+    {#        <!-- Single Service Item ////////// Just this Section is changed! -->#}
+    {#        <div id="user">#}
+    {#            <div class="row">#}
+    {#                <div class="col-lg-6">#}
+    {#                    <div class="user-form">#}
+    {#                        <h1>{% translate "Contact us" %}</h1>#}
+    {#                        <hr>#}
+    {#                        <form autocomplete="off" method="post" action="{% url 'contact_us:form' %}">#}
+    {#                            {% csrf_token %}#}
+    {#                            <div class="row">#}
+    {#                                <div class="form-group col-12">#}
+    {#                                    <div class="mb-3">#}
+    {#                                        <div>#}
+    {#                                            {{ form.subject.label_tag }}#}
+    {#                                        </div>#}
+    {#                                        {{ form.subject }}#}
+    {#                                        {{ form.subject.errors }}#}
+    {#                                    </div>#}
+    {#                                    <div class="mb-3">#}
+    {#                                        <div>#}
+    {#                                            {{ form.phone.label_tag }}#}
+    {#                                        </div>#}
+    {#                                        {{ form.phone }}#}
+    {#                                        {{ form.phone.errors }}#}
+    {#                                    </div>#}
+    {#                                    <div class="mb-3">#}
+    {#                                        <div>#}
+    {#                                            {{ form.email.label_tag }}#}
+    {#                                        </div>#}
+    {#                                        {{ form.email }}#}
+    {#                                        {{ form.email.errors }}#}
+    {#                                    </div>#}
+    {#                                    <div class="mb-3">#}
+    {#                                        <div>#}
+    {#                                            {{ form.content.label_tag }}#}
+    {#                                        </div>#}
+    {#                                        {{ form.content }}#}
+    {#                                        {{ form.content.errors }}#}
+    {#                                    </div>#}
+    {#                                    <div class="mb-3">#}
+    {#                                        <div>#}
+    {#                                            {{ form.owner.label_tag }}#}
+    {#                                        </div>#}
+    {#                                        {{ form.owner }}#}
+    {#                                        {{ form.owner.errors }}#}
+    {#                                    </div>#}
+    {#                                </div>#}
+    {#                                {{ form.captcha }}#}
+    {#                                {{ form.captcha.errors }}#}
+    {#                            </div>#}
+    {#                            <button type="submit" class="mt-1 btn btn-primary">{% translate "Create account" %}</button>#}
+    {#                        </form>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <div class="col-lg-6 mt-5">#}
+    {#                    {% if form.password1.help_text %}#}
+    {#                        <p class="help">{{ form.password1.help_text|safe }}</p>#}
+    {#                    {% endif %}#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
 {% endblock content %}
