@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-01 14:14+0430\n"
+"POT-Creation-Date: 2022-06-03 17:02+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,8 +216,8 @@ msgstr "دسته بندی بلاگ"
 msgid "Blog Categories"
 msgstr "دسته بندی های بلاگ"
 
-#: apps/blog/models.py:39 apps/store/models.py:193 apps/store/models.py:240
-#: apps/store/models.py:297
+#: apps/blog/models.py:39 apps/store/models.py:193 apps/store/models.py:242
+#: apps/store/models.py:298
 msgid "Date"
 msgstr ""
 
@@ -393,43 +393,43 @@ msgstr "پرداخت"
 msgid "Payments"
 msgstr "پرداخت ها"
 
-#: apps/store/models.py:200
+#: apps/store/models.py:202
 msgid "Service"
 msgstr "خدمات"
 
-#: apps/store/models.py:201
+#: apps/store/models.py:203
 msgid "Services"
 msgstr "خدمات"
 
-#: apps/store/models.py:219
+#: apps/store/models.py:221
 msgid "Learning Category"
 msgstr "دسته بندی مطالب آموزشی"
 
-#: apps/store/models.py:220
+#: apps/store/models.py:222
 msgid "Learning Categories"
 msgstr "دسته بندی مطالب آموزشی"
 
-#: apps/store/models.py:249
+#: apps/store/models.py:250
 msgid "Learning Post"
 msgstr ""
 
-#: apps/store/models.py:250
+#: apps/store/models.py:251
 msgid "Learning Posts"
 msgstr "مطالب آموزشی"
 
-#: apps/store/models.py:284
+#: apps/store/models.py:285
 msgid "Event "
 msgstr "رویداد"
 
-#: apps/store/models.py:285
+#: apps/store/models.py:286
 msgid "Event Categories"
 msgstr "دسته بندی رویداد"
 
-#: apps/store/models.py:323
+#: apps/store/models.py:324
 msgid "Event"
 msgstr "رویداد"
 
-#: apps/store/models.py:324
+#: apps/store/models.py:325
 msgid "Events"
 msgstr "رویداد"
 
