@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 18:48+0430\n"
+"POT-Creation-Date: 2022-06-01 14:14+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,11 +61,11 @@ msgstr "نام"
 msgid "last name"
 msgstr "نام خانوادگی"
 
-#: apps/account/forms.py:92 apps/account/models.py:20 apps/store/models.py:305
+#: apps/account/forms.py:92 apps/account/models.py:18
 msgid "mobile"
 msgstr "موبایل"
 
-#: apps/account/forms.py:98 apps/account/models.py:21
+#: apps/account/forms.py:98 apps/account/models.py:19
 msgid "phone"
 msgstr "شماره تلفن ثابت"
 
@@ -85,16 +85,11 @@ msgstr ""
 msgid "Address"
 msgstr "آدرس"
 
-#: apps/account/models.py:17
-msgid "profile picture"
-msgstr "عکس پروفایل"
-
-#: apps/account/models.py:19 apps/account/templates/account/profile.html:38
+#: apps/account/models.py:17 apps/account/templates/account/profile.html:34
 msgid "address"
 msgstr "آدرس"
 
 #: apps/account/templates/account/custom_field.html:6
-#: templates/admin/captcha.html:6
 msgid "Enter security code"
 msgstr "کد امنیتی را وارد کنید"
 
@@ -197,46 +192,40 @@ msgstr "نام خانوادگی"
 msgid "email"
 msgstr "ایمیل"
 
-#: apps/account/templates/account/profile.html:34
-#: apps/account/templates/account/profile.html:37
-msgid "profile_picture"
-msgstr "تصویر پروفایل"
-
-#: apps/account/templates/account/profile.html:40
+#: apps/account/templates/account/profile.html:36
 msgid "logout"
 msgstr "خروج"
 
-#: apps/account/templates/account/profile.html:42
+#: apps/account/templates/account/profile.html:38
 msgid "password reset"
 msgstr "بازنشانی رمز عبور"
 
-#: apps/account/templates/account/profile.html:44
+#: apps/account/templates/account/profile.html:40
 msgid "password change"
 msgstr "تغییر رمز عبور"
 
 #: apps/account/templates/account/signup.html:105
-#: apps/contact_us/templates/contact_us/message_form.html:56
 msgid "Create account"
 msgstr "ایجاد حساب کاربری"
 
-#: apps/blog/models.py:22
+#: apps/blog/models.py:21
 msgid "Blog Category"
 msgstr "دسته بندی بلاگ"
 
-#: apps/blog/models.py:23
+#: apps/blog/models.py:22
 msgid "Blog Categories"
 msgstr "دسته بندی های بلاگ"
 
-#: apps/blog/models.py:44 apps/store/models.py:190 apps/store/models.py:234
-#: apps/store/models.py:296
+#: apps/blog/models.py:39 apps/store/models.py:193 apps/store/models.py:240
+#: apps/store/models.py:297
 msgid "Date"
 msgstr ""
 
-#: apps/blog/models.py:49
+#: apps/blog/models.py:46
 msgid "Blog Post"
 msgstr "مطلب بلاگ"
 
-#: apps/blog/models.py:50
+#: apps/blog/models.py:47
 msgid "Blog Posts"
 msgstr "مطالب بلاگ"
 
@@ -273,12 +262,12 @@ msgstr "پیام"
 msgid "Messages"
 msgstr "پیام"
 
-#: apps/contact_us/templates/contact_us/message_form.html:11
 #: apps/contact_us/templates/contact_us/thanks.html:11
 msgid "Contact us"
 msgstr ""
 
 #: apps/core/templates/core/about_us.html:11
+#: apps/core/templates/core/rules.html:11
 msgid "About Us"
 msgstr ""
 
@@ -298,149 +287,143 @@ msgstr ""
 msgid "product not found"
 msgstr ""
 
-#: apps/store/models.py:30
+#: apps/store/models.py:33
 msgid "Product Base Model"
 msgstr "محصول پایه"
 
-#: apps/store/models.py:31
+#: apps/store/models.py:34
 msgid "Product Base Models"
 msgstr "محصولات پایه"
 
-#: apps/store/models.py:61
+#: apps/store/models.py:64
 msgid "Cart"
 msgstr "سبد خرید"
 
-#: apps/store/models.py:62
+#: apps/store/models.py:65
 msgid "Carts"
 msgstr "سبدهای خرید"
 
-#: apps/store/models.py:70
+#: apps/store/models.py:73
 msgid "cart"
 msgstr "سبد خرید"
 
-#: apps/store/models.py:71 apps/store/models.py:123
+#: apps/store/models.py:74 apps/store/models.py:126
 msgid "quantity"
 msgstr "تعداد"
 
-#: apps/store/models.py:75
+#: apps/store/models.py:78
 msgid "Cart item"
 msgstr "اقلام سبد خرید"
 
-#: apps/store/models.py:76
+#: apps/store/models.py:79
 msgid "Cart items"
 msgstr "اقلام سبد خرید"
 
-#: apps/store/models.py:106
+#: apps/store/models.py:109
 msgid "Order"
 msgstr "سفارش"
 
-#: apps/store/models.py:107
+#: apps/store/models.py:110
 msgid "Orders"
 msgstr "سفارشات"
 
-#: apps/store/models.py:122
+#: apps/store/models.py:125
 msgid "order item"
 msgstr "اقلام سفارش"
 
-#: apps/store/models.py:130
+#: apps/store/models.py:133
 msgid "Order item"
 msgstr "اقلام سفارش"
 
-#: apps/store/models.py:131
+#: apps/store/models.py:134
 msgid "Order items"
 msgstr "اقلام سفارشات"
 
-#: apps/store/models.py:144
+#: apps/store/models.py:147
 msgid "initial"
 msgstr ""
 
-#: apps/store/models.py:145
+#: apps/store/models.py:148
 msgid "processing"
 msgstr ""
 
-#: apps/store/models.py:146
+#: apps/store/models.py:149
 msgid "confirmed"
 msgstr ""
 
-#: apps/store/models.py:149 apps/store/templates/store/order.html:9
+#: apps/store/models.py:152 apps/store/templates/store/order.html:9
 #: apps/store/templates/store/orders.html:12
 #: apps/store/templates/store/payments.html:12
 msgid "order"
 msgstr ""
 
-#: apps/store/models.py:151
+#: apps/store/models.py:154
 #, fuzzy
 #| msgid "Create account"
 msgid "created at"
 msgstr "ایجاد حساب کاربری"
 
-#: apps/store/models.py:152
+#: apps/store/models.py:155
 msgid "expired at"
 msgstr ""
 
-#: apps/store/models.py:153
+#: apps/store/models.py:156
 msgid "due at"
 msgstr ""
 
-#: apps/store/models.py:154
+#: apps/store/models.py:157
 msgid "fulfilled at"
 msgstr ""
 
-#: apps/store/models.py:155
+#: apps/store/models.py:158
 msgid "amount"
 msgstr ""
 
-#: apps/store/models.py:156 apps/store/templates/store/order.html:9
+#: apps/store/models.py:159 apps/store/templates/store/order.html:9
 #: apps/store/templates/store/orders.html:12
 #: apps/store/templates/store/payments.html:12
 msgid "status"
 msgstr ""
 
-#: apps/store/models.py:164
+#: apps/store/models.py:167
 msgid "Payment"
 msgstr "پرداخت"
 
-#: apps/store/models.py:165
+#: apps/store/models.py:168
 msgid "Payments"
 msgstr "پرداخت ها"
 
-#: apps/store/models.py:197
+#: apps/store/models.py:200
 msgid "Service"
 msgstr "خدمات"
 
-#: apps/store/models.py:198
+#: apps/store/models.py:201
 msgid "Services"
 msgstr "خدمات"
 
-#: apps/store/models.py:212
+#: apps/store/models.py:219
 msgid "Learning Category"
 msgstr "دسته بندی مطالب آموزشی"
 
-#: apps/store/models.py:213
+#: apps/store/models.py:220
 msgid "Learning Categories"
 msgstr "دسته بندی مطالب آموزشی"
 
-#: apps/store/models.py:241
+#: apps/store/models.py:249
 msgid "Learning Post"
 msgstr ""
 
-#: apps/store/models.py:242
+#: apps/store/models.py:250
 msgid "Learning Posts"
 msgstr "مطالب آموزشی"
 
-#: apps/store/models.py:283
+#: apps/store/models.py:284
 msgid "Event "
 msgstr "رویداد"
 
-#: apps/store/models.py:284
+#: apps/store/models.py:285
 msgid "Event Categories"
 msgstr "دسته بندی رویداد"
-
-#: apps/store/models.py:305
-#, fuzzy
-#| msgid "00989123456789"
-msgid "00989354356804"
-msgstr "00989123456789"
 
 #: apps/store/models.py:323
 msgid "Event"
@@ -450,15 +433,7 @@ msgstr "رویداد"
 msgid "Events"
 msgstr "رویداد"
 
-#: apps/store/templates/learning/slug.html:11
-msgid "tag:"
-msgstr ""
-
-#: apps/store/templates/learning/slug.html:17
-msgid "category:"
-msgstr ""
-
-#: apps/store/templates/learning/slug.html:57
+#: apps/store/templates/learning/slug.html:41
 msgid "error in video server"
 msgstr ""
 
@@ -474,7 +449,7 @@ msgstr ""
 msgid "your cart is empty"
 msgstr ""
 
-#: apps/store/templates/store/order.html:39
+#: apps/store/templates/store/order.html:37
 #: apps/store/templates/store/orders.html:41
 #: apps/store/templates/store/payments.html:41
 msgid "Make Payment"
@@ -489,15 +464,15 @@ msgstr ""
 msgid "you have no payment"
 msgstr ""
 
-#: apps/store/views.py:56
+#: apps/store/views.py:51
 msgid "product added to cart"
 msgstr ""
 
-#: apps/store/views.py:72
+#: apps/store/views.py:67
 msgid "product updated"
 msgstr ""
 
-#: apps/store/views.py:119
+#: apps/store/views.py:114
 msgid "minimum order amount should be more than 100,000 IRR"
 msgstr ""
 
@@ -509,32 +484,20 @@ msgstr "انگلیسی"
 msgid "Persian"
 msgstr "پارسی"
 
-#: templates/admin/login.html:23
-msgid "Please correct the error below."
-msgstr ""
-
-#: templates/admin/login.html:23
-msgid "Please correct the errors below."
-msgstr ""
-
-#: templates/admin/login.html:39
-#, python-format
-msgid ""
-"You are authenticated as %(username)s, but are not authorized to access this "
-"page. Would you like to login to a different account?"
-msgstr ""
-
-#: templates/admin/login.html:63
-msgid "Forgotten your password or username?"
-msgstr ""
-
-#: templates/admin/login.html:67
-msgid "Log in"
-msgstr ""
-
 #: templates/captcha/image.html:3
 msgid "Play CAPTCHA as audio file"
 msgstr ""
+
+#~ msgid "profile picture"
+#~ msgstr "عکس پروفایل"
+
+#~ msgid "profile_picture"
+#~ msgstr "تصویر پروفایل"
+
+#, fuzzy
+#~| msgid "00989123456789"
+#~ msgid "00989354356804"
+#~ msgstr "00989123456789"
 
 #~ msgid "your address"
 #~ msgstr "آدرس شما"

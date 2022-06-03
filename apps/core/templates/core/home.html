@@ -1,12 +1,9 @@
 {% extends "core/base.html" %}
 {% load static %}
+{% load jformat %}
+{% load str_month_to_persian %}
 {% block content %}
-    <!-- Page Content -->
-    <!-- Highlighs / Slideshow -->
-{#    <div>#}
-{#        <a href="https://t.me/s_sayadlou" target=”_blank”>telegram</a>#}
-{#        <a href="https://wa.me/+989123346829" target=”_blank”>whatsapp</a>#}
-{#    </div>#}
+
     <div id="highlights" class="wide">
         <div
                 id="carouselExampleControls"
@@ -22,7 +19,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <h1>
-                                        {{ post.title }}
+                                    {{ post.title }}
                                 </h1>
                                 <hr>
                                 <p style="text-align: justify">
@@ -31,7 +28,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <a href="{{ post.get_absolute_url }}"><img class="home-post-pic"
-                                                                            src="{{ post.picture.url }}" alt=""></a>
+                                                                           src="{{ post.picture.url }}" alt=""></a>
                             </div>
                         </div>
                     </div>
@@ -57,113 +54,82 @@
     <div id="services" class="wide2">
         <div class="row">
             <div class="col-lg-6">
-                <!-- خدمات هایلایت شده -->
-                <div class="row services-highlight">
-                    <div class="col-5">
-                        <a href="#"><h1>ویزای کاری</h1></a>
-                        <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
-                    </div>
-                    <div class="col-7">
-                        <p>توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات
-                            توضیحات خدمات توضیحات خدمات </p>
-                    </div>
-                </div>
-                <div class="row services-highlight">
-                    <div class="col-5">
-                        <a href="#"><h1>ارسال رزومه</h1></a>
-                        <a href="#"><img class="" src="{% static "core/images/0002.jpg" %}" alt=""></a>
-                            </div>
-                            <div class="col-7">
-                                <p>توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات توضیحات خدمات
-                                    توضیحات خدمات توضیحات خدمات </p>
-                            </div>
+                {% for service in highlight_services %}
+                    <div class="row services-highlight">
+                        <div class="col-5">
+                            <a href="#"><h1>{{ service.title }}</h1></a>
+                            <a href="#"><img class="" src="{{ service.picture.url }}" alt=""></a>
+                        </div>
+                        <div class="col-7">
+                            <p style="text-align: justify">{{ service.introduction }}</p>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="services-latest">
-                            <div class="services-single">
-                                <a href="#"><h1>ارسال رزومه</h1></a>
-                                <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
-                            </div>
-                            <div class="services-single">
-                                <a href="#"><h1>ارسال رزومه</h1></a>
-                                <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
-                            </div>
-                            <div class="services-single">
-                                <a href="#"><h1>ارسال رزومه</h1></a>
-                                <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
-                            </div>
-                            <div class="services-single">
-                                <a href="#"><h1>ارسال رزومه</h1></a>
-                                <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
-                            </div>
-                            <div class="services-single">
-                                <a href="#"><h1>ارسال رزومه</h1></a>
-                                <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
-                            </div>
-                            <div class="services-single">
-                                <a href="#"><h1>ارسال رزومه</h1></a>
-                                <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
+            <div class="col-lg-6">
+                <div class="services-latest">
+                    {% for service in services %}
+                        <div class="services-single">
+                            <a href="#"><h1>{{ service.title }}</h1></a>
+                            <a href="#"><img class="" src="{{ service.picture.url }}" alt="{{ service.title }}"></a>
+                        </div>
+                    {% endfor %}
+{#                    <div class="services-single">#}
+{#                        <a href="#"><h1>ارسال رزومه</h1></a>#}
+{#                        <a href="#"><img class="" src="{% static "core/images/0001.jpg" %}" alt=""></a>#}
+{#                    </div>#}
 
-            <!-- Events -->
-            <div id="events" class="wide">
-                <div class="row events-highlight">
-                    <div class="col-lg-6">
-                        <div class="events-highlight-single">
-                            <div class="event-highlight-date">
-                                <a href="#">22<br>آبان</a>
-                            </div>
-                            <div class="event-highlight-desc">
-                                <p>
-                                    توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات
-                                    رویداد توضیحات رویداد توضیحات
-                                </p>
-                            </div>
-                        </div>
-                        <div class="events-highlight-single">
-                            <div class="event-highlight-date">
-                                <a href="#">22<br>آذر</a>
-                            </div>
-                            <div class="event-highlight-desc">
-                                <p>
-                                    توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات
-                                    رویداد توضیحات رویداد توضیحات
-                                </p>
-                            </div>
-                        </div>
-                        <div class="events-highlight-single">
-                            <div class="event-highlight-date">
-                                <a href="#">22<br>دی</a>
-                            </div>
-                            <div class="event-highlight-desc">
-                                <p>
-                                    توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات
-                                    رویداد توضیحات رویداد توضیحات
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 video-highlight">
-                        <!-- Video Player -->
-                        <!--
-                        <video width="100%" height="auto" controls>
-                            <source src="movie.mp4" type="video/mp4">
-                            <source src="movie.ogg" type="video/ogg">
-                            Your browser does not support the video tag.
-                        </video>
-                        -->
-                        <!-- FOR FUN !! :) -->
-                        <div id="73832804035">
-                            <script type="text/JavaScript"
-                                    src="https://www.aparat.com/embed/2QjXp?data[rnddiv]=73832804035&data[responsive]=yes"></script>
-                        </div>
-                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Events -->
+    <div id="events" class="wide">
+        <div class="row events-highlight">
+            <div class="col-lg-6">
+                {% for event in events %}
+                    <div class="events-highlight-single">
+                        <div class="event-highlight-date">
+                            <a>
+                                <p class="m-0 p-0">{{ event.start_date|jformat:"%d"}}</p>
+                                <p class="m-0 p-0">{{ event.start_date|jformat:"%B" |str_month_to_persian}}</p>
+                            </a>
+                        </div>
+                        <div class="event-highlight-desc">
+                            <p>{{ event.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                {#                        <div class="events-highlight-single">#}
+                {#                            <div class="event-highlight-date">#}
+                {#                                <a href="#">22<br>آذر</a>#}
+                {#                            </div>#}
+                {#                            <div class="event-highlight-desc">#}
+                {#                                <p>#}
+                {#                                    توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات رویداد توضیحات#}
+                {#                                    رویداد توضیحات رویداد توضیحات#}
+                {#                                </p>#}
+                {#                            </div>#}
+                {#                        </div>#}
+
+            </div>
+            <div class="col-lg-6 video-highlight">
+                <!-- Video Player -->
+                <!--
+                <video width="100%" height="auto" controls>
+                    <source src="movie.mp4" type="video/mp4">
+                    <source src="movie.ogg" type="video/ogg">
+                    Your browser does not support the video tag.
+                </video>
+                -->
+                <!-- FOR FUN !! :) -->
+                <div id="73832804035">
+                    <script type="text/JavaScript"
+                            src="https://www.aparat.com/embed/2QjXp?data[rnddiv]=73832804035&data[responsive]=yes"></script>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}

@@ -14,7 +14,6 @@ from django_jalali.db import models as jmodels
 from filer.fields.image import FilerImageField
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
-from tinymce.models import HTMLField
 
 from apps.account.models import UserProfile
 from config.settings.base import product_models, learning_attachments_path
@@ -194,8 +193,10 @@ class Service(ProductBaseModel):
     pub_date = jmodels.jDateTimeField(_("Date"))
     picture = FilerImageField(related_name='service', on_delete=models.PROTECT)
     category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
-    description = HTMLField()
-    introduction = HTMLField()
+    description = RichTextField()
+    introduction = models.TextField(max_length=190)
+    show_in_home = models.BooleanField(default=False)
+    highlight_in_home = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Service')
@@ -244,7 +245,6 @@ class LearningPost(ProductBaseModel):
     video = models.ForeignKey('VideoFile', on_delete=models.CASCADE, null=True, blank=True)
     attachment = models.FileField(null=True, blank=True, storage=learning_attachments_path)
     show_in_home = models.BooleanField(default=False)
-    show_big_in_home = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Learning Post')
@@ -302,7 +302,7 @@ class Event(ProductBaseModel):
     end_date = jmodels.jDateTimeField()
     duration = models.IntegerField()
     join_link = models.URLField(max_length=128)
-    description = HTMLField()
+    description = models.TextField(max_length=500)
     show_in_home = models.BooleanField(default=False)
 
     @property
