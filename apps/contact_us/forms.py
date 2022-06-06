@@ -1,10 +1,8 @@
-from django.forms import ModelForm
 from django import forms
-from .models import Message
-from captcha.fields import CaptchaField, CaptchaTextInput
+from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 
-from ..account.widget import CustomCaptchaTextInput
+from .models import Message
 
 owner_email = (
     ('Department1@example.com', _('Department1')),
@@ -15,28 +13,81 @@ owner_email = (
 
 class ContactForm(ModelForm):
     class Meta:
-        model = Message
-        fields = ['subject', 'phone', 'email', 'content', 'captcha']
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            for field in self.fields:
+                field.widget.attrs.update({'class': 'form-control'})
+            self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+            self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
 
-    subject = forms.CharField(
-        label=_("Subject")
-    )
-    phone = forms.CharField(
-        required=False,
-        label=_('Phone number')
-    )
-    email = forms.EmailField(
-        label=_('Email')
-    )
-    content = forms.CharField(
-        widget=forms.Textarea,
-        label=_('Message')
-    )
-    captcha = CaptchaField(widget=CustomCaptchaTextInput(attrs={'class': "form-control"}))
-    subject.widget.attrs.update({'class': 'form-control', 'placeholder': _("Subject")})
-    phone.widget.attrs.update({'class': 'form-control', 'placeholder': _('Phone number')})
-    email.widget.attrs.update({'class': 'form-control', 'placeholder': _('Email')})
-    content.widget.attrs.update({'class': 'form-control', 'placeholder': _('Message'), 'rows': '5'})
+        model = Message
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'personal_web_site',
+            'linkedin_profile',
+            'resume',
+            'gender',
+            'marital_status',
+            'education_status',
+            'university',
+            'field_of_study',
+            'research_activity',
+            'work_experience',
+            'certificate',
+            'language_exam',
+            'language_exam_description',
+            'destination_countries',
+            'capital_for_immigration',
+            'preference_to_join',
+            'final_description',
+        )
+        help_texts = {
+            'personal_web_site':
+                _("If you have implemented your academic or professional activities on a specific site, enter its address."),
+            'linkedin_profile': "",
+            'resume': "",
+            'gender': "",
+            'marital_status': "",
+            'education_status': "",
+            'university': "",
+            'field_of_study': "",
+            'research_activity': "",
+            'work_experience': "",
+            'certificate': "",
+            'language_exam': "",
+            'language_exam_description': "",
+            'destination_countries': "",
+            'capital_for_immigration': "",
+            'preference_to_join': "",
+            'final_description': "",
+        }
+
+        labels = {
+            # 'first_name': "",
+            # 'last_name': "",
+            # 'email': "",
+            # 'phone': "",
+            # 'personal_web_site': "",
+            # 'linkedin_profile': "",
+            # 'resume': "",
+            # 'gender': "",
+            # 'marital_status': "",
+            # 'education_status': "",
+            # 'university': "",
+            # 'field_of_study': "",
+            # 'research_activity': "",
+            # 'work_experience': "",
+            # 'certificate': "",
+            # 'language_exam': "",
+            # 'language_exam_description': "",
+            # 'destination_countries': "",
+            # 'capital_for_immigration': "",
+            # 'preference_to_join': "",
+            # 'final_description': "",
+        }
 
     def save(self, commit=True):
         message = super().save(commit=False)

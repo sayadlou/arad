@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-03 17:02+0430\n"
+"POT-Creation-Date: 2022-06-06 20:23+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,6 @@ msgid "Password"
 msgstr "رمز عبور"
 
 #: apps/account/forms.py:25 apps/account/forms.py:105
-#: apps/contact_us/forms.py:29 apps/contact_us/forms.py:38
 msgid "Email"
 msgstr "ایمیل"
 
@@ -208,55 +207,112 @@ msgstr "تغییر رمز عبور"
 msgid "Create account"
 msgstr "ایجاد حساب کاربری"
 
-#: apps/blog/models.py:21
+#: apps/blog/models.py:22
 msgid "Blog Category"
 msgstr "دسته بندی بلاگ"
 
-#: apps/blog/models.py:22
+#: apps/blog/models.py:23
 msgid "Blog Categories"
 msgstr "دسته بندی های بلاگ"
 
-#: apps/blog/models.py:39 apps/store/models.py:193 apps/store/models.py:242
+#: apps/blog/models.py:40 apps/store/models.py:193 apps/store/models.py:242
 #: apps/store/models.py:298
 msgid "Date"
 msgstr ""
 
-#: apps/blog/models.py:46
+#: apps/blog/models.py:47
 msgid "Blog Post"
 msgstr "مطلب بلاگ"
 
-#: apps/blog/models.py:47
+#: apps/blog/models.py:48
 msgid "Blog Posts"
 msgstr "مطالب بلاگ"
 
-#: apps/contact_us/forms.py:10
+#: apps/contact_us/forms.py:8
 msgid "Department1"
 msgstr ""
 
-#: apps/contact_us/forms.py:11
+#: apps/contact_us/forms.py:9
 msgid "Department2"
 msgstr ""
 
-#: apps/contact_us/forms.py:12
+#: apps/contact_us/forms.py:10
 msgid "Department3"
 msgstr ""
 
-#: apps/contact_us/forms.py:22 apps/contact_us/forms.py:36
-msgid "Subject"
+#: apps/contact_us/forms.py:49
+msgid ""
+"If you have implemented your academic or professional activities on a "
+"specific site, enter its address."
 msgstr ""
 
-#: apps/contact_us/forms.py:26 apps/contact_us/forms.py:37
-msgid "Phone number"
+#: apps/contact_us/models.py:13
+msgid "Male"
 msgstr ""
 
-#: apps/contact_us/forms.py:33 apps/contact_us/forms.py:39
+#: apps/contact_us/models.py:14
+msgid "Female"
+msgstr ""
+
+#: apps/contact_us/models.py:17
+msgid "Single"
+msgstr ""
+
+#: apps/contact_us/models.py:18
+msgid "Married"
+msgstr ""
+
 #: apps/contact_us/models.py:21
+msgid "High school"
+msgstr ""
+
+#: apps/contact_us/models.py:22
+msgid "Diploma"
+msgstr ""
+
+#: apps/contact_us/models.py:23
+msgid "Associate Degree"
+msgstr ""
+
+#: apps/contact_us/models.py:24
+msgid "Bachelor's degree"
+msgstr ""
+
+#: apps/contact_us/models.py:25
+msgid "Master's degree"
+msgstr ""
+
+#: apps/contact_us/models.py:26
+msgid "P.H.D"
+msgstr ""
+
+#: apps/contact_us/models.py:29
+msgid "IELTS"
+msgstr ""
+
+#: apps/contact_us/models.py:30
+msgid "TOEFL"
+msgstr ""
+
+#: apps/contact_us/models.py:31
+msgid "GRE"
+msgstr ""
+
+#: apps/contact_us/models.py:32
+msgid "GMAT"
+msgstr ""
+
+#: apps/contact_us/models.py:33
+msgid "others"
+msgstr ""
+
+#: apps/contact_us/models.py:60
 #, fuzzy
 #| msgid "Messages"
 msgid "Message"
 msgstr "پیام"
 
-#: apps/contact_us/models.py:22
+#: apps/contact_us/models.py:61
 #, fuzzy
 #| msgid "Messages"
 msgid "Messages"

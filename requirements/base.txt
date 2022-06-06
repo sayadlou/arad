@@ -1,4 +1,4 @@
-asgiref==3.4.*
+asgiref==3.5.*
 Django==3.2.*
 pytz==2021.*
 sqlparse==0.4.*
@@ -6,12 +6,12 @@ Pillow==9.1.*
 django-ranged-response==0.2.*
 django-simple-captcha==0.5.*
 psycopg2-binary==2.9.*
-redis==4.1.*
+redis==4.3.*
 celery==5.2.*
 requests==2.27.*
 django_downloadview==2.3.*
 az-iranian-bank-gateways==1.6.*
-django-ckeditor==6.2.*
+django-ckeditor==6.4.*
 django-jalali==6.0.*
 django-filer==2.2.*
 django-dbbackup==3.3.*

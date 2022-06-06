@@ -6,6 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+from filer.fields.image import FilerImageField
 from mptt.models import MPTTModel, TreeForeignKey
 
 
@@ -37,7 +38,7 @@ class Post(models.Model):
     status = models.CharField(max_length=50, choices=STATUS)
     view = models.BigIntegerField(null=True, blank=True, default=0)
     pub_date = models.DateField(_("Date"), default=datetime.date.today)
-    picture = models.ImageField(upload_to='blog')
+    picture = FilerImageField(related_name='blog', on_delete=models.PROTECT)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     intro = models.TextField(max_length=500)
     show_in_home = models.BooleanField(default=False)

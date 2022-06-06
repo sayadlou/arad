@@ -198,20 +198,7 @@ product_models = [
     "event",
 ]
 ALLOW_UNICODE_SLUGS = True
-TINYMCE_DEFAULT_CONFIG = {
-    "theme": "silver",
-    "height": 500,
-    "automatic_uploads": True,
-    "file_picker_types": "image media",
-    "menubar": True,
-    "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
-               "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
-               "code,help,wordcount,directionality",
-    "toolbar": "undo redo | formatselect | "
-               "bold italic backcolor | alignleft aligncenter "
-               "alignright alignjustify | bullist numlist outdent indent | "
-               "removeformat | ltr rtl | help",
-}
+
 
 CKEDITOR_CONFIGS = {
     'default': {
