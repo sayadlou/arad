@@ -5,8 +5,8 @@
 
 {% block content %}
     <div id="" class="wide">
-        <div class="filter row">
-            <div class="blog-categoty col-4">
+        <div class="filter ">
+            <div class="blog-categoty ">
                 دسته بندی&nbsp;:
                 <a type="button" class="btn  btn-sm btn-tag" href="{% url "store:learning_home" %}">همه</a>
                 {% for cat in categories %}
@@ -31,7 +31,7 @@
         <hr>
         <div class="row">
             {% for post in page_obj %}
-                <div class="col-4 blog-single">
+                <div class="col-lg-4 col-sm-6 blog-single">
                     <div class="blog-image">
                         <a class="post-title" href="{{ post.get_absolute_url }}"><h1>{{ post.title }}</h1></a>
                         <strong class="post-date">{{ post.pub_date|jformat:'%Y/%m/%d' }}</strong>
