@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-06 20:23+0430\n"
+"POT-Creation-Date: 2022-06-06 20:50+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,7 @@ msgid "Password"
 msgstr "رمز عبور"
 
 #: apps/account/forms.py:25 apps/account/forms.py:105
+#: apps/contact_us/forms.py:64
 msgid "Email"
 msgstr "ایمیل"
 
@@ -240,51 +241,141 @@ msgstr ""
 msgid "Department3"
 msgstr ""
 
-#: apps/contact_us/forms.py:49
+#: apps/contact_us/forms.py:42
 msgid ""
 "If you have implemented your academic or professional activities on a "
 "specific site, enter its address."
 msgstr ""
+"در صورتی که فعالیت های آکادمیک یا تخصصی خود را در سایت خاصی پیاده سازی کرده "
+"اید آدرس آن را وارد کنید."
+
+#: apps/contact_us/forms.py:62
+#, fuzzy
+#| msgid "first_name"
+msgid "First Name"
+msgstr "نام"
+
+#: apps/contact_us/forms.py:63
+#, fuzzy
+#| msgid "last_name"
+msgid "Last Name"
+msgstr "نام خانوادگی"
+
+#: apps/contact_us/forms.py:65
+#, fuzzy
+#| msgid "phone"
+msgid "Phone"
+msgstr "شماره تلفن ثابت"
+
+#: apps/contact_us/forms.py:66
+msgid "Personal Web Site"
+msgstr ""
+
+#: apps/contact_us/forms.py:67
+#, fuzzy
+#| msgid "Profile"
+msgid "Linkedin Profile"
+msgstr "پروفایل لینکدین"
+
+#: apps/contact_us/forms.py:68
+msgid "Resume"
+msgstr "آپلود رزومه"
+
+#: apps/contact_us/forms.py:69
+msgid "Gender"
+msgstr "جنسیت"
+
+#: apps/contact_us/forms.py:70
+msgid "Marital Status"
+msgstr "وضعیت تاهل"
+
+#: apps/contact_us/forms.py:71
+msgid "Education Status"
+msgstr "وضعیت تحصیل"
+
+#: apps/contact_us/forms.py:72
+msgid "University"
+msgstr "دانشگاه"
+
+#: apps/contact_us/forms.py:73
+msgid "Field Of Study"
+msgstr "رشته تحصیلی"
+
+#: apps/contact_us/forms.py:74
+msgid "Research Activity"
+msgstr "فعالیت های تحقیقاتی"
+
+#: apps/contact_us/forms.py:75
+msgid "Work Experience"
+msgstr "سوابق شغلی"
+
+#: apps/contact_us/forms.py:76
+msgid "Certificate"
+msgstr "مدارک"
+
+#: apps/contact_us/forms.py:77
+msgid "Language Exam"
+msgstr ""
+
+#: apps/contact_us/forms.py:78
+msgid "Language Exam Description"
+msgstr ""
+
+#: apps/contact_us/forms.py:79
+msgid "Destination Countries"
+msgstr ""
+
+#: apps/contact_us/forms.py:80
+msgid "Capital For Immigration"
+msgstr ""
+
+#: apps/contact_us/forms.py:81
+msgid "Preference To Join"
+msgstr ""
+
+#: apps/contact_us/forms.py:82
+msgid "Final Description"
+msgstr ""
 
 #: apps/contact_us/models.py:13
 msgid "Male"
-msgstr ""
+msgstr "مذکر"
 
 #: apps/contact_us/models.py:14
 msgid "Female"
-msgstr ""
+msgstr "مؤنث"
 
 #: apps/contact_us/models.py:17
 msgid "Single"
-msgstr ""
+msgstr "مجرد"
 
 #: apps/contact_us/models.py:18
 msgid "Married"
-msgstr ""
+msgstr "متاعل"
 
 #: apps/contact_us/models.py:21
 msgid "High school"
-msgstr ""
+msgstr "زیر دیپلم"
 
 #: apps/contact_us/models.py:22
 msgid "Diploma"
-msgstr ""
+msgstr "دیپلم"
 
 #: apps/contact_us/models.py:23
 msgid "Associate Degree"
-msgstr ""
+msgstr "فوق دیپلم"
 
 #: apps/contact_us/models.py:24
 msgid "Bachelor's degree"
-msgstr ""
+msgstr "لیسانس"
 
 #: apps/contact_us/models.py:25
 msgid "Master's degree"
-msgstr ""
+msgstr "فوق لیسانس"
 
 #: apps/contact_us/models.py:26
 msgid "P.H.D"
-msgstr ""
+msgstr "دکترا"
 
 #: apps/contact_us/models.py:29
 msgid "IELTS"

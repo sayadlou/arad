@@ -13,13 +13,6 @@ owner_email = (
 
 class ContactForm(ModelForm):
     class Meta:
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            for field in self.fields:
-                field.widget.attrs.update({'class': 'form-control'})
-            self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
-            self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
-
         model = Message
         fields = (
             'first_name',
@@ -48,13 +41,13 @@ class ContactForm(ModelForm):
             'personal_web_site':
                 _("If you have implemented your academic or professional activities on a specific site, enter its address."),
             'linkedin_profile': "",
-            'resume': "",
+            'resume': _("You can upload your resume in pdf or docx format here Maximum file size: 2048kb"),
             'gender': "",
             'marital_status': "",
             'education_status': "",
             'university': "",
             'field_of_study': "",
-            'research_activity': "",
+            'research_activity': "Please cite your journal and conference papers.",
             'work_experience': "",
             'certificate': "",
             'language_exam': "",
@@ -66,27 +59,27 @@ class ContactForm(ModelForm):
         }
 
         labels = {
-            # 'first_name': "",
-            # 'last_name': "",
-            # 'email': "",
-            # 'phone': "",
-            # 'personal_web_site': "",
-            # 'linkedin_profile': "",
-            # 'resume': "",
-            # 'gender': "",
-            # 'marital_status': "",
-            # 'education_status': "",
-            # 'university': "",
-            # 'field_of_study': "",
-            # 'research_activity': "",
-            # 'work_experience': "",
-            # 'certificate': "",
-            # 'language_exam': "",
-            # 'language_exam_description': "",
-            # 'destination_countries': "",
-            # 'capital_for_immigration': "",
-            # 'preference_to_join': "",
-            # 'final_description': "",
+            'first_name': _("First Name"),
+            'last_name': _("Last Name"),
+            'email': _("Email"),
+            'phone': _("Phone"),
+            'personal_web_site': _("Personal Web Site"),
+            'linkedin_profile': _("Linkedin Profile"),
+            'resume': _("Resume"),
+            'gender': _("Gender"),
+            'marital_status': _("Marital Status"),
+            'education_status': _("Education Status"),
+            'university': _("University"),
+            'field_of_study': _("Field Of Study"),
+            'research_activity': _("Research Activity"),
+            'work_experience': _("Work Experience"),
+            'certificate': _("Certificate"),
+            'language_exam': _("Language Exam"),
+            'language_exam_description': _("Language Exam Description"),
+            'destination_countries': _("Destination Countries"),
+            'capital_for_immigration': _("Capital For Immigration"),
+            'preference_to_join': _("Preference To Join"),
+            'final_description': _("Final Description"),
         }
 
     def save(self, commit=True):
