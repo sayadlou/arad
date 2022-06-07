@@ -2,7 +2,18 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-    <div id="welcome-text">
+
+
+
+    <div id="welcome-text"
+         style="display:
+                 {% if form.errors %}
+                     none
+                 {% else %}
+                     block
+                 {% endif %}
+                 ;"
+    >
         <div class="row justify-content-center">
             <div class="col-4 d-flex justify-content-center">
                 <img style="max-width: 20vw" class="text-center" src="{% static "contact_us\img.png" %}"
@@ -30,26 +41,41 @@
             </div>
         </div>
     </div>
-    <form style="display: none" id="regForm" autocomplete="off" method="post" action="{% url 'contact_us:form' %}">
+    <div class="px-5 mx-5">
+        {% for field in form.visible_fields %}
+            {% if field.errors %}
+                <div class="alert alert-danger" role="alert">برای بخش {{ field.label_tag }}{{ field.errors.as_text }}
+                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 
+    <form style="display:
+            {% if form.errors %}
+                block
+            {% else %}
+                none
+            {% endif %}
+
+            ;"
+          id="regForm" autocomplete="off" method="post" action="{% url 'contact_us:form' %}">
+        {% csrf_token %}
         <!-- One " tab" for each step in the form: -->
         {% for field in form.visible_fields %}
             <div class="tab">
-                {{ field.label_tag }}
-                <h1>{{ field.help_text }}</h1>
+                <p class="fw-bold">{{ field.label_tag }}</p>
+                <p class="fw-light">{{ field.help_text }}</p>
                 {{ field }}
-                {{ field.errors }}
             </div>
         {% endfor %}
-
-
         <div style="overflow:auto;">
             <div style="float:right;">
                 <a class="btn btn-outline-primary " type="button" id="prevBtn" onclick="nextPrev(-1)">
-                    Previous
+                    قبل
                 </a>
                 <a class="btn btn-outline-primary " type="button" id="nextBtn" onclick="nextPrev(1)">
-                    Next
+                    بعد
                 </a>
             </div>
         </div>
@@ -67,7 +93,7 @@
         /* Style the form */
         #regForm {
             background-color: #ffffff;
-            margin: 100px auto;
+            margin: 20px auto;
             padding: 40px;
             width: 70%;
             min-width: 300px;
@@ -115,13 +141,6 @@
         }
     </style>
     <script>
-        document.querySelectorAll('.form-control').forEach(item => {
-            item.addEventListener('change', event => {
-                {#event.classList.add("active");#}
-                console.log()
-                event.target.classList.remove("invalid")
-            })
-        })
 
 
         function validateEmail(email) {
@@ -146,9 +165,9 @@
                 document.getElementById("prevBtn").style.display = "inline";
             }
             if (n === (x.length - 1)) {
-                document.getElementById("nextBtn").innerHTML = "Submit";
+                document.getElementById("nextBtn").innerHTML = "ارسال";
             } else {
-                document.getElementById("nextBtn").innerHTML = "Next";
+                document.getElementById("nextBtn").innerHTML = "بعد";
             }
             // ... and run a function that displays the correct step indicator:
             fixStepIndicator(n)

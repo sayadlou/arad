@@ -15,7 +15,7 @@ class Message(models.Model):
     )
     marital_choices = (
         ('single', _('Single')),
-        ('married', _('Married')),
+        ('married', "متاهل"),
     )
     education_choices = (
         ("high_school", _('High school')),
@@ -41,8 +41,8 @@ class Message(models.Model):
     linkedin_profile = models.URLField(null=True, blank=True)
     resume = models.FileField(null=True, blank=True)
     gender = models.CharField(max_length=50, choices=gender_choices)
-    marital_status = models.CharField(max_length=50, choices=gender_choices)
-    education_status = models.CharField(max_length=50, choices=gender_choices)
+    marital_status = models.CharField(max_length=50, choices=marital_choices)
+    education_status = models.CharField(max_length=50, choices=education_choices)
     university = models.CharField(max_length=100)
     field_of_study = models.CharField(max_length=100)
     research_activity = models.TextField(max_length=1000, null=True, blank=True)
