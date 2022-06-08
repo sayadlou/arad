@@ -18,7 +18,7 @@
                                         {{ form.first_name.label_tag }}
                                     </div>
                                     {{ form.first_name }}
-                                    {{ form.first_name.errors }}
+                                    <p class="text-danger">{{ form.first_name.errors.as_text }}</p>
 
                                 </div>
                                 <div class="form-group col-md-6">
@@ -26,7 +26,7 @@
                                         {{ form.last_name.label_tag }}
                                     </div>
                                     {{ form.last_name }}
-                                    {{ form.last_name.errors }}
+                                    <p class="text-danger"> {{ form.last_name.errors.as_text }}</p>
 
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                         {{ form.username.label_tag }}
                                     </div>
                                     {{ form.username }}
-                                    {{ form.username.errors }}
+                                    <p class="text-danger">{{ form.username.errors.as_text }}</p>
 
                                 </div>
                                 <div class="form-group col-md-6">
@@ -44,7 +44,7 @@
                                         {{ form.email.label_tag }}
                                     </div>
                                     {{ form.email }}
-                                    {{ form.email.errors }}
+                                    <p class="text-danger"> {{ form.email.errors.as_text }}</p>
 
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                                         {{ form.mobile.label_tag }}
                                     </div>
                                     {{ form.mobile }}
-                                    {{ form.mobile.errors }}
+                                    <p class="text-danger"> {{ form.mobile.errors.as_text }}</p>
 
                                 </div>
                                 <div class="form-group col-md-6">
@@ -62,7 +62,7 @@
                                         {{ form.phone.label_tag }}
                                     </div>
                                     {{ form.phone }}
-                                    {{ form.phone.errors }}
+                                    <p class="text-danger">  {{ form.phone.errors.as_text }}</p>
 
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                                         {{ form.password1.label_tag }}
                                     </div>
                                     {{ form.password1 }}
-                                    {{ form.password1.errors }}
+                                    <p class="text-danger"> {{ form.password1.errors.as_text }}</p>
 
                                 </div>
                                 <div class="form-group col-md-6">
@@ -82,7 +82,7 @@
                                         {{ form.password2.label_tag }}
                                     </div>
                                     {{ form.password2 }}
-                                    {{ form.password2.errors }}
+                                    <p class="text-danger">{{ form.password2.errors.as_text }}</p>
 
                                 </div>
 
@@ -93,13 +93,13 @@
                                     <div>
                                         {{ form.address.label_tag }}
                                     </div>
-                                    {{ form.address.errors }}
+                                    <p class="text-danger">   {{ form.address.errors.as_text }}</p>
 
                                     {{ form.address }}
 
                                 </div>
                                 {{ form.captcha }}
-                                {{ form.captcha.errors }}
+                                <p class="text-danger">  {{ form.captcha.errors.as_text }}</p>
 
                             </div>
                             <button type="submit" class="mt-1 btn btn-primary">{% translate "Create account" %}</button>

@@ -1,3 +1,4 @@
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, \
     PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.shortcuts import render
@@ -57,7 +58,8 @@ class SignUp(CreateView):
     form_class = UserRegisterForm
 
     def get_success_url(self):
-        return reverse_lazy('account:login')
+        login(self.request, self.object)
+        return reverse_lazy('account:profile')
 
 
 class Profile(LoginRequiredMixin, DetailView):
