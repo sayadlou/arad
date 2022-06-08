@@ -19,9 +19,11 @@
 
                         <hr>
                         {% if next %}
-                            {% translate "Your account doesn't have access to this page. To proceed, please login with an account that has access" %}
+                            {#                            {% translate "Your account doesn't have access to this page. To proceed, please login with an account that has access" %}#}
+                            حساب کاربری شما به این صفحه دسترسی ندارد. برای ادامه، لطفا با حساب کاربری که دسترسی دارد
+                            وارد شوید
                         {% else %}
-                            {% translate "Please login " %}
+                            {#                            {% translate "Please login " %}#}
                         {% endif %}
                         <form method="post" action="{% url 'account:login' %}">
                             <div class="row">
@@ -32,21 +34,23 @@
                                         {{ form.username.label_tag }}
                                     </div>
                                     {{ form.username }}
-                                    {{ form.username.errors }}
+                                    <p class="text-danger">    {{ form.username.errors.as_text }}</p>
                                     {% if form.username.help_text %}
                                         <p class="help">{{ form.username.help_text|safe }}</p>
                                     {% endif %}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ form.password.errors }}
-                                    {{ form.password.label_tag }}
+                                    <div>
+                                        {{ form.password.label_tag }}
+                                    </div>
                                     {{ form.password }}
+                                    <p class="text-danger">         {{ form.password.errors.as_text }}</p>
                                     {% if form.password.help_text %}
                                         <p class="help">{{ form.password.help_text|safe }}</p>
                                     {% endif %}
                                 </div>
-                                {{ form.captcha.errors }}
                                 {{ form.captcha }}
+                                <p class="text-danger">    {{ form.captcha.errors.as_text }}</p>
                             </div>
                             <button type="submit" class="mt-1 btn btn-primary">{% translate "Login" %}</button>
                             <a href="{% url "account:password_reset" %}"
