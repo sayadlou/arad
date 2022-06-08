@@ -13,7 +13,7 @@
                 data-bs-pause=false
                 style="min-height: 400px"
         >
-            <div class="carousel-inner">
+            <div class="carousel-inner" style="height: 60vh">
                 {% for post in Posts %}
                     <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
                         <div class="row">
@@ -27,8 +27,8 @@
                                 </p>
                             </div>
                             <div class="col-lg-6">
-                                <a href="{{ post.get_absolute_url }}"><img class="home-post-pic"
-                                                                           src="{{ post.picture.url }}" alt=""></a>
+                                <a href="{{ post.get_absolute_url }}">
+                                    <img class="home-post-pic" src="{{ post.picture.url }}" alt=""></a>
                             </div>
                         </div>
                     </div>
