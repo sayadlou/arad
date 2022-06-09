@@ -1,11 +1,11 @@
+from captcha.fields import CaptchaField
 from django import forms
-from django.contrib.auth import password_validation, login
+from django.contrib.auth import password_validation
 from django.contrib.auth.forms import AuthenticationForm, UsernameField, PasswordResetForm, PasswordChangeForm, \
     SetPasswordForm
+from django.contrib.auth.forms import UserCreationForm
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from captcha.fields import CaptchaField
-from django.contrib.auth.forms import UserCreationForm
 
 from .models import UserProfile
 from .widget import CustomCaptchaTextInput
