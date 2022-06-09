@@ -1,14 +1,14 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, \
     PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import DetailView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import UserProfile
+from django.views.generic import CreateView
+from django.views.generic.edit import UpdateView
 
-from .forms import MyAuthenticationForm, MyPasswordResetForm, MyPasswordChangeForm, MySetPasswordForm, UserRegisterForm
+from .forms import MyAuthenticationForm, MyPasswordResetForm, MyPasswordChangeForm, MySetPasswordForm, UserRegisterForm, \
+    UserUpdateForm
+from .models import UserProfile
 
 
 class Login(LoginView):
@@ -62,20 +62,29 @@ class SignUp(CreateView):
         return reverse_lazy('account:profile')
 
 
-class Profile(LoginRequiredMixin, DetailView):
+class Profile(LoginRequiredMixin, UpdateView):
     model = UserProfile
+    form_class = UserUpdateForm
     login_url = reverse_lazy('account:login')
     template_name = "account/profile.html"
     context_object_name = "user"
+    success_url = reverse_lazy('account:profile')
+
+
+    def get_initial(self):
+        return self.request.user.__dict__
 
     def get_object(self, queryset=None):
         return self.request.user
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data()
-        user_purchased_base_product = self.request.user.productbasemodel_set.all()
+        data["purchase"] = self.get_user_purchased_item()
+        return data
+
+    def get_user_purchased_item(self):
         user_purchased_product = set()
+        user_purchased_base_product = self.request.user.productbasemodel_set.all()
         for base_product in user_purchased_base_product:
             user_purchased_product.add(base_product.get_child())
-        data["purchase"] = user_purchased_product
-        return data
+        return user_purchased_product
