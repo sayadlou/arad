@@ -43,7 +43,7 @@ class MyUserAdmin(admin.ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'telegram', 'whatsapp')
+    list_display = ('first_name', 'last_name', 'username', 'send_an_email', 'telegram', 'whatsapp')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     search_fields = ('username', 'first_name', 'last_name', 'email')
     ordering = ('username',)
@@ -53,6 +53,12 @@ class MyUserAdmin(admin.ModelAdmin):
     def telegram(self, user: UserProfile):
         if user.telegram_id:
             return format_html('<a href="https://t.me/{}" target=”_blank”>چت</a>', user.telegram_id[1:])
+        return "---"
+
+    @admin.display(description="ایمیل")
+    def send_an_email(self, user: UserProfile):
+        if user.email:
+            return format_html('<a href="mailto:{}" target=”_blank”>ارسال ایمیل</a>', user.email)
         return "---"
 
     @admin.display(description="واتساپ")
