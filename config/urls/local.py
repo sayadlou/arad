@@ -1,12 +1,12 @@
 import debug_toolbar
-from django.contrib import admin
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.urls import path, include
 
 from .base import urlpatterns
-# from apps.core.admin import AuthAdminForm
-
 from ..settings.base import MEDIA_URL, MEDIA_ROOT, STATIC_URL, STATIC_ROOT
+
+# from apps.core.admin import AuthAdminForm
 
 # admin.autodiscover()
 # admin.site.login_form = AuthAdminForm

@@ -17,6 +17,11 @@ DATABASES = {
     }
 }
 
+INSTALLED_APPS += [
+    "admin_honeypot",
+]
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
@@ -26,3 +31,6 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Arad Mohajer Mahan'
 
 CAPTCHA_TEST_MODE = False
+
+
+ADMINS = [(os.environ.get('ADMIN_NAME'), os.environ.get('ADMIN_EMAIL')),]
