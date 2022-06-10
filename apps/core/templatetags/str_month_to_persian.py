@@ -20,4 +20,6 @@ def str_month_to_persian(value, arg=None):
         ('Esfand', 'اسفند'),
     )
     for month_pair in month_pairs:
-        return value.replace(month_pair[0], month_pair[1])
+        value = value.replace(month_pair[0], month_pair[1])
+    return value
+
