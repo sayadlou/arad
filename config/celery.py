@@ -2,7 +2,7 @@ import os
 
 from celery import Celery
 
-os.environ.get('DJANGO_SETTINGS_MODULE')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.production')
 
 celery = Celery('arad')
 celery.config_from_object('django.conf:settings', namespace='CELERY')
