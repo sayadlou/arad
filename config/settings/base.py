@@ -199,7 +199,6 @@ product_models = [
 ]
 ALLOW_UNICODE_SLUGS = True
 
-
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
@@ -219,3 +218,8 @@ THUMBNAIL_PROCESSORS = (
 
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR / 'backup'}
+
+CELERY_BROKER_URL = 'redis://redis:6379/1'
+CELERY_BEAT_SCHEDULE = {
+
+}
