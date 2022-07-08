@@ -64,3 +64,4 @@ media/
 general.log/
 /static/
 /backup/
+/logs/
