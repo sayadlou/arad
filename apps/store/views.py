@@ -185,20 +185,24 @@ class CallbackGatewayView(LoginRequiredMixin, View):
             "پرداخت با شکست مواجه شده است.اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.")
 
 
-class ServiceIndexView(ListView):
-    model = Service
-    template_name = 'service/index.html'
+class IndexView(ListView):
+    template_name = 'store/index.html'
     paginate_by = 6
-
-    # all_posts = Post.objects.order_by('pub_date').filter(status='Published')
+    context_object_name = "object_list"
 
     def get_queryset(self):
         return self.model.objects.order_by('pub_date').filter(status='Published')
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['categories'] = ServiceCategory.objects.all()
-        return data
+        context = super().get_context_data(**kwargs)
+        context['categories'] = self.category_model.objects.all()
+        context['index_url'] = self.model.get_index_url()
+        return context
+
+
+class ServiceIndexView(IndexView):
+    model = Service
+    category_model = ServiceCategory
 
 
 class ServiceSlugView(DetailView):
@@ -217,36 +221,32 @@ class ServiceSlugView(DetailView):
         return data
 
 
-class ServiceCategoryView(ListView):
-    model = Service
-    template_name = 'service/category.html'
+class CategoryView(ListView):
+    template_name = 'store/category.html'
     paginate_by = 6
+    context_object_name = "object_list"
+
 
     def get_queryset(self):
         category = self.kwargs['category']
         return self.model.objects.order_by('pub_date').filter(category__name__iexact=category)
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['categories'] = ServiceCategory.objects.all()
-        data['category'] = self.kwargs.get('category')
-        return data
-
-
-class LearningIndexView(ListView):
-    model = LearningPost
-    template_name = 'learning/index.html'
-    paginate_by = 6
-
-    # all_posts = Post.objects.order_by('pub_date').filter(status='Published')
-
-    def get_queryset(self):
-        return self.model.objects.order_by('pub_date').filter(status='Published')
-
-    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = LearningCategory.objects.all()
+        context['categories'] = self.category_model.objects.all()
+        context['index_url'] = self.model.get_index_url()
+        context['category'] = self.kwargs.get('category')
         return context
+
+
+class ServiceCategoryView(CategoryView):
+    model = Service
+    category_model = ServiceCategory
+
+
+class LearningIndexView(IndexView):
+    model = LearningPost
+    category_model = LearningCategory
 
 
 class LearningSlugView(DetailView):
@@ -299,20 +299,9 @@ class LearningSlugView(DetailView):
         return ip
 
 
-class LearningCategoryView(ListView):
+class LearningCategoryView(CategoryView):
     model = LearningPost
-    template_name = 'learning/category.html'
-    paginate_by = 6
-
-    def get_queryset(self):
-        category = self.kwargs['category']
-        return self.model.objects.order_by('pub_date').filter(category__name__iexact=category)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = LearningCategory.objects.all()
-        context['category'] = self.kwargs.get('category')
-        return context
+    category_model = LearningCategory
 
 
 class LearningAttachmentView(LearningBoughtUserMixin, ObjectDownloadView):
@@ -338,22 +327,9 @@ def refresh(request):
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
 
-class EventIndexView(ListView):
+class EventIndexView(IndexView):
     model = Event
-    template_name = 'event/index.html'
-    paginate_by = 6
-
-    # all_posts = Post.objects.order_by('pub_date').filter(status='Published')
-
-    def get_queryset(self):
-        return self.model.objects.order_by('pub_date').filter(status='Published')
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['model'] = ContentType.objects.get_for_model(Event).pk
-        data['formmy'] = CartItemForm()
-        data['categories'] = EventCategory.objects.all()
-        return data
+    category_model = EventCategory
 
 
 class EventSlugView(DetailView):
@@ -372,17 +348,6 @@ class EventSlugView(DetailView):
         return data
 
 
-class EventCategoryView(ListView):
+class EventCategoryView(CategoryView):
     model = Event
-    template_name = 'event/category.html'
-    paginate_by = 6
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['category'] = self.kwargs['category']
-        data['categories'] = EventCategory.objects.all()
-        return data
-
-    def get_queryset(self):
-        category = self.kwargs['category']
-        return self.model.objects.order_by('pub_date').filter(category__name__iexact=category)
+    category_model = EventCategory

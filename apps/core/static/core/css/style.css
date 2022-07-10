@@ -52,7 +52,8 @@ body {
 }
 
 #Menu li a.active {
-    color: #000;
+    background-color: #a19e9e;
+    border-radius: 5px;
 }
 
 #Menu li:last-child a {
@@ -405,9 +406,17 @@ tr, td {
     display: none;
 }
 
+.home-link {
+    display: none;
+}
+
 @media screen and (max-width: 992px) {
     .logo {
         display: none;
+    }
+
+    .home-link {
+        display: block;
     }
 
     .sidebar {

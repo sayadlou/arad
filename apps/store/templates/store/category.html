@@ -5,23 +5,29 @@
     <div id="" class="wide">
         <div class="filter ">
             <div class="blog-categoty ">
-                <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "store:event_home" %}">همه</a>
-                {% for category in categories %}
-                    <a type="button" class="btn btn-light btn-sm btn-tag"
-                       href="{% url "store:event_category" category.name %}">{{ category.name }}</a>
+                دسته بندی&nbsp;:
+                <a type="button" class="btn  btn-sm btn-tag" href="{{ index_url }}">همه</a>
+                {% for cat in categories %}
+                    <a type="button" class="btn
+                     {% if cat.name == category %}
+                        btn-dark
+                    {% else %}
+                        btn-light
+                    {% endif %}
+                    btn-sm btn-tag"
+                       href="{% url "store:event_category" cat.name %}">{{ cat.name }}</a>
                 {% endfor %}
             </div>
         </div>
         <hr>
         <div class="row">
-            {% for event in page_obj %}
+            {% for object in object_list %}
                 <div class="col-lg-4 col-sm-6 blog-single">
                     <div class="blog-image">
-                        <a class="post-title" href="{{ event.get_absolute_url }}"><h1>{{ event.title }}</h1></a>
-                        {#                        <strong class="post-date">{{ event.start_date|jformat:"%d-%m-%Y" }}</strong>#}
-                        <strong class="post-date">{{ event.start_date|jformat:"%Y-%m-%d" }}</strong>
-                        <a href="{{ event.get_absolute_url }}">
-                            <img class="" src="{{ event.picture.url }}" alt="">
+                        <a class="post-title" href="{{ object.get_absolute_url }}"><h1 class="text-center">{{ object.title }}</h1></a>
+                        <strong class="post-date">{{ object.start_date|jformat:"%Y-%m-%d" }}</strong>
+                        <a href="{{ object.get_absolute_url }}">
+                            <img class="" src="{{ object.picture.url }}" alt="">
                         </a>
                     </div>
                 </div>

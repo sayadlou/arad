@@ -17,14 +17,7 @@
                         btn-light
                      {% endif %}
                      btn-sm btn-tag"
-                       href="{% url "store:learning_category" cat.name %}">{{ cat.name }}</a>
-                {% endfor %}
-            </div>
-            <div class="blog-tag col-8">
-                <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "store:learning_home" %}">همه</a>
-                {% for tag in tags %}
-                    <a type="button" class="btn btn-light btn-sm btn-tag"
-                       href="{% url "store:learning_tag" %}?tag={{ tag }}">{{ tag }}</a>
+                       href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
                 {% endfor %}
             </div>
         </div>

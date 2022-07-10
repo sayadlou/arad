@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load core_tag %}
 <!DOCTYPE html>
 <html lang="fa-ir" dir="rtl">
 <head>
@@ -17,9 +18,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
-{#    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"#}
-{#            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"#}
-{#            crossorigin="anonymous"></script>#}
+    {#    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"#}
+    {#            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"#}
+    {#            crossorigin="anonymous"></script>#}
 
 
     <!-- Bootstrap -->
@@ -99,13 +100,34 @@
                     <a class="icon" onclick="mobileMenu()"><i class="fa fa-bars"></i></a>
                 </div>
                 <ul id="Menu">
-                    {#                    <li><a href="{% url "core:home" %}" class="active">صفحه نخست</a></li>#}
-                    <li><a href="{% url "store:service_home" %}">خدمات</a></li>
-                    <li><a href="{% url "store:event_home" %}">رویداد ها</a></li>
-                    <li><a href="{% url "store:learning_home" %}">آموزش</a></li>
-                    <li><a href="{% url "blog:home" %}">وبلاگ</a></li>
-                    <li><a href="{% url "core:about_us" %}">درباره ما</a></li>
-                    <li><a href="{% url "contact_us:form" %}">ارتباط با ما</a></li>
+                    <li class="home-link">
+                        {% url "core:home" as home %}
+                        <a href="{{ home }}">صفحه نخست</a>
+                    </li>
+                    <li>
+                        {% url "store:service_home" as service_home %}
+                        <a class={{ service_home|toolbar_active_detect:request.path_info }} href="{{ service_home }}">خدمات</a>
+                    </li>
+                    <li>
+                        {% url "store:event_home" as event_home %}
+                        <a class={{ event_home|toolbar_active_detect:request.path_info }}  href="{{ event_home }}">رویداد ها</a>
+                    </li>
+                    <li>
+                        {% url "store:learning_home" as learning_home %}
+                        <a class={{ learning_home|toolbar_active_detect:request.path_info }} href="{{ learning_home }}">آموزش</a>
+                    </li>
+                    <li>
+                        {% url "blog:home" as  blog_home %}
+                        <a class={{ blog_home|toolbar_active_detect:request.path_info }} href="{{ blog_home }}">وبلاگ</a>
+                    </li>
+                    <li>
+                        {% url "core:about_us" as  about_us %}
+                        <a class={{ about_us|toolbar_active_detect:request.path_info }} href="{{ about_us }}">درباره ما</a>
+                    </li>
+                    <li>
+                        {% url "contact_us:form" as contact_us %}
+                        <a class={{ contact_us|toolbar_active_detect:request.path_info }} href="{{ contact_us }}">ارتباط با ما</a>
+                    </li>
                 </ul>
             </div>
 
@@ -200,21 +222,21 @@
                             <a href="" class="text-decoration-none">
                                 <i class="fa fa-telegram social-icon-blue"></i>
                             </a>
-{#                            <a href="" class="text-decoration-none">#}
-{#                                <i class="fa fa-twitter social-icon-blue"></i>#}
-{#                            </a>#}
-{#                            <a href="" class="text-decoration-none">#}
-{#                                <i class="fa fa-youtube social-icon-red"></i>#}
-{#                            </a>#}
+                            {#                            <a href="" class="text-decoration-none">#}
+                            {#                                <i class="fa fa-twitter social-icon-blue"></i>#}
+                            {#                            </a>#}
+                            {#                            <a href="" class="text-decoration-none">#}
+                            {#                                <i class="fa fa-youtube social-icon-red"></i>#}
+                            {#                            </a>#}
                             <a href="" class="text-decoration-none">
                                 <i class="fa fa-instagram social-icon-inst"></i>
                             </a>
                             <a href="" class="text-decoration-none">
                                 <i class="fa fa-whatsapp social-icon-green"></i>
                             </a>
-{#                            <a href="" class="text-decoration-none">#}
-{#                                <i class="fa fa-linkedin social-icon-blue"></i>#}
-{#                            </a>#}
+                            {#                            <a href="" class="text-decoration-none">#}
+                            {#                                <i class="fa fa-linkedin social-icon-blue"></i>#}
+                            {#                            </a>#}
                         </div>
                         <div class="row pt-3">
                             <div class="col-6">

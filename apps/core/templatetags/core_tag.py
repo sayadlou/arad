@@ -23,3 +23,8 @@ def str_month_to_persian(value, arg=None):
         value = value.replace(month_pair[0], month_pair[1])
     return value
 
+
+@register.filter
+def toolbar_active_detect(menu_url, current_url):
+    # print(menu_url, current_url)
+    return "active" if menu_url in current_url else None

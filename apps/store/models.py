@@ -180,6 +180,10 @@ class ServiceCategory(MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['name']
 
+    @property
+    def get_absolute_url(self):
+        return reverse('store:service_category', kwargs={'category': self.name})
+
 
 class Service(ProductBaseModel):
     STATUS = (
@@ -207,6 +211,10 @@ class Service(ProductBaseModel):
     def get_absolute_url(self):
         return reverse('store:service_slug', kwargs={'slug': self.slug})
 
+    @staticmethod
+    def get_index_url():
+        return reverse('store:service_home')
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
@@ -226,6 +234,10 @@ class LearningCategory(MPTTModel):
 
     class MPTTMeta:
         order_insertion_by = ['name']
+
+    @property
+    def get_absolute_url(self):
+        return reverse('store:learning_category', kwargs={'category': self.name})
 
 
 class LearningPost(ProductBaseModel):
@@ -253,6 +265,10 @@ class LearningPost(ProductBaseModel):
     @property
     def get_absolute_url(self):
         return reverse('store:learning_slug', kwargs={'slug': self.slug})
+
+    @staticmethod
+    def get_index_url():
+        return reverse('store:learning_home')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, allow_unicode=True)
@@ -284,6 +300,10 @@ class EventCategory(MPTTModel):
     class Meta:
         verbose_name = _('Event ')
         verbose_name_plural = _('Event Categories')
+
+    @property
+    def get_absolute_url(self):
+        return reverse('store:event_category', kwargs={'category': self.name})
 
 
 class Event(ProductBaseModel):
@@ -319,6 +339,10 @@ class Event(ProductBaseModel):
                     tag = clean_tag(tag)
                     tag_to_set.add(tag)
         return tag_to_set
+
+    @staticmethod
+    def get_index_url():
+        return reverse('store:event_home')
 
     class Meta:
         verbose_name = _('Event')

@@ -39,7 +39,6 @@ class ViewTest(TestCase):
     def test_index_page(self):
         response = self.client.get(reverse('blog:home'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blog/index.html')
 
     def test_tag_page(self):
         response = self.client.get(f"{reverse('blog:tag')}?tag=Sport")
@@ -48,7 +47,6 @@ class ViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         response = self.client.get(f"{reverse('blog:tag')}?tag=")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blog/tag.html')
 
     def test_post_page(self):
         page_pk = Post.objects.last().pk

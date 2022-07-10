@@ -5,23 +5,24 @@
     <div id="" class="wide">
         <div class="filter ">
             <div class="blog-categoty ">
-                <a type="button" class="btn btn-dark btn-sm btn-tag" href="{% url "store:learning_home" %}">همه</a>
+                دسته بندی&nbsp;:
+                <a type="button" class="btn btn-dark btn-sm btn-tag" href="{{ index_url }}">همه</a>
                 {% for category in categories %}
                     <a type="button" class="btn btn-light btn-sm btn-tag"
-                       href="{% url "store:service_category" category.name %}">{{ category.name }}</a>
+                       href="{{ category.get_absolute_url }}">{{ category.name }}</a>
                 {% endfor %}
             </div>
         </div>
         <hr>
         <div class="row">
-            {% for service in service_list %}
+            {% for object in object_list %}
                 <div class="col-lg-4 col-sm-6 blog-single">
                     <div class="blog-image">
-                        <a class="post-title" href="{{ service.get_absolute_url }}"><h1>{{ service.title }}</h1></a>
-                        {#                        <strong class="post-date">{{ service.start_date|jformat:"%d-%m-%Y" }}</strong>#}
-                        <strong class="post-date">{{ service.start_date|jformat:"%Y-%m-%d" }}</strong>
-                        <a href="{{ service.get_absolute_url }}">
-                            <img class="" src="{{ service.picture.url }}" alt="">
+                        <a class="post-title" href="{{ object.get_absolute_url }}"><h1 class="text-center">{{ object.title }}</h1></a>
+                        {#                        <strong class="post-date">{{ object.start_date|jformat:"%d-%m-%Y" }}</strong>#}
+{#                        <strong class="post-date">{{ object.start_date|jformat:"%Y-%m-%d" }}</strong>#}
+                        <a href="{{ object.get_absolute_url }}">
+                            <img class="" src="{{ object.picture.url }}" alt="">
                         </a>
                     </div>
                 </div>
