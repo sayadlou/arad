@@ -26,7 +26,7 @@
             {% for post in page_obj %}
                 <div class="col-lg-4 col-sm-6 blog-single">
                     <div class="blog-image">
-                        <a class="post-title" href="{{ post.get_absolute_url }}"><h1>{{ post.title }}</h1></a>
+                        <a class="post-title" href="{{ post.get_absolute_url }}"><h1 class="text-center">{{ post.title }}</h1></a>
                         <strong class="post-date">{{ post.pub_date|jformat:'%Y/%m/%d' }}</strong>
                         <a href="{{ post.get_absolute_url }}">
                             <img class="blog-index-pic" src="{{ post.picture.url }}" alt={{ post.title }}>

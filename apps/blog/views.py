@@ -1,5 +1,3 @@
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
 from .models import Post, Category
@@ -17,8 +15,6 @@ class Blog(ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
-
-
 
 
 class Slug(DetailView):

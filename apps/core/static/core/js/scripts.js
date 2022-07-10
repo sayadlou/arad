@@ -41,12 +41,23 @@ function getCookie(name) {
 const csrftoken = getCookie('csrftoken');
 
 function mobileMenu() {
-    var x = document.getElementById("Menu");
+    const menu = document.getElementById("Menu");
 
-    if (x.style.display === "block") {
-        x.style.display = "none";
+    if (menu.style.display === "block") {
+        menu.style.display = "none";
     } else {
-        x.style.display = "block";
+        menu.style.display = "block";
     }
 
 }
+
+function mobileMenuResize() {
+    const menu = document.getElementById("Menu");
+    if (window.matchMedia("(max-width: 992px)").matches) {
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "block";
+    }
+}
+
+window.onresize = mobileMenuResize;

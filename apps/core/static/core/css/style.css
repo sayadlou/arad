@@ -85,8 +85,15 @@ body {
 
 /* Page Contents Styles */
 #signin_signup {
-    padding: 1rem 3rem !important;
+    padding: 1rem 1rem !important;
     text-align: left;
+}
+
+@media screen and (min-width: 425px) {
+    #signin_signup {
+        padding: 1rem 3rem !important;
+        text-align: left;
+    }
 }
 
 #highlights {
@@ -309,8 +316,15 @@ body {
 }
 
 .btn-equal {
-    min-width: 140px !important;
+    min-width: 40px !important;
 }
+
+@media screen and (min-width: 576px) {
+    .btn-equal {
+        min-width: 140px !important;
+    }
+}
+
 
 .btn-primary {
     background-color: #1096d4;

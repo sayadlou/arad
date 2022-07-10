@@ -94,3 +94,6 @@ img {
     width: 70%;
     max-height: 100px !important;
 }
+.content-div{
+    min-height: 70vh;
+}
