@@ -473,13 +473,13 @@ tr, td {
     padding-right: 15px;
 }
 
-.card {
-    text-align: center !important;
-}
+/*.card {*/
+/*    text-align: center !important;*/
+/*}*/
 
 .card img {
-    width: 20%;
-    margin-bottom: 10px;
+    /*width: 20%;*/
+    /*margin-bottom: 10px;*/
 }
 
 .carousel-control-prev-contact-us {

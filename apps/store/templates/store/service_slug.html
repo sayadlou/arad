@@ -1,0 +1,57 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="service-item">
+        <div class="row wide">
+            <div class="col-lg-6">
+                <div class="service-img">
+                    <img class="" src="{% static "core/images/0001.jpg" %}" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="service-name">
+                    <h1>{{ object.title }}</h1>
+                </div>
+                <hr>
+                <p>
+                    {{ object.introduction }}
+                </p>
+                {% if  is_owner %}
+
+                {% else %}
+                    <div class="btn-group buy" role="group">
+                        <button type="button" class="btn btn-primary btn-icon" style="pointer-events: none;" disabled><i
+                                class="fas fa-hand-pointer"></i></button>
+                        <button type="button" class="btn btn-outline-primary btn-text">افزودن به سبد خرید</button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row wide2 over_flow">
+            <div class="col-12 tabs"> <!-- har kodoom az in Div, yek Tab beshe. -->
+                <img class="" src="{% static "core/images/0001.jpg" %}" alt="">
+                {{ object.description | safe }}
+            </div>
+        </div> <!-- service End -->
+        <!-- Cards -->
+        <div class="row wide">
+            {% for product  in same_product %}
+                <div class="col-sm-4">
+                    <div class="card">
+                        <img src="{% static "core/images/0001.jpg" %}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <div class="service-name">
+                                <h1>{{ product.title }}</h1>
+                            </div>
+                            <p>
+                                {{ object.introduction }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

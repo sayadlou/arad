@@ -52,16 +52,15 @@ class ViewTest(TestCase):
         page_pk = Post.objects.last().pk
         response = self.client.get(reverse('blog:post', kwargs={'pk': page_pk}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blog/slug.html')
+        self.assertTemplateUsed(response, 'blog/service_slug.html')
 
     def test_slug_page(self):
         page_slug = Post.objects.last().slug
         response = self.client.get(reverse('blog:slug', kwargs={'slug': page_slug}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blog/slug.html')
+        self.assertTemplateUsed(response, 'blog/service_slug.html')
 
     def test_category_page(self):
         page_category = Post.objects.last().category.name
         response = self.client.get(reverse('blog:category', kwargs={'category': page_category}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blog/category.html')

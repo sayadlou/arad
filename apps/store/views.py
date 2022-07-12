@@ -189,6 +189,7 @@ class IndexView(ListView):
     template_name = 'store/index.html'
     paginate_by = 6
     context_object_name = "object_list"
+    category_model = None
 
     def get_queryset(self):
         return self.model.objects.order_by('pub_date').filter(status='Published')
@@ -206,7 +207,7 @@ class ServiceIndexView(IndexView):
 
 
 class ServiceSlugView(DetailView):
-    template_name = 'service/slug.html'
+    template_name = 'store/service_slug.html'
     model = Service
 
     def _increase_view_counter(self):
@@ -218,6 +219,9 @@ class ServiceSlugView(DetailView):
         event = self.object
         user_id = self.request.user.pk
         data['is_owner'] = event.purchaser.filter(pk=user_id).exists()
+        data['same_product'] = self.model.objects \
+                                   .filter(category=self.object.category).all() \
+                                   .exclude(pk=self.object.pk)[:3]
         return data
 
 
@@ -225,7 +229,6 @@ class CategoryView(ListView):
     template_name = 'store/category.html'
     paginate_by = 6
     context_object_name = "object_list"
-
 
     def get_queryset(self):
         category = self.kwargs['category']
@@ -250,7 +253,7 @@ class LearningIndexView(IndexView):
 
 
 class LearningSlugView(DetailView):
-    template_name: str = 'learning/slug.html'
+    template_name: str = 'store/learning_slug.html'
     model: ProductBaseModel = LearningPost
     movie_link: str
     movie_link_request_result: bool = False
@@ -333,7 +336,7 @@ class EventIndexView(IndexView):
 
 
 class EventSlugView(DetailView):
-    template_name = 'event/slug.html'
+    template_name = 'store/event_slug.html'
     model = Event
 
     def _increase_view_counter(self):
