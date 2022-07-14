@@ -8,9 +8,8 @@ import requests
 from azbankgateways import bankfactories
 from azbankgateways import models as bank_models, default_settings as settings
 from azbankgateways.exceptions import AZBankGatewaysException
+from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
@@ -21,7 +20,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django_downloadview.views.object import ObjectDownloadView
 
-from config.settings.base import MINIMUM_ORDER_AMOUNT
+from config.settings.base import MINIMUM_ORDER_AMOUNT, ARVAN_CHANNEL_ID, ARVAN_API_KEY
 from .forms import CartItemForm
 from .models import *
 from .permitions import LearningBoughtUserMixin
@@ -312,22 +311,23 @@ class LearningAttachmentView(LearningBoughtUserMixin, ObjectDownloadView):
     file_field = "attachment"
 
 
-@staff_member_required
-def refresh(request):
-    url = f"https://napi.arvancloud.com/vod/2.0/channels/{os.environ.get('ARVAN_CHANNEL_ID')}/videos"
-    headers = {'Authorization': os.environ.get('ARVAN_API_KEY')}
-    r = requests.get(url, headers=headers)
-    if r.status_code == 200:
-        respone = r.json()
-        ids = VideoFile.objects.values_list('arvan_id')
-        list(ids)
-        id_list = [i[0] for i in ids]
-        video_file = []
-        for video in respone['data']:
-            if video['id'] not in id_list:
-                video_file.append(VideoFile(arvan_id=video['id'], name=video['title']))
-        VideoFile.objects.bulk_create(video_file)
-    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+class VideoUpdateView(LoginRequiredMixin, StaffuserRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        url = f"https://napi.arvancloud.com/vod/2.0/channels/{ARVAN_CHANNEL_ID}/videos"
+        headers = {'Authorization': ARVAN_API_KEY}
+        r = requests.get(url, headers=headers)
+        if r.status_code == 200:
+            respone = r.json()
+            ids = VideoFile.objects.values_list('arvan_id')
+            list(ids)
+            id_list = [i[0] for i in ids]
+            video_file = []
+            for video in respone['data']:
+                if video['id'] not in id_list:
+                    video_file.append(VideoFile(arvan_id=video['id'], name=video['title']))
+            VideoFile.objects.bulk_create(video_file)
+            return HttpResponse('ok')
+        return HttpResponseBadRequest('nok')
 
 
 class EventIndexView(IndexView):

@@ -4,7 +4,6 @@ from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 
 from .models import *
-from .views import refresh
 
 
 class CartItemInLine(admin.TabularInline):
@@ -70,13 +69,6 @@ class VideoFileAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
-
-    def get_urls(self):
-        urls = super().get_urls()
-        my_urls = [
-            url("refresh/", refresh)
-        ]
-        return my_urls + urls
 
 
 @admin.register(LearningPost)

@@ -18,9 +18,11 @@ urlpatterns = [
     path('learning/post/<str:slug>/', LearningSlugView.as_view(), name='learning_slug'),
     path('learning/category/<str:category>/', LearningCategoryView.as_view(), name='learning_category'),
     path('learning/attachment/<str:slug>/', LearningAttachmentView.as_view(), name='learning_attachment'),
+    path('learning/video/update', VideoUpdateView.as_view(), name='learning_video'),
 
     path('event/', EventIndexView.as_view(), name='event_home'),
     path('event/<str:slug>/', EventSlugView.as_view(), name='event_slug'),
     path('event/category/<str:category>/', EventCategoryView.as_view(), name='event_category'),
+
 
 ]

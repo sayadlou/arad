@@ -1,0 +1,39 @@
+{% extends "admin/change_list.html" %}
+{% block object-tools-items %}
+    <li>
+        <a id="add-movies" class="addlink">Refresh Movie List</a>
+    </li>
+    <style>
+        #add-movies {
+            display: block;
+            float: left;
+            padding: 3px 12px;
+            background: var(--object-tools-bg);
+            color: var(--object-tools-fg);
+            font-weight: 400;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+
+        }
+    </style>
+    <script>
+        addButton = document.getElementById('add-movies')
+        addButton.addEventListener('click', function (event) {
+            var url = "{% url "store:learning_video" %}"
+            fetch(url)
+                .then(function (response) {
+                    if (response.status === 200) {
+                        alert("Movie List Updated")
+                    } else {
+                        alert("Error in Movie List Update")
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        })
+    </script>
+
+{% endblock %}
