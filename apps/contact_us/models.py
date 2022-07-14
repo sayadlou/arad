@@ -49,11 +49,11 @@ class Message(models.Model):
     work_experience = models.TextField(max_length=1000, null=True, blank=True)
     certificate = models.TextField(max_length=1000, null=True, blank=True)
     language_exam = models.CharField(max_length=50, choices=exam_choices)
-    language_exam_description = models.TextField(max_length=1000)
+    language_exam_description = models.TextField(max_length=1000, null=True, blank=True)
     destination_countries = models.CharField(max_length=100)
     capital_for_immigration = models.CharField(max_length=100, null=True, blank=True)
-    preference_to_join = models.TextField(max_length=1000)
-    final_description = models.TextField(max_length=1000)
+    preference_to_join = models.TextField(max_length=1000, null=True, blank=True)
+    final_description = models.TextField(max_length=1000, null=True, blank=True)
     submission_time = models.DateTimeField(auto_now_add=True, editable=True)
 
     class Meta:
