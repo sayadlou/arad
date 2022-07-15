@@ -1,0 +1,30 @@
+{% load i18n %}
+{% spaceless %}
+    <div style="height: 70px">
+        <label>{% translate "Enter security code" %} </label>
+        <img id="id_captcha_img" src="{{ image }}" alt="captcha" class="captcha mx-2"/>
+        {% for widget in widget.subwidgets %}
+            {% include widget.template_name %}
+        {% endfor %}
+    </div>
+
+
+    <style>
+        #id_captcha_1 {
+            width: 60%;
+            height: 21px;
+            float: left;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 5px 6px;
+            margin-top: 5px;
+            color: var(--body-fg);
+            background-color: var(--body-bg);
+        }
+
+        #id_captcha_img {
+            width: 30%;
+            float: right;
+        }
+    </style>
+{% endspaceless %}

@@ -1,14 +1,15 @@
 from captcha.fields import CaptchaField
 from django import forms
 from django.contrib.auth import password_validation
-from django.contrib.auth.forms import AuthenticationForm, UsernameField, PasswordResetForm, PasswordChangeForm, \
-    SetPasswordForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UsernameField, PasswordResetForm, PasswordChangeForm, \
+    SetPasswordForm
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from .models import UserProfile
-from .widget import CustomCaptchaTextInput
+from .widget import CustomCaptchaTextInput, AdminCaptchaTextInput
 
 
 class MyAuthenticationForm(AuthenticationForm):
@@ -170,7 +171,7 @@ class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(
         label=_("Email"),
         max_length=254,
-        widget=forms.EmailInput(attrs={'class': "form-control", 'autocomplete': 'off'})
+        widget=forms.EmailInput(attrs={'autocomplete': 'off'})
     )
 
     # def save(self, commit=True):
@@ -183,3 +184,7 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['first_name', 'last_name', 'mobile', 'username', 'email', 'telegram_id']
+
+
+class AuthAdminForm(AuthenticationForm):
+    captcha = CaptchaField(widget=AdminCaptchaTextInput(attrs={'class': "form-control"}))
