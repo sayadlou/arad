@@ -26,6 +26,7 @@ gunicorn = "==20.1.*"
 whitenoise = "==6.1.*"
 django-admin-honeypot = "==1.1.*"
 django-braces = "==1.15.*"
+flower = "==1.1.*"
 
 [dev-packages]
 django-debug-toolbar = "==3.4.*"
