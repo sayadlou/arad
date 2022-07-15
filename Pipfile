@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 asgiref = "==3.5.*"
-django = ">=3.2.14"
+django = "==3.2.14"
 pytz = "==2021.*"
 sqlparse = "==0.4.*"
 pillow = "==9.1.*"
