@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f64c97211f7b56d6d23752e8927fb83870f69165ef0b391be260edc0e47c5813"
+            "sha256": "026e9feddf4269e63434b3e14b391ceb3a628f0da78ccf90e841a000800f8cdb"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -295,6 +295,13 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==4.1.0"
+        },
+        "kavenegar": {
+            "hashes": [
+                "sha256:37992560e93535b904ee908e26819713c5df28532edfc897767251f527b76f03"
+            ],
+            "index": "pypi",
+            "version": "==1.1.2"
         },
         "kombu": {
             "hashes": [

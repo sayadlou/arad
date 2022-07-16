@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 
 from apps.blog.models import Post as BlogPost
-from apps.core.tasks import send_email
+from apps.account.tasks import send_sms
 from apps.store.models import Event, Service
 
 
@@ -33,5 +33,5 @@ class Rules(TemplateView):
 
 
 def celery_test(request):
-    send_email.delay("salam")
+    send_sms.delay("salam")
     return HttpResponse('result')
