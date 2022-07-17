@@ -195,10 +195,11 @@ class Service(ProductBaseModel):
 
     status = models.CharField(max_length=50, choices=STATUS)
     pub_date = jmodels.jDateTimeField(_("Date"))
-    picture = FilerImageField(related_name='service', on_delete=models.PROTECT)
+    picture_intro = FilerImageField(related_name='service_intro', on_delete=models.PROTECT)
+    introduction = models.TextField(max_length=190)
     category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
     description = RichTextField()
-    introduction = models.TextField(max_length=190)
+    picture_descrip = FilerImageField(related_name='service_descrip', on_delete=models.PROTECT)
     show_in_home = models.BooleanField(default=False)
     highlight_in_home = models.BooleanField(default=False)
 

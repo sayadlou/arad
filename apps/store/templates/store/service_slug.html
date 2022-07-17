@@ -7,7 +7,7 @@
         <div class="row wide">
             <div class="col-lg-6">
                 <div class="service-img">
-                    <img class="" src="{% static "core/images/0001.jpg" %}" alt="">
+                    <img class="" src="{{ object.picture_intro.url }}" alt="{{ object.picture_intro.description }}">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -31,7 +31,7 @@
         </div>
         <div class="row wide2 over_flow">
             <div class="col-12 tabs"> <!-- har kodoom az in Div, yek Tab beshe. -->
-                <img class="" src="{% static "core/images/0001.jpg" %}" alt="">
+                <img class="" src="{{ object.picture_descrip.url }}" alt="{{ object.picture_descrip.description }}">
                 {{ object.description | safe }}
             </div>
         </div> <!-- service End -->
@@ -40,7 +40,7 @@
             {% for product  in same_product %}
                 <div class="col-sm-4">
                     <div class="card">
-                        <img src="{% static "core/images/0001.jpg" %}" class="card-img-top" alt="...">
+                        <img class="card-img-to" src="{{ product.picture_intro.url }}" alt="{{ product.picture_intro.description }}">
                         <div class="card-body">
                             <div class="service-name">
                                 <h1>{{ product.title }}</h1>
