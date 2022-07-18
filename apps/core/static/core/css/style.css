@@ -489,3 +489,24 @@ tr, td {
 .carousel-control-next-contact-us {
     width: 5%;
 }
+input[type=email]{
+    direction: ltr;
+}
+input[name=username]{
+    direction: ltr;
+}
+input[name=password2]{
+    direction: ltr;
+}
+input[name=password1]{
+    direction: ltr;
+}
+input[name=telegram_id]{
+    direction: ltr;
+}
+input[name=mobile]{
+    direction: ltr;
+}
+input[name=captcha_1]{
+    direction: ltr;
+}

@@ -7,7 +7,7 @@
         <div class="row wide">
             <div class="col-lg-6">
                 <div class="service-img">
-                    <img class="" src="{{ object.picture_intro.url }}" alt="{{ object.picture_intro.description }}">
+                    <img class="" src="{{ object.picture.url }}" alt="{{ object.picture.description }}">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -40,7 +40,7 @@
             {% for product  in same_product %}
                 <div class="col-sm-4">
                     <div class="card">
-                        <img class="card-img-to" src="{{ product.picture_intro.url }}" alt="{{ product.picture_intro.description }}">
+                        <img class="card-img-to" src="{{ product.picture.url }}" alt="{{ product.picture.description }}">
                         <div class="card-body">
                             <div class="service-name">
                                 <h1>{{ product.title }}</h1>

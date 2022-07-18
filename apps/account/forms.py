@@ -76,7 +76,7 @@ class UserRegisterForm(UserCreationForm):
 
     first_name = forms.CharField(
         label=_("first name"),
-        widget=forms.TextInput(attrs={'autofocus': True, 'class': "form-control", 'autocomplete': 'off'}),
+        widget=forms.TextInput(attrs={'autofocus': True, 'class': "form-control ", 'autocomplete': 'off'}),
         strip=True,
         help_text="",
         required=False,
@@ -171,7 +171,7 @@ class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(
         label=_("Email"),
         max_length=254,
-        widget=forms.EmailInput(attrs={'autocomplete': 'off'})
+        widget=forms.EmailInput(attrs={'class': "form-control",'autocomplete': 'off'})
     )
 
     # def save(self, commit=True):

@@ -224,3 +224,4 @@ CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
 
 ARVAN_CHANNEL_ID = os.environ.get('ARVAN_CHANNEL_ID')
 ARVAN_API_KEY = os.environ.get('ARVAN_API_KEY')
+SMS_SENDER_NUMBER = os.environ.get('SMS_SENDER_NUMBER')

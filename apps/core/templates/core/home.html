@@ -58,7 +58,9 @@
                     <div class="row services-highlight">
                         <div class="col-6 col-md-5">
                             <div style="position: relative;text-align: center;color: white;">
-                                <a href="{% url 'store:service_slug' service.slug %}"><img class="" src="{{ service.picture.url }}" alt="">
+                                <a href="{% url 'store:service_slug' service.slug %}"><img class=""
+                                                                                           src="{{ service.picture.url }}"
+                                                                                           alt="">
                                     <div style="color: #eee;background-color: #000000cf;position: absolute;top: 90%;left: 50%;transform: translate(-50%, -50%);width: 100%;">{{ service.title }}</div>
                                 </a>
                             </div>

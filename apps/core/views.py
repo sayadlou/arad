@@ -1,8 +1,6 @@
-from django.http import HttpResponse
 from django.views.generic import TemplateView
 
 from apps.blog.models import Post as BlogPost
-from apps.account.tasks import send_sms
 from apps.store.models import Event, Service
 
 
@@ -30,8 +28,3 @@ class Rules(TemplateView):
 
     def get_context_data(self, **kwargs):
         pass
-
-
-def celery_test(request):
-    send_sms.delay("salam")
-    return HttpResponse('result')
