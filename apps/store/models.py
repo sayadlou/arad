@@ -39,10 +39,11 @@ class ProductBaseModel(models.Model):
     def add_buyer(self, user):
         self.purchaser.add(user)
 
+    @property
     def get_child(self):
-        for attr in product_models:
-            if getattr(self, attr, False):
-                return getattr(self, attr)
+        for model_name in product_models:
+            if getattr(self, model_name, False):
+                return getattr(self, model_name)
 
 
 class Cart(models.Model):
@@ -73,6 +74,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, verbose_name=_('cart'), on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
     product = models.ForeignKey(ProductBaseModel, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = _('Cart item')
@@ -81,6 +83,11 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f'{self.quantity} of {self.product.title}'
+
+    @property
+    def get_absolute_url(self):
+        print(self.product.get_child.get_absolute_url)
+        return self.product.get_child.get_absolute_url
 
 
 class Order(models.Model):

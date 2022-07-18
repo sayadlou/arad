@@ -7,75 +7,51 @@
     <div id="page-top" class="wide">
         <div id="user">
             {% if cart_has_item %}
-                <div id="page-top" class="wide">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col" style="width: 70%">عنوان</th>
-                            <th scope="col" style="width: auto">تاریخ ثبت نام</th>
-                            <th scope="col" style="width: 140px; text-align: center;">لینک</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for item in cart_item %}
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>{{ item.product.title }}</td>
-                                <td>01.01.1401</td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-primary btn-equal">مشاهده</button>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    <br> <br>
-
-                    <br> <br> <br>
-                    اگر بشه ستون های سوم و چهارم که تاریخ و دکمه هستن، متنهاشون وسط چین بشن.
-                </div>
                 <table class="table" id="cart-table">
                     <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th scope="col">سطر</th>
-                        <th scope="col">نام کالا</th>
+                        <th scope="col" style="text-align: right">نام کالا</th>
                         <th scope="col">قیمت</th>
-                        <th scope="col">تعداد</th>
-                        <th scope="col">تغییر تعداد</th>
-                        <th scope="col">حذف</th>
+                        <th scope="col" class="text-center">تعداد</th>
+                        <th scope="col" class="text-center">تغییر تعداد</th>
+                        <th scope="col" class="text-center">حذف</th>
+                        <th scope="col" class="text-center">مشاهده</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                     {% for item in cart_item %}
-                        <tr id="row{{ forloop.counter }}">
+                        <tr class="text-center" id="row{{ forloop.counter }}">
                             <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ item.product.title }}</td>
+                            <td style="text-align: right">{{ item.product.title }}</td>
                             <td>{{ item.product.price |floatformat:"0" |intcomma }}</td>
                             <td>{{ item.quantity }}</td>
                             <td>
-                                <form autocomplete=off method="post"
+                                <form class="d-inline mx-2" autocomplete=off method="post"
                                       action="{% url 'store:cart_item' item.id %}">
                                     {% csrf_token %}
                                     <input type="text" name="product" value="{{ item.product.pk }}" hidden>
                                     <input type="text" name="request_type" value="dec" hidden>
                                     <input type="number" name="quantity" value="1" hidden>
-                                    <input type="submit" value="Dec">
+                                    <i class="fa fa-minus" style="cursor : pointer" onclick="this.closest('form').submit()" aria-hidden="true"></i>
+{#                                    <input type="submit" value="Dec">#}
                                 </form>
 
-                                <form autocomplete=off method="post"
+                                <form class="d-inline mx-2" autocomplete=off method="post"
                                       action="{% url 'store:cart_item' item.id %}">
                                     {% csrf_token %}
                                     <input type="text" name="product" value="{{ item.product.pk }}" hidden>
                                     <input type="text" name="request_type" value="inc" hidden>
                                     <input type="number" name="quantity" value="1" hidden>
-                                    <input type="submit" value="Inc">
+                                    <i class="fa fa-plus" style="cursor : pointer" onclick="this.closest('form').submit()" aria-hidden="true"></i>
+{#                                    <input type="submit" value="Inc">#}
                                 </form>
 
 
                             </td>
                             <td>
-                                <button id="delete{{ forloop.counter }}">delete</button>
+                                <i class="fa fa-trash" style="cursor : pointer" id="delete{{ forloop.counter }}" aria-hidden="true"></i>
+
                                 <script>
                                     $("#delete{{ forloop.counter }}").click(function () {
                                         $.ajax({
@@ -96,13 +72,17 @@
                                     });
                                 </script>
                             </td>
+                            <td>
+                                <a href="{{ item.get_absolute_url }}" type="button"
+                                   class="btn btn-outline-primary btn-equal">مشاهده</a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
 
                 </table>
                 <br>
-                <h1>جمع کل {{ cart_sum |floatformat:"0" |intcomma  }}</h1>
+                <h1>جمع کل {{ cart_sum |floatformat:"0" |intcomma }}</h1>
                 <form autocomplete=off method="post"
                       action="{% url 'store:payments' %}">
                     {% csrf_token %}

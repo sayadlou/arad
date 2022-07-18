@@ -21,7 +21,7 @@ from django.views.generic.list import ListView
 from django_downloadview.views.object import ObjectDownloadView
 
 from config.settings.base import MINIMUM_ORDER_AMOUNT, ARVAN_CHANNEL_ID, ARVAN_API_KEY
-from .forms import CartItemForm
+from .forms import CartItemEditForm, CartItemAddForm
 from .models import *
 from .permitions import LearningBoughtUserMixin
 
@@ -45,10 +45,10 @@ class CartListAddView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         post_copy = request.POST.copy()
         post_copy['cart'] = self.request.user.cart
-        form = CartItemForm(data=post_copy)
+        form = CartItemAddForm(data=post_copy)
         if form.is_valid():
             messages.success(request, _('product added to cart'))
-            form.save_or_update()
+            form.save()
         else:
             for key in form.errors:
                 for error in form.errors[key]:
@@ -61,7 +61,7 @@ class CartPutDeleteView(LoginRequiredMixin, View):
         cart_item = get_object_or_404(CartItem, pk=kwargs['pk'])
         post_copy = request.POST.copy()
         post_copy['cart'] = self.request.user.cart
-        form = CartItemForm(data=post_copy, instance=cart_item)
+        form = CartItemEditForm(data=post_copy, instance=cart_item)
         if form.is_valid():
             messages.success(request, _('product updated'))
             form.save_or_update()
