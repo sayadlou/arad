@@ -19,7 +19,7 @@
                         <th scope="col" class="text-center">مشاهده</th>
                     </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                     {% for item in cart_item %}
                         <tr class="text-center" id="row{{ forloop.counter }}">
                             <th scope="row">{{ forloop.counter }}</th>
@@ -33,8 +33,9 @@
                                     <input type="text" name="product" value="{{ item.product.pk }}" hidden>
                                     <input type="text" name="request_type" value="dec" hidden>
                                     <input type="number" name="quantity" value="1" hidden>
-                                    <i class="fa fa-minus" style="cursor : pointer" onclick="this.closest('form').submit()" aria-hidden="true"></i>
-{#                                    <input type="submit" value="Dec">#}
+                                    <i class="fa fa-minus" style="cursor : pointer"
+                                       onclick="this.closest('form').submit()" aria-hidden="true"></i>
+                                    {#                                    <input type="submit" value="Dec">#}
                                 </form>
 
                                 <form class="d-inline mx-2" autocomplete=off method="post"
@@ -43,8 +44,9 @@
                                     <input type="text" name="product" value="{{ item.product.pk }}" hidden>
                                     <input type="text" name="request_type" value="inc" hidden>
                                     <input type="number" name="quantity" value="1" hidden>
-                                    <i class="fa fa-plus" style="cursor : pointer" onclick="this.closest('form').submit()" aria-hidden="true"></i>
-{#                                    <input type="submit" value="Inc">#}
+                                    <i class="fa fa-plus" style="cursor : pointer"
+                                       onclick="this.closest('form').submit()" aria-hidden="true"></i>
+                                    {#                                    <input type="submit" value="Inc">#}
                                 </form>
 
 
@@ -56,38 +58,39 @@
                                     <input type="text" name="product" value="{{ item.product.pk }}" hidden>
                                     <input type="text" name="request_type" value="del" hidden>
                                     <input type="number" name="quantity" value="1" hidden>
-                                    <i class="fa fa-trash" style="cursor : pointer" onclick="this.closest('form').submit()" aria-hidden="true"></i>
-{#                                    <input type="submit" value="Inc">#}
+                                    <i class="fa fa-trash" style="cursor : pointer"
+                                       onclick="this.closest('form').submit()" aria-hidden="true"></i>
+                                    {#                                    <input type="submit" value="Inc">#}
                                 </form>
 
 
-{#                                #}
-{#                                #}
-{#                                <i class="fa fa-trash" style="cursor : pointer" id="delete{{ forloop.counter }}" aria-hidden="true"></i>#}
-{##}
-{#                                <script>#}
-{#                                    $("#delete{{ forloop.counter }}").click(function () {#}
-{#                                        $.ajax({#}
-{#                                            type: "DELETE",#}
-{#                                            url: '{% url 'store:cart_item'  item.id %}',#}
-{#                                            beforeSend: function (xhr) {#}
-{#                                                xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));#}
-{#                                            },#}
-{#                                            success: function (data) {#}
-{#                                                console.log("success");#}
-{#                                                $('#row{{ forloop.counter }}').remove();#}
-{#                                            },#}
-{#                                            error: function (data) {#}
-{#                                                alertify.error('{% translate "error in response" %}');#}
-{#                                            },#}
-{##}
-{#                                        });#}
-{#                                    });#}
-{#                                </script>#}
+                                {#                                #}
+                                {#                                #}
+                                {#                                <i class="fa fa-trash" style="cursor : pointer" id="delete{{ forloop.counter }}" aria-hidden="true"></i>#}
+                                {##}
+                                {#                                <script>#}
+                                {#                                    $("#delete{{ forloop.counter }}").click(function () {#}
+                                {#                                        $.ajax({#}
+                                {#                                            type: "DELETE",#}
+                                {#                                            url: '{% url 'store:cart_item'  item.id %}',#}
+                                {#                                            beforeSend: function (xhr) {#}
+                                {#                                                xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));#}
+                                {#                                            },#}
+                                {#                                            success: function (data) {#}
+                                {#                                                console.log("success");#}
+                                {#                                                $('#row{{ forloop.counter }}').remove();#}
+                                {#                                            },#}
+                                {#                                            error: function (data) {#}
+                                {#                                                alertify.error('{% translate "error in response" %}');#}
+                                {#                                            },#}
+                                {##}
+                                {#                                        });#}
+                                {#                                    });#}
+                                {#                                </script>#}
                             </td>
                             <td>
-                                <a href="{{ item.get_absolute_url }}" type="button"
-                                   class="btn btn-outline-primary btn-equal">مشاهده</a>
+                                <a style="color: black" href="{{ item.get_absolute_url }}"
+                                ><i class="fa fa-eye" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     {% endfor %}

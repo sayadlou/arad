@@ -108,7 +108,7 @@ class PaymentListAddView(LoginRequiredMixin, View):
             try:
                 order = Order.objects.get(owner=request.user, pk=order_id)
             except Order.DoesNotExist:
-                order = self.cart_to_order(request)
+                order = self.cart_to_order()
             if order.total_price <= MINIMUM_ORDER_AMOUNT:
                 messages.success(request, _('minimum order amount should be more than 100,000 IRR'))
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
