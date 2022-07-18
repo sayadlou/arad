@@ -58,10 +58,9 @@
                     <div class="row services-highlight">
                         <div class="col-6 col-md-5">
                             <div style="position: relative;text-align: center;color: white;">
-                                <a href="{% url 'store:service_slug' service.slug %}"><img class=""
-                                                                                           src="{{ service.picture.url }}"
-                                                                                           alt="">
-                                    <div style="color: #eee;background-color: #000000cf;position: absolute;top: 90%;left: 50%;transform: translate(-50%, -50%);width: 100%;">{{ service.title }}</div>
+                                <a href="{% url 'store:service_slug' service.slug %}">
+                                    <img src="{{ service.picture.url }}" alt="{{ service.picture.description }}">
+                                    <div class="image-text-overlay">{{ service.title }}</div>
                                 </a>
                             </div>
                         </div>
@@ -72,12 +71,24 @@
                 {% endfor %}
             </div>
             <div class="col-lg-6">
-                <div class="services-latest">
+                <div class=row">
                     {% for service in services %}
-                        <div class="services-single">
-                            <a href="#"><h1>{{ service.title }}</h1></a>
-                            <a href="#"><img class="" src="{{ service.picture.url }}" alt="{{ service.title }}"></a>
+                        <div class="col-4">
+                            <div style="position: relative;text-align: center;color: white;">
+                                <a href="{% url 'store:service_slug' service.slug %}">
+                                    <img class="w-100" src="{{ service.picture.url }}" alt="{{ service.picture.description }}">
+                                    <div class="image-text-overlay">{{ service.title }}</div>
+                                </a>
+                            </div>
                         </div>
+
+
+
+
+                        {#                        <div class="services-single">#}
+                        {#                            <a href="#"><h1>{{ service.title }}</h1></a>#}
+                        {#                            <a href="#"><img class="" src="{{ service.picture.url }}" alt="{{ service.title }}"></a>#}
+                        {#                        </div>#}
                     {% endfor %}
                 </div>
             </div>
