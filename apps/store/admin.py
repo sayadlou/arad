@@ -30,9 +30,9 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInLine]
 
 
-@admin.register(ProductBaseModel)
-class ProductAdmin(admin.ModelAdmin):
-    pass
+# @admin.register(ProductBaseModel)
+# class ProductAdmin(admin.ModelAdmin):
+#     pass
 
 
 @admin.register(Payment)
