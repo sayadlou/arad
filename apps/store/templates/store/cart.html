@@ -50,27 +50,40 @@
 
                             </td>
                             <td>
-                                <i class="fa fa-trash" style="cursor : pointer" id="delete{{ forloop.counter }}" aria-hidden="true"></i>
+                                <form class="d-inline mx-2" autocomplete=off method="post"
+                                      action="{% url 'store:cart_item' item.id %}">
+                                    {% csrf_token %}
+                                    <input type="text" name="product" value="{{ item.product.pk }}" hidden>
+                                    <input type="text" name="request_type" value="del" hidden>
+                                    <input type="number" name="quantity" value="1" hidden>
+                                    <i class="fa fa-trash" style="cursor : pointer" onclick="this.closest('form').submit()" aria-hidden="true"></i>
+{#                                    <input type="submit" value="Inc">#}
+                                </form>
 
-                                <script>
-                                    $("#delete{{ forloop.counter }}").click(function () {
-                                        $.ajax({
-                                            type: "DELETE",
-                                            url: '{% url 'store:cart_item'  item.id %}',
-                                            beforeSend: function (xhr) {
-                                                xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
-                                            },
-                                            success: function (data) {
-                                                console.log("success");
-                                                $('#row{{ forloop.counter }}').remove();
-                                            },
-                                            error: function (data) {
-                                                alertify.error('{% translate "error in response" %}');
-                                            },
 
-                                        });
-                                    });
-                                </script>
+{#                                #}
+{#                                #}
+{#                                <i class="fa fa-trash" style="cursor : pointer" id="delete{{ forloop.counter }}" aria-hidden="true"></i>#}
+{##}
+{#                                <script>#}
+{#                                    $("#delete{{ forloop.counter }}").click(function () {#}
+{#                                        $.ajax({#}
+{#                                            type: "DELETE",#}
+{#                                            url: '{% url 'store:cart_item'  item.id %}',#}
+{#                                            beforeSend: function (xhr) {#}
+{#                                                xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));#}
+{#                                            },#}
+{#                                            success: function (data) {#}
+{#                                                console.log("success");#}
+{#                                                $('#row{{ forloop.counter }}').remove();#}
+{#                                            },#}
+{#                                            error: function (data) {#}
+{#                                                alertify.error('{% translate "error in response" %}');#}
+{#                                            },#}
+{##}
+{#                                        });#}
+{#                                    });#}
+{#                                </script>#}
                             </td>
                             <td>
                                 <a href="{{ item.get_absolute_url }}" type="button"

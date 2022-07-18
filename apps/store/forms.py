@@ -15,7 +15,7 @@ class CartItemEditForm(forms.ModelForm):
     def clean(self):
         cleaned_post_data = super().clean()
         product = cleaned_post_data['product']
-        if not cleaned_post_data["request_type"] in ("dec", "inc"):
+        if not cleaned_post_data["request_type"] in ("dec", "inc", 'del'):
             raise ValidationError(_("requested type is not valid"))
         try:
             data = CartItem.objects.get(product=product)
@@ -30,17 +30,17 @@ class CartItemEditForm(forms.ModelForm):
             raise ValidationError(_("product not found"))
 
     def save_or_update(self):
-        try:
-            data = CartItem.objects.get(product=self.cleaned_data['product'])
+        cart_item = CartItem.objects.get(product=self.cleaned_data['product'])
+        if self.cleaned_data["request_type"] == "inc":
+            cart_item.quantity += self.cleaned_data['quantity']
+            cart_item.save()
 
-            if self.cleaned_data["request_type"] == "inc":
-                data.quantity += self.cleaned_data['quantity']
+        if self.cleaned_data["request_type"] == "dec":
+            cart_item.quantity -= self.cleaned_data['quantity']
+            cart_item.save()
 
-            if self.cleaned_data["request_type"] == "dec":
-                data.quantity -= self.cleaned_data['quantity']
-            data.save()
-        except CartItem.DoesNotExist:
-            self.save()
+        if self.cleaned_data["request_type"] == "del":
+            cart_item.delete()
 
 
 class CartItemAddForm(forms.ModelForm):
