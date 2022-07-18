@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = int(os.environ.get("DEBUG", 0))
 
 # Application definition
 
@@ -154,7 +154,8 @@ CKEDITOR_FILENAME_GENERATOR = 'utils.functions.get_filename'
 AZ_IRANIAN_BANK_GATEWAYS = {
     'GATEWAYS': {
         'ZARINPAL': {
-            'MERCHANT_CODE': os.environ.get('ZARINPAL_MERCHANT_CODE'),
+            'MERCHANT_CODE': os.environ['ZARINPAL_MERCHANT_CODE'],
+            'SANDBOX': int(os.environ['ZARINPAL_SANDBOX']),
         },
     },
     'DEFAULT': 'ZARINPAL',

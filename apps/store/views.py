@@ -71,14 +71,6 @@ class CartPutDeleteView(LoginRequiredMixin, View):
                     messages.error(request, error)
         return redirect(reverse('store:cart'), permanent=True)
 
-    def delete(self, request, *args, **kwargs):
-        obj = get_object_or_404(CartItem, pk=kwargs['pk'])
-        if request.user.cart.pk == obj.cart.pk:
-            obj.delete()
-            return HttpResponse("deleted")
-        else:
-            return HttpResponse(status=404)
-
 
 class OrderListView(LoginRequiredMixin, View):
 
@@ -115,7 +107,7 @@ class PaymentListAddView(LoginRequiredMixin, View):
             request.user.cart.cartitem_set.all().delete()
             factory = bankfactories.BankFactory()
             try:
-                bank = factory.auto_create(bank_models.BankType.ZARINPAL)
+                bank = factory.create(bank_models.BankType.ZARINPAL)
                 bank.set_request(request)
                 bank.set_amount(int(order.total_price))
                 bank.set_client_callback_url(reverse_lazy('store:callback-gateway'))
@@ -175,13 +167,23 @@ class CallbackGatewayView(LoginRequiredMixin, View):
                 bayer = payment.owner
                 for item in paid_order_items:
                     item.product.add_buyer(bayer)
-                return HttpResponse("پرداخت با موفقیت انجام شد.")
+
+                context = {
+                    "message": "پرداخت با موفقیت انجام شد.",
+                }
+                return render(request=self.request, template_name="store/callback.html", context=context)
             except Payment.DoesNotExist:
                 logging.error(f"payment for {bank_record.pk} was successful but has no oder")
-                return HttpResponse("خطایی در پرداخت رخ داده است جهت بازپرداخت وجه با پشتیبانی تماس حاصل نمایید.")
+                context = {
+                    "message": "خطایی در پرداخت رخ داده است جهت بازپرداخت وجه با پشتیبانی تماس حاصل نمایید.",
+                }
+                return render(request=self.request, template_name="store/callback.html", context=context)
+
         logging.error(f"payment {bank_record.pk} with amount {bank_record.amount} was not successful")
-        return HttpResponse(
-            "پرداخت با شکست مواجه شده است.اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.")
+        context = {
+            "message": "عملیات پرداخت موفقیت آمیز نبوده است.اگر از حساب شما مبلغی کم شده است. ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.",
+        }
+        return render(request=self.request, template_name="store/callback.html", context=context)
 
 
 class IndexView(ListView):
