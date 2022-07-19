@@ -86,5 +86,5 @@ class Profile(LoginRequiredMixin, UpdateView):
         user_purchased_product = set()
         user_purchased_base_product = self.request.user.productbasemodel_set.all()
         for base_product in user_purchased_base_product:
-            user_purchased_product.add(base_product.get_child())
+            user_purchased_product.add(base_product.get_child)
         return user_purchased_product
