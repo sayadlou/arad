@@ -146,11 +146,11 @@ class PaymentListAddView(LoginRequiredMixin, View):
 
 
 class CallbackGatewayView(LoginRequiredMixin, View):
-    tracking_code: str = None
-    bank_record: Bank = None
-    payment: Payment = None
-    paid_order_items: QuerySet[OrderItem] = None
-    buyer: UserProfile = None
+    tracking_code: str
+    bank_record: Bank
+    payment: Payment
+    paid_order_items: QuerySet[OrderItem]
+    buyer: UserProfile
 
     def get(self, request, *args, **kwargs):
         self.tracking_code = request.GET.get(settings.TRACKING_CODE_QUERY_PARAM, None)
