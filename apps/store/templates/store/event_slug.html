@@ -55,7 +55,7 @@
                             <form autocomplete="off" method="post" action="{% url 'store:cart' %}">
                                 {% csrf_token %}
                                 <input type="text" name="product" value="{{ event.pk }}" hidden>
-                                <input type="text" name="request_type" value="inc" hidden>
+                                <input type="text" name="request_type" value="add" hidden>
                                 <input type="number" name="quantity" value="1" hidden>
                                 <input type="submit" class="btn btn-primary" value="اضافه به سبد خرید">
                             </form>

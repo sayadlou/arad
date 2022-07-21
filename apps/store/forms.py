@@ -44,6 +44,18 @@ class CartItemEditForm(forms.ModelForm):
 
 
 class CartItemAddForm(forms.ModelForm):
+    request_type = forms.CharField(max_length=3, required=True)
+
     class Meta:
         model = CartItem
-        fields = ('cart', 'quantity', 'product',)
+        fields = ('cart', 'quantity', 'product', 'request_type')
+
+    def save(self, commit=True):
+        try:
+            cart_item = CartItem.objects.get(product=self.cleaned_data['product'])
+            if self.cleaned_data["request_type"] == "add":
+                cart_item.quantity += self.cleaned_data['quantity']
+                cart_item.save()
+
+        except CartItem.DoesNotExist:
+            super().save(commit=commit)
