@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.admin.options import IS_POPUP_VAR
 from django.contrib.admin.utils import unquote
@@ -17,9 +18,17 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
 from .models import UserProfile
+from ..store.models import ProductBaseModel
 
 csrf_protect_m = method_decorator(csrf_protect)
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
+
+
+class ProductBaseModelInLine(admin.TabularInline):
+    model = ProductBaseModel.purchaser.through
+    verbose_name = "محصول"
+    verbose_name_plural = "محصولات"
+    extra = 1
 
 
 class MyUserAdmin(admin.ModelAdmin):
@@ -43,11 +52,13 @@ class MyUserAdmin(admin.ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ('first_name', 'last_name', 'username', 'send_an_email', 'telegram', 'whatsapp')
+    # list_display = ('first_name', 'last_name', 'username', 'send_an_email', 'telegram', 'whatsapp')
+    list_display = ('username', 'first_name', 'last_name', 'send_an_email', 'telegram', 'whatsapp')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     search_fields = ('username', 'first_name', 'last_name', 'email')
     ordering = ('username',)
     filter_horizontal = ('groups', 'user_permissions',)
+    inlines = (ProductBaseModelInLine,)
 
     @admin.display(description="تلگرام")
     def telegram(self, user: UserProfile):

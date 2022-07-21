@@ -104,7 +104,7 @@ class PaymentListAddView(LoginRequiredMixin, View):
             if order.total_price <= MINIMUM_ORDER_AMOUNT:
                 messages.success(request, _('minimum order amount should be more than 100,000 IRR'))
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-            request.user.cart.cartitem_set.all().delete()
+            # request.user.cart.cartitem_set.all().delete()
             factory = bankfactories.BankFactory()
             try:
                 bank = factory.create(bank_models.BankType.ZARINPAL)
@@ -144,46 +144,86 @@ class PaymentListAddView(LoginRequiredMixin, View):
 
 
 class CallbackGatewayView(LoginRequiredMixin, View):
+    tracking_code: str = None
+    bank_record: Bank = None
+    payment: Payment = None
 
     def get(self, request, *args, **kwargs):
-        tracking_code = request.GET.get(settings.TRACKING_CODE_QUERY_PARAM, None)
-        if not tracking_code:
+        self.tracking_code = request.GET.get(settings.TRACKING_CODE_QUERY_PARAM, None)
+        self.is_tracking_code_valid()
+        self.get_bank_record()
+        if self.bank_record.is_success:
+            try:
+                self.is_requested_user_payment_owner()
+                self.make_payment_confirmed()
+                self.make_cart_empty()
+            except Payment.DoesNotExist:
+                return self.show_no_payment_error()
+            self.add_bought_product_to_user()
+            return self.show_successful_payment()
+        return self.show_unsuccessful_payment()
+
+    def make_cart_empty(self):
+        self.request.user.cart.cartitem_set.all().delete()
+
+    def is_requested_user_payment_owner(self):
+        self.payment = Payment.objects.get(
+            content_type=ContentType.objects.get_for_model(self.bank_record),
+            object_id=self.bank_record.pk
+        )
+        if not self.payment.owner.pk == self.request.user.pk:
+            raise Http404
+
+    def is_tracking_code_valid(self):
+        if not self.tracking_code:
             logging.error("tracking code is not in url query param.")
             raise Http404
+
+    def get_bank_record(self):
         try:
-            bank_record = bank_models.Bank.objects.get(tracking_code=tracking_code)
+            self.bank_record = bank_models.Bank.objects.get(tracking_code=self.tracking_code)
         except bank_models.Bank.DoesNotExist:
             logging.error("bank record is not valid")
             raise Http404
-        if bank_record.is_success:
-            try:
-                payment = Payment.objects.get(content_type=ContentType.objects.get_for_model(bank_record),
-                                              object_id=bank_record.pk)
-                payment.status = Payment.STATUS_CONFIRMED
-                payment.save()
-                payment.order.status = Order.ORDER_STATUS_PAYED
-                payment.order.save()
-                paid_order_items = payment.order.orderitem_set.all()
-                bayer = payment.owner
-                for item in paid_order_items:
-                    item.product.add_buyer(bayer)
 
-                context = {
-                    "message": "پرداخت با موفقیت انجام شد.",
-                }
-                return render(request=self.request, template_name="store/callback.html", context=context)
-            except Payment.DoesNotExist:
-                logging.error(f"payment for {bank_record.pk} was successful but has no oder")
-                context = {
-                    "message": "خطایی در پرداخت رخ داده است جهت بازپرداخت وجه با پشتیبانی تماس حاصل نمایید.",
-                }
-                return render(request=self.request, template_name="store/callback.html", context=context)
+    def show_no_payment_error(self):
+        logging.error(f"payment for {self.bank_record.pk} was successful but has no oder")
+        return render(request=self.request,
+                      template_name="store/callback.html",
+                      context={
+                          "message": "خطایی در پرداخت رخ داده است جهت بازپرداخت وجه با پشتیبانی تماس حاصل نمایید.", }
+                      )
 
-        logging.error(f"payment {bank_record.pk} with amount {bank_record.amount} was not successful")
-        context = {
-            "message": "عملیات پرداخت موفقیت آمیز نبوده است.اگر از حساب شما مبلغی کم شده است. ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.",
-        }
-        return render(request=self.request, template_name="store/callback.html", context=context)
+    def show_successful_payment(self):
+        logging.error(f"payment {self.bank_record.pk} with amount {self.bank_record.amount} was not successful")
+
+        return render(request=self.request,
+                      template_name="store/callback.html",
+                      context={
+                          "message": "پرداخت با موفقیت انجام شد.", }
+                      )
+
+    def show_unsuccessful_payment(self):
+        logging.error(f"payment {self.bank_record.pk} with amount {self.bank_record.amount} was not successful")
+
+        return render(request=self.request,
+                      template_name="store/callback.html",
+                      context={
+                          "message": "عملیات پرداخت موفقیت آمیز نبوده است.اگر از حساب شما مبلغی کم شده "
+                                     "است. ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.", })
+
+    def make_payment_confirmed(self):
+
+        self.payment.status = Payment.STATUS_CONFIRMED
+        self.payment.save()
+        self.payment.order.status = Order.ORDER_STATUS_PAYED
+        self.payment.order.save()
+
+    def add_bought_product_to_user(self):
+        paid_order_items = self.payment.order.orderitem_set.all()
+        bayer = self.payment.owner
+        for item in paid_order_items:
+            item.product.add_buyer(bayer)
 
 
 class IndexView(ListView):

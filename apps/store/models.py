@@ -55,11 +55,11 @@ class Cart(models.Model):
         (CART_STATUS_TRANSFERRED, 'Transferred'),
         (CART_STATUS_FAILED, 'Failed')
     ]
-    owner = models.OneToOneField(UserProfile, on_delete=models.RESTRICT)
+    owner = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(choices=CART_STATUS_CHOICES, max_length=20, default=CART_STATUS_WAITING)
-    status_change_date = models.DateTimeField(auto_now_add=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
+    # status = models.CharField(choices=CART_STATUS_CHOICES, max_length=20, default=CART_STATUS_WAITING)
+    # status_change_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = _('Cart')
