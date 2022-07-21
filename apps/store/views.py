@@ -11,6 +11,7 @@ from azbankgateways.exceptions import AZBankGatewaysException
 from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 from django.contrib import messages
 from django.db import transaction
+from django.db.models import QuerySet
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -21,6 +22,7 @@ from django.views.generic.list import ListView
 from django_downloadview.views.object import ObjectDownloadView
 
 from config.settings.base import MINIMUM_ORDER_AMOUNT, ARVAN_CHANNEL_ID, ARVAN_API_KEY
+from utils.functions import send_sms
 from .forms import CartItemEditForm, CartItemAddForm
 from .models import *
 from .permitions import LearningBoughtUserMixin
@@ -147,26 +149,29 @@ class CallbackGatewayView(LoginRequiredMixin, View):
     tracking_code: str = None
     bank_record: Bank = None
     payment: Payment = None
+    paid_order_items: QuerySet[OrderItem] = None
+    buyer: UserProfile = None
 
     def get(self, request, *args, **kwargs):
         self.tracking_code = request.GET.get(settings.TRACKING_CODE_QUERY_PARAM, None)
-        self.is_tracking_code_valid()
-        self.get_bank_record()
+        self._is_tracking_code_valid()
+        self._get_bank_record()
         if self.bank_record.is_success:
             try:
-                self.is_requested_user_payment_owner()
-                self.make_payment_confirmed()
-                self.make_cart_empty()
+                self._is_requested_user_payment_owner()
+                self._make_payment_confirmed()
+                self._make_cart_empty()
+                self._add_bought_product_to_user()
+                self._send_buyer_sms()
             except Payment.DoesNotExist:
-                return self.show_no_payment_error()
-            self.add_bought_product_to_user()
-            return self.show_successful_payment()
-        return self.show_unsuccessful_payment()
+                return self._show_no_payment_error()
+            return self._show_successful_payment()
+        return self._show_unsuccessful_payment()
 
-    def make_cart_empty(self):
+    def _make_cart_empty(self):
         self.request.user.cart.cartitem_set.all().delete()
 
-    def is_requested_user_payment_owner(self):
+    def _is_requested_user_payment_owner(self):
         self.payment = Payment.objects.get(
             content_type=ContentType.objects.get_for_model(self.bank_record),
             object_id=self.bank_record.pk
@@ -174,19 +179,19 @@ class CallbackGatewayView(LoginRequiredMixin, View):
         if not self.payment.owner.pk == self.request.user.pk:
             raise Http404
 
-    def is_tracking_code_valid(self):
+    def _is_tracking_code_valid(self):
         if not self.tracking_code:
             logging.error("tracking code is not in url query param.")
             raise Http404
 
-    def get_bank_record(self):
+    def _get_bank_record(self):
         try:
             self.bank_record = bank_models.Bank.objects.get(tracking_code=self.tracking_code)
         except bank_models.Bank.DoesNotExist:
             logging.error("bank record is not valid")
             raise Http404
 
-    def show_no_payment_error(self):
+    def _show_no_payment_error(self):
         logging.error(f"payment for {self.bank_record.pk} was successful but has no oder")
         return render(request=self.request,
                       template_name="store/callback.html",
@@ -194,7 +199,7 @@ class CallbackGatewayView(LoginRequiredMixin, View):
                           "message": "خطایی در پرداخت رخ داده است جهت بازپرداخت وجه با پشتیبانی تماس حاصل نمایید.", }
                       )
 
-    def show_successful_payment(self):
+    def _show_successful_payment(self):
         logging.error(f"payment {self.bank_record.pk} with amount {self.bank_record.amount} was not successful")
 
         return render(request=self.request,
@@ -203,7 +208,7 @@ class CallbackGatewayView(LoginRequiredMixin, View):
                           "message": "پرداخت با موفقیت انجام شد.", }
                       )
 
-    def show_unsuccessful_payment(self):
+    def _show_unsuccessful_payment(self):
         logging.error(f"payment {self.bank_record.pk} with amount {self.bank_record.amount} was not successful")
 
         return render(request=self.request,
@@ -212,18 +217,24 @@ class CallbackGatewayView(LoginRequiredMixin, View):
                           "message": "عملیات پرداخت موفقیت آمیز نبوده است.اگر از حساب شما مبلغی کم شده "
                                      "است. ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.", })
 
-    def make_payment_confirmed(self):
+    def _make_payment_confirmed(self):
 
         self.payment.status = Payment.STATUS_CONFIRMED
         self.payment.save()
         self.payment.order.status = Order.ORDER_STATUS_PAYED
         self.payment.order.save()
 
-    def add_bought_product_to_user(self):
-        paid_order_items = self.payment.order.orderitem_set.all()
-        bayer = self.payment.owner
-        for item in paid_order_items:
-            item.product.add_buyer(bayer)
+    def _add_bought_product_to_user(self):
+        self.paid_order_items = self.payment.order.orderitem_set.all()
+        self.bayer = self.payment.owner
+        for item in self.paid_order_items:
+            item.product.add_buyer(self.bayer)
+
+    def _send_buyer_sms(self):
+        for item in self.paid_order_items:
+            message = f"خرید محصول {item.product.title} موفقیت آمیز بود."
+            receptor = self.bayer.mobile
+            send_sms(message=message, receptor=receptor)
 
 
 class IndexView(ListView):

@@ -72,22 +72,25 @@
         {#            </div>#}
 
     {% elif request_successful and is_user_owner %}
-        <div class="post-item">
-            <h1>{{ object.title }}</h1>
-            <strong class="post-date">01.01.1401</strong>
-            <hr>
-            <div class="ratio ratio-16x9">
-                <iframe src="{{ video_url }}" title="Learning video" allowfullscreen></iframe>
-            </div>
-            <div class="my-3">
-                {{ object.content| safe }}
-            </div>
+        <div id="page-top" class="wide">
 
-        </div>
-        <div class="my-5">
-            {% if object.attachment %}
-                <a href="{% url "store:learning_attachment" object.slug %}">مطلب پیوست</a>
-            {% endif %}
+            <div class="post-item">
+                <h1>{{ object.title }}</h1>
+                <strong class="post-date">01.01.1401</strong>
+                <hr>
+                <div class="ratio ratio-16x9">
+                    <iframe src="{{ video_url }}" title="Learning video" allowfullscreen></iframe>
+                </div>
+                <div class="my-3">
+                    {{ object.content| safe }}
+                </div>
+
+            </div>
+            <div class="my-5">
+                {% if object.attachment %}
+                    <a href="{% url "store:learning_attachment" object.slug %}">مطلب پیوست</a>
+                {% endif %}
+            </div>
         </div>
     {% else %}
         <h1>
