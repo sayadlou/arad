@@ -2,6 +2,9 @@
 {% load static %}
 {% load jformat %}
 {% load core_tag %}
+{% block title %}
+    آراد مهاجر
+{% endblock title %}
 {% block content %}
 
     <div id="highlights" class="wide">
@@ -76,7 +79,8 @@
                         <div class="col-4">
                             <div style="position: relative;text-align: center;color: white;">
                                 <a href="{% url 'store:service_slug' service.slug %}">
-                                    <img class="w-100" src="{{ service.picture.url }}" alt="{{ service.picture.description }}">
+                                    <img class="w-100" src="{{ service.picture.url }}"
+                                         alt="{{ service.picture.description }}">
                                     <div class="image-text-overlay">{{ service.title }}</div>
                                 </a>
                             </div>

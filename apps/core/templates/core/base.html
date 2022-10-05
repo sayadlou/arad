@@ -47,7 +47,11 @@
     -->
     <link rel="stylesheet" type="text/css" href="{% static "core/css/alertify.rtl.min.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "core/css/bootstrap.rtl.min.css" %}">
-    <title>آراد مهاجر</title>
+    <title>
+        {% block title %}
+            آراد مهاجر
+        {% endblock title %}
+    </title>
 </head>
 
 <body>

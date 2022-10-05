@@ -2,6 +2,10 @@
 {% load jformat %}
 {% load i18n %}
 
+{% block title %}
+    {{ object.title }}
+{% endblock title %}
+
 {% block content %}
     <!-- mobile View -->
     <div id="page-top" class="wide d-block d-md-none">
