@@ -14,26 +14,17 @@
     <meta property="og:image:width" content="256"/>
     <meta property="og:image:height" content="256"/>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    {#    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"#}
-    {#            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"#}
-    {#            crossorigin="anonymous"></script>#}
-
-
+    <script src="{% static "core/js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "core/js/popper.min.js" %}"></script>
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "core/css/bootstrap.min.css" %}">
+    <script src="{% static "core/js/bootstrap.bundle.min.js" %}"></script>
+
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Gayathri&family=Nunito:wght@200&family=Ubuntu&display=swap"
           rel="stylesheet">
-    <script src="https://kit.fontawesome.com/3a6e87e86d.js" crossorigin="anonymous"></script>
+    <script src="{% static "core/js/3a6e87e86d.js" %}"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="{% static "core/css/style.css" %}">
@@ -45,17 +36,17 @@
             src: url("{% static "core/fonts/samim.woff"%}") format("woff"), url("{% static "core/fonts/samim.otf"%}") format("opentype");
         }
     </style>
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <!-- CSS -->
 
     <!-- Local Sctipts -->
     <script src="{% static "core/js/scripts.js" %}"></script>
+    <script src="{% static "core/js/alertify.min.js" %}"></script>
 
     <!--
         RTL version
     -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css"/>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static "core/css/alertify.rtl.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "core/css/bootstrap.rtl.min.css" %}">
     <title>آراد مهاجر</title>
 </head>
 
@@ -110,7 +101,8 @@
                     </li>
                     <li>
                         {% url "store:event_home" as event_home %}
-                        <a class={{ event_home|toolbar_active_detect:request.path_info }}  href="{{ event_home }}">رویداد ها</a>
+                        <a class={{ event_home|toolbar_active_detect:request.path_info }}  href="{{ event_home }}">رویداد
+                            ها</a>
                     </li>
                     <li>
                         {% url "store:learning_home" as learning_home %}
@@ -122,11 +114,13 @@
                     </li>
                     <li>
                         {% url "core:about_us" as  about_us %}
-                        <a class={{ about_us|toolbar_active_detect:request.path_info }} href="{{ about_us }}">درباره ما</a>
+                        <a class={{ about_us|toolbar_active_detect:request.path_info }} href="{{ about_us }}">درباره
+                            ما</a>
                     </li>
                     <li>
                         {% url "contact_us:form" as contact_us %}
-                        <a class={{ contact_us|toolbar_active_detect:request.path_info }} href="{{ contact_us }}">ارتباط با ما</a>
+                        <a class={{ contact_us|toolbar_active_detect:request.path_info }} href="{{ contact_us }}">ارتباط
+                            با ما</a>
                     </li>
                 </ul>
             </div>

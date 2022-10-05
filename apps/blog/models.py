@@ -42,6 +42,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     intro = models.TextField(max_length=500)
     show_in_home = models.BooleanField(default=False)
+    seo_tag = models.TextField(max_length=500)
 
     class Meta:
         verbose_name = _('Blog Post')

@@ -28,6 +28,7 @@ class ProductBaseModel(models.Model):
     max_order_quantity = models.DecimalField(max_digits=12, decimal_places=0)
     min_order_quantity = models.DecimalField(max_digits=12, decimal_places=0)
     purchaser = models.ManyToManyField(UserProfile, blank=True)
+    seo_tag = models.TextField(max_length=500)
 
     class Meta:
         verbose_name = _('Product Base Model')
