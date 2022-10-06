@@ -3,9 +3,12 @@
 {% load static %}
 
 {% block title %}
-    سرویس
+    خدمات
 {% endblock title %}
+{% block description %}
 
+{% endblock description %}
+{{ object.seo_tag }}
 {% block content %}
     <div class="service-item">
         <div class="row wide">
@@ -22,28 +25,28 @@
                 <p>
                     {{ object.introduction }}
                 </p>
-{#                {% if  is_owner %}#}
+                {#                {% if  is_owner %}#}
 
-{#                {% else %}#}
-{#                    <div class="btn-group buy" role="group">#}
-                        <form class="btn-group buy" autocomplete="off" method="post" action="{% url 'store:cart' %}">
-                            {% csrf_token %}
-                            <input type="text" name="product" value="{{ object.pk }}" hidden>
-                            <input type="text" name="request_type" value="add" hidden>
-                            <input type="number" name="quantity" value="1" hidden>
-                            {#                            <input type="submit" class="btn btn-primary" value="اضافه به سبد خرید">#}
-                            <button type="button" class="btn btn-primary btn-icon" style="pointer-events: none;"
-                                    disabled><i
-                                    class="fas fa-hand-pointer"></i></button>
-                            <button type="submit" class="btn btn-outline-primary btn-text">افزودن به سبد خرید</button>
-                        </form>
+                {#                {% else %}#}
+                {#                    <div class="btn-group buy" role="group">#}
+                <form class="btn-group buy" autocomplete="off" method="post" action="{% url 'store:cart' %}">
+                    {% csrf_token %}
+                    <input type="text" name="product" value="{{ object.pk }}" hidden>
+                    <input type="text" name="request_type" value="add" hidden>
+                    <input type="number" name="quantity" value="1" hidden>
+                    {#                            <input type="submit" class="btn btn-primary" value="اضافه به سبد خرید">#}
+                    <button type="button" class="btn btn-primary btn-icon" style="pointer-events: none;"
+                            disabled><i
+                            class="fas fa-hand-pointer"></i></button>
+                    <button type="submit" class="btn btn-outline-primary btn-text">افزودن به سبد خرید</button>
+                </form>
 
 
-{#                        <button type="button" class="btn btn-primary btn-icon" style="pointer-events: none;" disabled><i#}
-{#                                class="fas fa-hand-pointer"></i></button>#}
-{#                        <button type="button" class="btn btn-outline-primary btn-text">افزودن به سبد خرید</button>#}
-{#                    </div>#}
-{#                {% endif %}#}
+                {#                        <button type="button" class="btn btn-primary btn-icon" style="pointer-events: none;" disabled><i#}
+                {#                                class="fas fa-hand-pointer"></i></button>#}
+                {#                        <button type="button" class="btn btn-outline-primary btn-text">افزودن به سبد خرید</button>#}
+                {#                    </div>#}
+                {#                {% endif %}#}
             </div>
         </div>
         <div class="row wide2 over_flow">

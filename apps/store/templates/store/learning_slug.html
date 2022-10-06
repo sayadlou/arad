@@ -5,6 +5,9 @@
 {% block title %}
     آموزش
 {% endblock title %}
+{% block description %}
+{{ object.seo_tag }}
+{% endblock description %}
 {% block content %}
     <!-- Single Service Item ////////// Just this Section is changed! -->
     {% if not is_user_owner %}

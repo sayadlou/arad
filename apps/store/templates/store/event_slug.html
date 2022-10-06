@@ -4,8 +4,9 @@
 {% block title %}
     رویداد
 {% endblock title %}
-{% block title %}
-{% endblock title %}
+{% block description %}
+    {{ event.seo_tag }}
+{% endblock description %}
 {% block content %}
     <div id="page-top" class="wide">
         <div class="post-item row">
@@ -15,8 +16,8 @@
                 </div>
                 <hr>
                 <div class=" d-lg-none">
-                <img class="img-fluid" style="max-width: 100%" src="{{ object.picture.url }}" alt="">
-            </div>
+                    <img class="img-fluid" style="max-width: 100%" src="{{ object.picture.url }}" alt="">
+                </div>
                 {{ event.description }}
             </div>
             <div class="col-lg-6 d-none d-lg-block">
