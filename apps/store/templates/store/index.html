@@ -7,7 +7,7 @@
 {% endblock title %}
 
 {% block content %}
-    <div id="" class="wide">
+    <div id="page-top" class="wide">
         <div class="filter ">
             <div class="blog-categoty ">
                 دسته بندی&nbsp;:
@@ -23,9 +23,10 @@
             {% for object in object_list %}
                 <div class="col-lg-4 col-sm-6 blog-single">
                     <div class="blog-image">
-                        <a class="post-title" href="{{ object.get_absolute_url }}"><h1 class="text-center">{{ object.title }}</h1></a>
+                        <a class="post-title" href="{{ object.get_absolute_url }}"><h1
+                                class="text-center">{{ object.title }}</h1></a>
                         {#                        <strong class="post-date">{{ object.start_date|jformat:"%d-%m-%Y" }}</strong>#}
-{#                        <strong class="post-date">{{ object.start_date|jformat:"%Y-%m-%d" }}</strong>#}
+                        {#                        <strong class="post-date">{{ object.start_date|jformat:"%Y-%m-%d" }}</strong>#}
                         <a href="{{ object.get_absolute_url }}">
                             <img class="" src="{{ object.picture.url }}" alt="">
                         </a>
@@ -64,14 +65,14 @@
                                 class="fa fa-chevron-left"
                                 aria-hidden="true"></i></a></li>
                     {% else %}
-                        <li class="page-item"><a class="page-link disabled"><i
-                                class="fa fa-chevron-left"
-                                aria-hidden="true"></i></a></li>
+                        <li class="page-item">
+                            <a class="page-link disabled">
+                                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
             </nav>
         </div>
-    </div>
-    </div>
     </div>
 {% endblock %}
