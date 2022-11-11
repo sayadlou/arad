@@ -14,7 +14,7 @@ def send_sms(message: str, receptor: str):
     try:
         kavenegar_api = KavenegarAPI(settings.KAVENEGAR_API_KEY)
         params = {
-            'sender': settings.SMS_SENDER_NUMBER,
+            'sender': settings.KAVENEGAR_SMS_SENDER_NUMBER,
             'receptor': receptor,  # multiple mobile number, split by comma
             'message': message,
         }
