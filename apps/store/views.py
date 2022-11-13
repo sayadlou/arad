@@ -77,8 +77,11 @@ class CartPutDeleteView(LoginRequiredMixin, View):
 class OrderListView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
-        orders = Order.objects.filter(owner=request.user)
-        context = {'orders': orders, 'has_order': orders.exists()}
+        payed_orders = Order.objects.filter(owner=request.user)
+        context = {
+            'payed_orders': payed_orders,
+            'has_payed_orders': payed_orders.exists()
+        }
         return render(request=self.request, template_name="store/orders.html", context=context)
 
 

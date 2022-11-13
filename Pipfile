@@ -28,6 +28,7 @@ django-admin-honeypot = "==1.1.*"
 django-braces = "==1.15.*"
 flower = "==1.2.*"
 kavenegar = "*"
+django-debug-toolbar = "==3.4"
 
 [dev-packages]
 django-debug-toolbar = "==3.4.*"
